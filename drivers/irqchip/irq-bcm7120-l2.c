@@ -23,9 +23,8 @@
 #include <linux/io.h>
 #include <linux/irqdomain.h>
 #include <linux/reboot.h>
+#include <linux/irqchip.h>
 #include <linux/irqchip/chained_irq.h>
-
-#include "irqchip.h"
 
 #include <asm/mach/irq.h>
 

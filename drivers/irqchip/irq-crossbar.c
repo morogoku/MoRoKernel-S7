@@ -11,6 +11,7 @@
  */
 #include <linux/err.h>
 #include <linux/io.h>
+#include <linux/irqchip.h>
 #include <linux/of_address.h>
 #include <linux/of_irq.h>
 #include <linux/slab.h>

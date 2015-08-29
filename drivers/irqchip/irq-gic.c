@@ -821,11 +821,11 @@ static int gic_irq_domain_map(struct irq_domain *d, unsigned int irq,
 		irq_set_percpu_devid(irq);
 		irq_set_chip_and_handler(irq, &gic_chip,
 					 handle_percpu_devid_irq);
-		set_irq_flags(irq, IRQF_VALID | IRQF_NOAUTOEN);
+		irq_set_status_flags(irq, IRQ_NOAUTOEN);
 	} else {
 		irq_set_chip_and_handler(irq, &gic_chip,
 					 handle_fasteoi_irq);
-		set_irq_flags(irq, IRQF_VALID | IRQF_PROBE);
+		irq_set_probe(irq);
 
 		gic_routable_irq_domain_ops->map(d, irq, hw);
 	}

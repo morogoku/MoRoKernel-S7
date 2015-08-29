@@ -468,13 +468,11 @@ static int s3c24xx_irq_map(struct irq_domain *h, unsigned int virq,
 
 	irq_set_chip_data(virq, irq_data);
 
-	set_irq_flags(virq, IRQF_VALID);
-
 	if (parent_intc && irq_data->type != S3C_IRQTYPE_NONE) {
 		if (irq_data->parent_irq > 31) {
 			pr_err("irq-s3c24xx: parent irq %lu is out of range\n",
 			       irq_data->parent_irq);
-			goto err;
+			return -EINVAL;
 		}
 
 		parent_irq_data = &parent_intc->irqs[irq_data->parent_irq];
@@ -487,18 +485,12 @@ static int s3c24xx_irq_map(struct irq_domain *h, unsigned int virq,
 		if (!irqno) {
 			pr_err("irq-s3c24xx: could not find mapping for parent irq %lu\n",
 			       irq_data->parent_irq);
-			goto err;
+			return -EINVAL;
 		}
 		irq_set_chained_handler(irqno, s3c_irq_demux);
 	}
 
 	return 0;
-
-err:
-	set_irq_flags(virq, 0);
-
-	/* the only error can result from bad mapping data*/
-	return -EINVAL;
 }
 
 static const struct irq_domain_ops s3c24xx_irq_ops = {
@@ -1175,8 +1167,6 @@ static int s3c24xx_irq_map_of(struct irq_domain *h, unsigned int virq,
 					 handle_edge_irq);
 
 	irq_set_chip_data(virq, irq_data);
-
-	set_irq_flags(virq, IRQF_VALID);
 
 	return 0;
 }

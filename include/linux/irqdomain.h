@@ -110,6 +110,11 @@ struct irq_domain {
 	unsigned int linear_revmap[];
 };
 
+static inline struct device_node *irq_domain_get_of_node(struct irq_domain *d)
+{
+	return d->of_node;
+}
+
 #ifdef CONFIG_IRQ_DOMAIN
 struct irq_domain *__irq_domain_add(struct device_node *of_node, int size,
 				    irq_hw_number_t hwirq_max, int direct_max,

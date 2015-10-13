@@ -675,7 +675,8 @@ static struct irq_chip ipic_edge_irq_chip = {
 static int ipic_host_match(struct irq_domain *h, struct device_node *node)
 {
 	/* Exact match, unless ipic node is NULL */
-	return h->of_node == NULL || h->of_node == node;
+	struct device_node *of_node = irq_domain_get_of_node(h);
+	return of_node == NULL || of_node == node;
 }
 
 static int ipic_host_map(struct irq_domain *h, unsigned int virq,

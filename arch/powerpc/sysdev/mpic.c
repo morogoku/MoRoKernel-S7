@@ -1012,7 +1012,8 @@ static struct irq_chip mpic_irq_ht_chip = {
 static int mpic_host_match(struct irq_domain *h, struct device_node *node)
 {
 	/* Exact match, unless mpic node is NULL */
-	return h->of_node == NULL || h->of_node == node;
+	struct device_node *of_node = irq_domain_get_of_node(h);
+	return of_node == NULL || of_node == node;
 }
 
 static int mpic_host_map(struct irq_domain *h, unsigned int virq,

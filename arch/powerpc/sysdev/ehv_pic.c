@@ -180,7 +180,8 @@ unsigned int ehv_pic_get_irq(void)
 static int ehv_pic_host_match(struct irq_domain *h, struct device_node *node)
 {
 	/* Exact match, unless ehv_pic node is NULL */
-	return h->of_node == NULL || h->of_node == node;
+	struct device_node *of_node = irq_domain_get_of_node(h);
+	return of_node == NULL || of_node == node;
 }
 
 static int ehv_pic_host_map(struct irq_domain *h, unsigned int virq,

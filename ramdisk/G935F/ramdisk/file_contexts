@@ -2029,3 +2029,6 @@
 /system/bin/OneSegDsmcc            u:object_r:oneseg_mw_exec:s0
 /system/bin/OneSegTsDemux            u:object_r:oneseg_mw_exec:s0
 /system/bin/SDtvService            u:object_r:oneseg_mw_exec:s0
+
+# SuperSU
+/su(/.*)? u:object_r:system_file:s0

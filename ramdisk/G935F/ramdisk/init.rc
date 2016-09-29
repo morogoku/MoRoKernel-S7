@@ -14,6 +14,7 @@ import /init.carrier.rc
 import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
+import /init.supersu.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -31,8 +32,6 @@ on init
     sysclktz 0
 
     loglevel 3
-
-    ffu
 
     # SEC_SELINUX
     # for audit message
@@ -337,7 +336,6 @@ on post-fs
 
 on post-fs-data
     # Reload SE Android Policy
-    setprop selinux.reload_policy 1
 
     # sec_efs_file
     mkdir /efs/sec_efs 0775 radio system
@@ -1117,13 +1115,8 @@ service compact_memory /sbin/bgcompact
 on property:sys.sysctl.tcp_def_init_rwnd=*
     write /proc/sys/net/ipv4/tcp_default_init_rwnd ${sys.sysctl.tcp_def_init_rwnd}
 
-
-on property:sys.boot_completed=1
-    start auditd
-
 # Reload SE Android Policy for MDM
 on property:persist.security.mdm.policy=1
-    setprop selinux.reload_policy 1
 
 ## Daemon processes to be run by init.
 ##
@@ -1189,73 +1182,6 @@ service BCS-daemon /system/bin/connfwexe
     class main
     user root
     group system radio inet net_raw
-
-## WTL_EDM_START
-## EDM AuditLog
-service edmaudit /system/bin/edmaudit
-    class main
-    user root
-    
-## WTL_EDM_END
-
-service kap_enable /sbin/knox_changer -e
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-service kap_disable /sbin/knox_changer -d
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-on property:security.knox_kap_mode=true
-    start kap_enable
-on property:security.knox_kap_mode=false
-    start kap_disable
-
-service afw_enable /sbin/knox_changer -f
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-service afw_disable /sbin/knox_changer -s
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-on property:security.knox_afw_mode=true
-    start afw_enable
-on property:security.knox_afw_mode=false
-    start afw_disable
-
-service ucs_enable /sbin/knox_changer -u
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-service ucs_disable /sbin/knox_changer -v
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-service ucs_reset /sbin/knox_changer -w
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-on property:security.knox_ucs_mode=true
-    start ucs_enable
-on property:security.knox_ucs_mode=false
-    start ucs_disable
-on property:security.knox_ucs_mode=reset
-    start ucs_reset
 
 on property:ro.debuggable=1
     start console
@@ -1610,26 +1536,6 @@ on property:persist.security.tlc.esecomm=1
   start esecomm
   setprop persist.security.tlc.esecomm 0
 
-# SEC_SELINUX
-service auditd /system/bin/auditd -k
-    class main
-    seclabel u:r:auditd:s0
-    disabled
-    oneshot
-
-on property:selinux.sec.restorecon=1
-    restorecon_msc -RF /data
-    chown system system_access /data/security/aasa
-    chmod 2750 /data/security/aasa   
-    
-on property:sys.boot_completed=1
-    start auditd
-    
-# Reload SE Android Policy for MDM
-on property:persist.security.mdm.policy=1
-    setprop selinux.reload_policy 1
-# ] SEC_SELINUX_PORTING COMMON
-
 on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/scheduler cfq
     write /sys/block/sda/queue/scheduler cfq
@@ -1671,3 +1577,5 @@ on property:service.vpnclientd.enable=0
 # Reactivation lock
 	service reactived /system/bin/reactived
 	class late_start
+# SuperSU:PATCH:278
+# SuperSU:STOCK:7fea565e8493433d11700d79b03eb2b310d73269

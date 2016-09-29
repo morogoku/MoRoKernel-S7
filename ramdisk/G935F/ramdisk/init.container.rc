@@ -71,31 +71,3 @@ on post-fs-data
     export ENC_EMULATED_STORAGE_TARGET /storage/enc_emulated
 
     restorecon /data/knox
-
-on boot
-
-#group system log shell
-service epmlogd /system/bin/epmlogd
-    class main
-    user system
-    group system log shell
-    oneshot
-
-service sdp_cryptod /system/bin/sdp_cryptod
-    class main
-    socket sdp stream 0660 system system
-    user system
-    group system
-
-# virtual sdcard daemon running as system (1000)
-#service knox /system/bin/sdcard /data/knox/sdcard /mnt/shell/knox-emulated 1000 1000
-#    class late_start
-#    oneshot
-
-# virtual sdcard daemon running as system (1000)
-#service secure_fs /system/bin/sdcard -r /data/knox/secure_fs/enc_media /mnt/shell/enc_media 1000 1000
-#    class late_start
-#    oneshot
-
-#    start knox
-

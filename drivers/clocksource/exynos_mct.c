@@ -470,7 +470,11 @@ static int exynos4_local_timer_setup(struct clock_event_device *evt)
 	exynos4_mct_write(TICK_BASE_CNT, mevt->base + MCT_L_TCNTB_OFFSET);
 
 	if (mct_int_type == MCT_INT_SPI) {
-		irq_force_affinity(mct_irqs[MCT_L0_IRQ + cpu], cpumask_of(cpu));
+	  
+		if (evt->irq == -1)
+ 			return -EIO;
+		
+		irq_force_affinity(evt->irq, cpumask_of(cpu));
 		enable_irq(evt->irq);
 	} else {
 		enable_percpu_irq(mct_irqs[MCT_L0_IRQ], 0);
@@ -486,10 +490,12 @@ static int exynos4_local_timer_setup(struct clock_event_device *evt)
 static void exynos4_local_timer_stop(struct clock_event_device *evt)
 {
 	evt->set_mode(CLOCK_EVT_MODE_UNUSED, evt);
-	if (mct_int_type == MCT_INT_SPI)
-		disable_irq(evt->irq);
-	else
+	if (mct_int_type == MCT_INT_SPI) {
+		if (evt->irq != -1)
+			disable_irq_nosync(evt->irq);
+	} else {
 		disable_percpu_irq(mct_irqs[MCT_L0_IRQ]);
+	}
 }
 
 static int exynos4_mct_cpu_notify(struct notifier_block *self,
@@ -521,7 +527,7 @@ static struct notifier_block exynos4_mct_cpu_nb = {
 
 static void __init exynos4_timer_resources(struct device_node *np, void __iomem *base)
 {
-	int err;
+	int err, cpu;
 	struct mct_clock_event_device *mevt = this_cpu_ptr(&percpu_mct_tick);
 	struct clk *mct_clk, *tick_clk;
 
@@ -548,7 +554,25 @@ static void __init exynos4_timer_resources(struct device_node *np, void __iomem 
 		WARN(err, "MCT: can't request IRQ %d (%d)\n",
 		     mct_irqs[MCT_L0_IRQ], err);
 	} else {
-		irq_set_affinity(mct_irqs[MCT_L0_IRQ], cpumask_of(0));
+		for_each_possible_cpu(cpu) {
+			int mct_irq = mct_irqs[MCT_L0_IRQ + cpu];
+			struct mct_clock_event_device *pcpu_mevt =
+				per_cpu_ptr(&percpu_mct_tick, cpu);
+
+			pcpu_mevt->evt.irq = -1;
+
+			irq_set_status_flags(mct_irq, IRQ_NOAUTOEN);
+			if (request_irq(mct_irq,
+					exynos4_mct_tick_isr,
+					IRQF_TIMER | IRQF_NOBALANCING,
+					pcpu_mevt->name, pcpu_mevt)) {
+				pr_err("exynos-mct: cannot register IRQ (cpu%d)\n",
+									cpu);
+
+				continue;
+			}
+			pcpu_mevt->evt.irq = mct_irq;
+		}
 	}
 
 	err = register_cpu_notifier(&exynos4_mct_cpu_nb);

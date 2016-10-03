@@ -696,7 +696,7 @@ static int wm_adsp_fw_put(struct snd_kcontrol *kcontrol,
 	case WMFW_ADSP1:
 		if (dsp->running)
 			return -EBUSY;
-		dsp->fw = ucontrol->value.enumerated.item[0];
+		dsp->fw = ucontrol->value.integer.value[0];
 		return 0;
 	default:
 		return -EINVAL;

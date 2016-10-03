@@ -580,8 +580,6 @@ int snd_timer_stop(struct snd_timer_instance *timeri)
 	timer = timeri->timer;
 	if (!timer)
 		return -EINVAL;
-	if (timer->card && timer->card->shutdown)
-		return -ENODEV;
 	spin_lock_irqsave(&timer->lock, flags);
 	timeri->cticks = timeri->ticks;
 	timeri->pticks = 0;
@@ -605,11 +603,13 @@ int snd_timer_continue(struct snd_timer_instance *timeri)
 	timer = timeri->timer;
 	if (! timer)
 		return -EINVAL;
+	if (timer->card && timer->card->shutdown)
+		return -ENODEV;
+	spin_lock_irqsave(&timer->lock, flags);
 	if (timeri->flags & SNDRV_TIMER_IFLG_RUNNING) {
 		result = -EBUSY;
 		goto unlock;
 	}
-	spin_lock_irqsave(&timer->lock, flags);
 	if (!timeri->cticks)
 		timeri->cticks = 1;
 	timeri->pticks = 0;

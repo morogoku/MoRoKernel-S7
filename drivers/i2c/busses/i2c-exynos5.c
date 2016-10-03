@@ -1404,9 +1404,9 @@ static int exynos5_i2c_xfer(struct i2c_adapter *adap,
 	clk_ret = pm_runtime_get_sync(i2c->dev);
 	if (clk_ret < 0) {
 		exynos_update_ip_idle_status(i2c->idle_ip_index, 0);
-		ret = clk_enable(i2c->clk);
-		if (ret)
-			return ret;
+			ret = clk_enable(i2c->clk);
+			if (ret)
+				return ret;
 	}
 #else
 	exynos_update_ip_idle_status(i2c->idle_ip_index, 0);
@@ -1622,10 +1622,6 @@ static int exynos5_i2c_probe(struct platform_device *pdev)
 	pm_runtime_enable(&pdev->dev);
 #endif
 
-	ret = clk_prepare_enable(i2c->clk);
-	if (ret)
-		return ret;
-	
 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	i2c->regs = devm_ioremap_resource(&pdev->dev, mem);
 	if (i2c->regs == NULL) {
@@ -1707,7 +1703,9 @@ static int exynos5_i2c_probe(struct platform_device *pdev)
 	pm_runtime_get_sync(&pdev->dev);
 #else
 	exynos_update_ip_idle_status(i2c->idle_ip_index, 0);
-	clk_prepare_enable(i2c->clk);
+	ret = clk_prepare_enable(i2c->clk);
+	if (ret)
+		return ret;
 #endif
 
 	/* Clear pending interrupts from u-boot or misc causes */
@@ -1809,6 +1807,7 @@ static int exynos5_i2c_resume_noirq(struct device *dev)
 {
 	struct platform_device *pdev = to_platform_device(dev);
 	struct exynos5_i2c *i2c = platform_get_drvdata(pdev);
+	int ret = 0;
 
 	i2c_lock_adapter(&i2c->adap);
 	exynos_update_ip_idle_status(i2c->idle_ip_index, 0);

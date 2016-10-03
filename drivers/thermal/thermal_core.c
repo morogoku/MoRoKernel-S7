@@ -1590,15 +1590,14 @@ struct thermal_zone_device *thermal_zone_device_register(const char *type,
 	tz->trips = trips;
 	tz->passive_delay = passive_delay;
 	tz->polling_delay = polling_delay;
-	/* A new thermal zone needs to be updated anyway. */
-	atomic_set(&tz->need_update, 1);
-
 #if defined(CONFIG_EXYNOS_BIG_FREQ_BOOST)
 	tz->device_enable = THERMAL_DEVICE_ENABLED;
 #endif
 #ifdef CONFIG_SCHED_HMP
 	tz->poll_queue_cpu = BOUNDED_CPU;
 #endif
+	/* A new thermal zone needs to be updated anyway. */
+	atomic_set(&tz->need_update, 1);
 
 	dev_set_name(&tz->device, "thermal_zone%d", tz->id);
 	result = device_register(&tz->device);
@@ -2079,7 +2078,6 @@ static void __exit thermal_exit(void)
 #ifdef CONFIG_SCHED_HMP
 	unregister_hotcpu_notifier(&thermal_cpu_notifier);
 #endif
-	unregister_pm_notifier(&thermal_pm_nb);
 	of_thermal_destroy_zones();
 	genetlink_exit();
 	class_unregister(&thermal_class);

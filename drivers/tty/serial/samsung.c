@@ -1065,7 +1065,6 @@ static void s3c24xx_serial_set_termios(struct uart_port *port,
 
 	/* setting clock for baud rate */
 	if (ourport->baudclk != clk) {
-		clk_prepare_enable(clk);
 		ourport->baudclk = clk;
 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
 	}
@@ -1534,15 +1533,14 @@ static int s3c24xx_serial_init_port(struct s3c24xx_uart_port *ourport,
 		if (IS_ERR(ourport->separated_clk)) {
 			pr_err("%s: Controller clock not found\n",
 					dev_name(&platdev->dev));
-			ret = PTR_ERR(ourport->separated_clk);
-			goto err;
+			return PTR_ERR(ourport->separated_clk);
 		}
 
 		ret = clk_prepare_enable(ourport->separated_clk);
 		if (ret) {
 			pr_err("uart: clock failed to prepare+enable: %d\n", ret);
 			clk_put(ourport->separated_clk);
-			goto err;
+			return ret;
 		}
 	}
 
@@ -1550,7 +1548,7 @@ static int s3c24xx_serial_init_port(struct s3c24xx_uart_port *ourport,
 	if (ret) {
 		pr_err("uart: clock failed to prepare+enable: %d\n", ret);
 		clk_put(ourport->clk);
-		return ret;
+		goto err;
 	}
 
 	/* Keep all interrupts masked and cleared */

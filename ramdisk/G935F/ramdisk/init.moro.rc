@@ -1,0 +1,8 @@
+on boot
+    start kinit
+    
+service kinit /sbin/kernel_init.sh
+    class late_start
+    user root
+    seclabel u:r:init:s0
+    oneshot

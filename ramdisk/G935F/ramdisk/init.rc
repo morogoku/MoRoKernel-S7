@@ -15,6 +15,7 @@ import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
 import /init.supersu.rc
+import /init.moro.rc
 
 on early-init
     # Set init and its forked children's oom_adj.

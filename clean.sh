@@ -13,7 +13,7 @@ rm -f $PWD/build.log
 #rm -f $PWD/ramdisk/G930F/ramdisk-new.cpio.gz
 #rm -f $PWD/ramdisk/G930F/split_img/boot.img-dtb
 #rm -f $PWD/ramdisk/G930F/split_img/boot.img-zImage
-rm -f $PWD/ramdisk/G930F/image-new.img
+rm -f $PWD/ramdisk/G935F/image-new.img
 rm -f $PWD/ramdisk/G935F/ramdisk-new.cpio.gz
 rm -f $PWD/ramdisk/G935F/split_img/boot.img-dtb
 rm -f $PWD/ramdisk/G935F/split_img/boot.img-zImage

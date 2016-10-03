@@ -2437,10 +2437,7 @@ unsigned long nr_running(void)
  */
 bool single_task_running(void)
 {
-	if (cpu_rq(smp_processor_id())->nr_running == 1)
-		return true;
-	else
-		return false;
+	return raw_rq()->nr_running == 1;
 }
 EXPORT_SYMBOL(single_task_running);
 

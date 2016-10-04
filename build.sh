@@ -51,9 +51,9 @@ else [ $MODEL = hero2lte ]
 	echo ""
 fi
 
-export KERNEL_VERSION="MoRoKernel-$VERSION_KL-v0.5"
+export KERNEL_VERSION="MoRoKernel-$VERSION_KL-v1.0"
 export REVISION="RC"
-export KBUILD_BUILD_VERSION="42"
+export KBUILD_BUILD_VERSION="1"
 
 
 # FUNCTIONS

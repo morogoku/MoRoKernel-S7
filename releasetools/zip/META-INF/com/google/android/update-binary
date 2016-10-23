@@ -18,11 +18,12 @@ unzip -o "$ZIP"
 
 ui_print " "
 ui_print "***************************************"
-ui_print "*           MoRoKernel v0.2           *"
+ui_print "*           MoRoKernel v1.1           *"
 ui_print "*      SM-G93XF S7/S7 Edge 6.0.1      *"
 ui_print "*                                     *"
 ui_print "*                                     *"
 ui_print "*          script by tkkg1994         *"
+ui_print "*         modified by morogoku        *"
 ui_print "***************************************"
 ui_print " "
 
@@ -34,9 +35,20 @@ ui_print " -> Flashing kernel"
 cat boot.img > /dev/block/platform/155a0000.ufs/by-name/BOOT
 
 
+ui_print " -> Editing knox build.prop entries"
+
+sed -i /ro.config.tima=/c\ro.config.tima=0 /system/build.prop
+sed -i /ro.config.timaversion=/c\ro.config.timaversion=0 /system/build.prop
+sed -i /ro.config.dmverity=/c\ro.config.dmverity=false /system/build.prop
+sed -i /ro.config.rkp=/c\ro.config.rkp=false /system/build.prop
+sed -i /ro.config.kap_default_on=/c\ro.config.kap_default_on=false /system/build.prop
+sed -i /ro.config.kap=/c\ro.config.kap=false /system/build.prop
+sed -i /ro.build.selinux=/c\ro.build.selinux=0 /system/build.prop
+sed -i /ro.config.knox=/c\ro.config.knox=0 /system/build.prop
+
+
 ui_print " -> Removing wrong build.prop entries"
 
-sed -i /timaversion/d /system/build.prop
 sed -i /security.mdpp.mass/d /system/build.prop
 sed -i /ro.hardware.keystore/d /system/build.prop
 

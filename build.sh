@@ -51,7 +51,7 @@ else [ $MODEL = hero2lte ]
 	echo ""
 fi
 
-export KERNEL_VERSION="MoRoKernel-$VERSION_KL-v1.0"
+export KERNEL_VERSION="MoRoKernel-$VERSION_KL-v1.1"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 
@@ -170,7 +170,7 @@ FUNC_BUILD_FLASHABLES()
 
 	cd $RDIR
 	cd releasetools/zip
-	zip -0 -r $KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION.zip *
+	zip -5 -r $KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION.zip *
 	rm boot.img
 	cd ..
 	cd tar

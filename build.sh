@@ -53,7 +53,7 @@ fi
 
 export KERNEL_VERSION="MoRoKernel-$VERSION_KL-v1.2"
 export REVISION="RC"
-export KBUILD_BUILD_VERSION="6"
+export KBUILD_BUILD_VERSION="7"
 
 
 # FUNCTIONS

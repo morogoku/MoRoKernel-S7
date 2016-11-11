@@ -18,7 +18,7 @@ unzip -o "$ZIP"
 
 ui_print " "
 ui_print "***************************************"
-ui_print "*           MoRoKernel v1.1           *"
+ui_print "*           MoRoKernel v1.2           *"
 ui_print "*       SM-G935F S7 Edge 6.0.1        *"
 ui_print "*                                     *"
 ui_print "*                                     *"

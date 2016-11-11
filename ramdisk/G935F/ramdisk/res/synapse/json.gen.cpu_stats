@@ -1,0 +1,54 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"CPU STATS",
+    elements:[
+	{ SPane:{
+		title:{
+			en:"Device State",
+			es:"Estado del dispositivo"
+		},
+		description:{
+			en:"Stats are only displayed if those cores are online.",
+			es:"Las estadísticas sólo se muestran si los núcleos están en línea"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SLiveLabel:{
+		title:{
+			en:"A72 big Cores time in state",
+			es:"Tiempos de los Cores big A72"
+		},
+		description:"CPU4",
+		refresh:2500,
+		action:"live Live_A72_Time 0 9"
+	}},
+	{ SLiveLabel:{
+		refresh:2500,
+		action:"live Live_A72_Time 10 19"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SLiveLabel:{
+		title:{
+			en:"A53 LITTLE Cores time in state",
+			es:"Tiempos de los Cores LITTLE A53"
+		},
+		description:"CPU0",
+		refresh:2500,
+		action:"live Live_A53_Time 0 9"
+	}},
+	{ SLiveLabel:{
+		refresh:2500,
+		action:"live Live_A53_Time 10 14"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG

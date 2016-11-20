@@ -14,7 +14,6 @@ import /init.carrier.rc
 import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
-import /init.supersu.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -1584,5 +1583,3 @@ on property:service.vpnclientd.enable=0
     user root
     oneshot
 
-# SuperSU:PATCH:278
-# SuperSU:STOCK:7fea565e8493433d11700d79b03eb2b310d73269

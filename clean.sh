@@ -42,7 +42,6 @@ echo "" > ramdisk/G935F/ramdisk/oem/.placeholder
 echo "" > ramdisk/G935F/ramdisk/proc/.placeholder
 echo "" > ramdisk/G935F/ramdisk/sys/.placeholder
 echo "" > ramdisk/G935F/ramdisk/system/.placeholder
-echo "" > ramdisk/G935F/ramdisk/su/.placeholder
 
 # Recreate Releasetools Placeholders
 echo "" > releasetools/tar/.placeholder

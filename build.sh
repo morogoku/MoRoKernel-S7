@@ -7,14 +7,13 @@
 export ARCH=arm64
 export SUBARCH=arm64
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-uber-5.3-kernel/bin/aarch64-linux-android-
-#export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-sabermod-7.0/bin/aarch64-
+export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-sabermod-7.0/bin/aarch64-
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-sabermod-5.4/bin/aarch64-
 export CROSS_COMPILE=$BUILD_CROSS_COMPILE
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 export MODEL="G935F"
-export KERNEL_VERSION="MoRoKernel-S7-v2.b1"
+export KERNEL_VERSION="MoRoKernel-S7-v2.b1-SM7"
 export REVISION="RC"
 export KBUILD_VERSION="1"
 

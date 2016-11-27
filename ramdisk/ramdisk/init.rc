@@ -1673,3 +1673,9 @@ on property:service.vpnclientd.enable=0
 # Reactivation lock
 	service reactived /system/bin/reactived
 	class late_start
+
+# Init moro-init	
+	service moro-init /sbin/moro-init.sh
+    class main
+    user root
+    oneshot

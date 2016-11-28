@@ -10,6 +10,23 @@ mount -o remount,rw -t auto /data
 mount -t rootfs -o remount,rw rootfs
 
 
+# Synapse
+chmod -R 755 /res/*
+ln -fs /res/synapse/uci /sbin/uci
+/sbin/uci
+
+
+# Make internal storage directory.
+if [ ! -d /data/moro ]; then
+	mkdir /data/moro
+fi;
+
+
+# Kernel init values
+# Led Fade-out
+echo 700 > /sys/class/sec/led/led_notification_ramp_down
+
+
 # Google play services wakelock fix
 sleep 3
 su -c "pm enable com.google.android.gms/.update.SystemUpdateActivity"

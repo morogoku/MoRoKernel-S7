@@ -13,7 +13,7 @@ export CROSS_COMPILE=$BUILD_CROSS_COMPILE
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 export MODEL="G935F"
-export KERNEL_VERSION="MoRoKernel-S7-v2.b4"
+export KERNEL_VERSION="MoRoKernel-S7-v2.b5"
 export REVISION="RC"
 export KBUILD_VERSION="1"
 

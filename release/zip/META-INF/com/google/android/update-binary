@@ -1,0 +1,76 @@
+#!/sbin/sh
+
+
+OUTFD=$2
+ZIP=$3
+
+ui_print() {
+  echo -n -e "ui_print $1\n" > /proc/self/fd/$OUTFD
+  echo -n -e "ui_print\n" > /proc/self/fd/$OUTFD
+}
+
+cd /tmp
+rm -rf moro
+mkdir moro
+cd moro
+unzip -o "$ZIP"
+
+ui_print " "
+ui_print "***************************************"
+ui_print "*         MoRoKernel Nougat v0.1      *"
+ui_print "*          SM-G935F S7 Edge 7.0       *"
+ui_print "*                                     *"
+ui_print "*                                     *"
+ui_print "*         Esp-Desarrolladores         *"
+ui_print "***************************************"
+ui_print " "
+
+ui_print " -> Mounting partition"
+mount /system
+
+
+ui_print " -> Flashing kernel"
+cat boot.img > /dev/block/platform/155a0000.ufs/by-name/BOOT
+
+
+ui_print " -> Editing knox build.prop entries"
+
+sed -i /ro.config.tima=/c\ro.config.tima=0 /system/build.prop
+sed -i /ro.config.timaversion=/c\ro.config.timaversion=0 /system/build.prop
+sed -i /ro.config.dmverity=/c\ro.config.dmverity=false /system/build.prop
+sed -i /ro.config.rkp=/c\ro.config.rkp=false /system/build.prop
+sed -i /ro.config.kap_default_on=/c\ro.config.kap_default_on=false /system/build.prop
+sed -i /ro.config.kap=/c\ro.config.kap=false /system/build.prop
+sed -i /ro.build.selinux=/c\ro.build.selinux=0 /system/build.prop
+sed -i /ro.config.knox=/c\ro.config.knox=0 /system/build.prop
+
+
+ui_print " -> Removing wrong build.prop entries"
+
+sed -i /security.mdpp.mass/d /system/build.prop
+sed -i /ro.hardware.keystore/d /system/build.prop
+
+
+ui_print " -> Fix fingerprint files"
+
+rm -rf /system/app/TuiService /system/*info*
+rm /system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin
+
+
+if [ ! -f "/system/xbin/busybox" ]; then
+	ui_print " -> Installing Busybox"
+	mv /tmp/moro/files/busybox /system/xbin/busybox
+	chmod 0755 /system/xbin/busybox
+	ln -s /system/xbin/busybox /system/bin/busybox
+	/system/xbin/busybox --install -s /system/xbin
+fi
+	
+
+ui_print " -> Unmounting partition"
+umount /system > /dev/null 2>&1
+
+
+ui_print " "
+ui_print "finished"
+rm -rf /tmp/moro
+sync

@@ -14,7 +14,7 @@ export CROSS_COMPILE=$BUILD_CROSS_COMPILE
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 export MODEL="G935F"
-export KERNEL_VERSION="MoRoKernel-S7-Nougat-v0.3"
+export KERNEL_VERSION="MoRoKernel-S7-Nougat-v0.4"
 export REVISION="RC"
 export KBUILD_VERSION="1"
 
@@ -118,7 +118,7 @@ FUNC_BUILD_FLASHABLES()
 
 	cd $RDIR
 	cd release/zip
-	zip -5 -r $KERNEL_VERSION-$MODEL-$REVISION$KBUILD_VERSION.zip *
+	zip -5 -r $KERNEL_VERSION.zip *
 	rm boot.img
 	cd ..
 	cd tar

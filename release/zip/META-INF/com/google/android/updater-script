@@ -1,7 +1,7 @@
 ui_print(" ");
 ui_print("*******************************************");
 ui_print("*                                         *");
-ui_print("*          MoRoKernel Nougat v0.2         *");
+ui_print("*          MoRoKernel Nougat v0.3         *");
 ui_print("*           SM-G935F S7 Edge 7.0          *");
 ui_print("*                                         *");
 ui_print("*                                         *");

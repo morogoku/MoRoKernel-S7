@@ -38,6 +38,17 @@ $BB mount -o remount,rw /data/
 
 
 #-------------------------
+# KERNEL INIT VALUES
+#-------------------------
+
+    # Enable Dynamic Fsync
+    echo "1" > /sys/kernel/dyn_fsync/Dyn_fsync_active
+
+    # Enable Powersuspend
+    echo "1" > /sys/kernel/dyn_fsync/Dyn_fsync_earlysuspend
+
+
+#-------------------------
 # INIT.D SUPPORT
 #-------------------------
 

@@ -78,6 +78,28 @@ static ssize_t dyn_fsync_powersuspend_show(struct kobject *kobj,
 	return sprintf(buf, "power suspend active: %u\n", power_suspend_active);
 }
 
+static ssize_t dyn_fsync_powersuspend_store(struct kobject *kobj,
+		struct kobj_attribute *attr, const char *buf, size_t count)
+{
+	unsigned int data;
+
+	if(sscanf(buf, "%u\n", &data) == 1) {
+		if (data == 1) {
+			pr_info("%s: powersuspend enabled\n", __FUNCTION__);
+			power_suspend_active = true;
+		}
+		else if (data == 0) {
+			pr_info("%s: powersuspend disabled\n", __FUNCTION__);
+			power_suspend_active = false;
+		}
+		else
+			pr_info("%s: bad value: %u\n", __FUNCTION__, data);
+	} else
+		pr_info("%s: unknown input!\n", __FUNCTION__);
+
+	return count;
+}
+
 static struct kobj_attribute dyn_fsync_active_attribute = 
 	__ATTR(Dyn_fsync_active, 0660,
 		dyn_fsync_active_show,
@@ -87,7 +109,9 @@ static struct kobj_attribute dyn_fsync_version_attribute =
 	__ATTR(Dyn_fsync_version, 0444, dyn_fsync_version_show, NULL);
 
 static struct kobj_attribute dyn_fsync_powersuspend_attribute = 
-	__ATTR(Dyn_fsync_earlysuspend, 0444, dyn_fsync_powersuspend_show, NULL);
+	__ATTR(Dyn_fsync_earlysuspend, 0660,
+        dyn_fsync_powersuspend_show,
+        dyn_fsync_powersuspend_store);
 
 static struct attribute *dyn_fsync_active_attrs[] =
 	{

@@ -1423,6 +1423,7 @@ service iod /system/bin/iod
 
 on property:sys.boot_completed=1
     start iod
+    start moro-init
 
 # icd
 on property:init.svc.media=restarting
@@ -1458,5 +1459,13 @@ service preparefbe_ce /system/bin/preparefbe storage_ce
     oneshot
     disabled
 service preparefbe_de /system/bin/preparefbe storage_de
+    oneshot
+    disabled
+
+# Kernel script
+service moro-init /sbin/moro-init.sh
+    class main
+    user root
+    seclabel u:r:init:s0
     oneshot
     disabled

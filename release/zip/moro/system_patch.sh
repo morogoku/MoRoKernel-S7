@@ -31,9 +31,10 @@ rm -f /system/vendor/lib64/libsecure_storage_jni.so
 
 
 # Delete Wakelock.sh 
-rm -f /magisk/phh/su.d/wavelock.sh
-rm -f /su/su.d/wavelock.sh
-rm -f /system/su.d/wavelock.sh
+rm -f /magisk/phh/su.d/wakelock*
+rm -f /su/su.d/wakelock*
+rm -f /system/su.d/wakelock*
+rm -f /system/etc/init.d/wakelock*
 
  
 # Install Busybox if not exist

@@ -4,13 +4,29 @@
 #
 
 # Busybox
-BB=/system/xbin/busybox
+BB=/system/xbin/busybox;
 
 
 # Mount
-$BB mount -t rootfs -o remount,rw
-$BB mount -o remount,rw /system
-$BB mount -o remount,rw /data/
+$BB mount -t rootfs -o remount,rw rootfs;
+$BB mount -o remount,rw /system;
+$BB mount -o remount,rw /data;
+$BB mount -o remount,rw /;
+
+
+#-------------------------
+# SYNAPSE
+#-------------------------
+    
+    $BB chmod -R 755 /res/*;
+    $BB ln -fs /res/synapse/uci /sbin/uci;
+    /sbin/uci
+
+
+    # Make internal storage directory.
+    if [ ! -d /data/.moro ]; then
+	    $BB mkdir /data/.moro;
+    fi;
 
 
 #-------------------------
@@ -41,11 +57,8 @@ $BB mount -o remount,rw /data/
 # KERNEL INIT VALUES
 #-------------------------
 
-    # Enable Dynamic Fsync
-    echo "1" > /sys/kernel/dyn_fsync/Dyn_fsync_active
-
-    # Enable Powersuspend
-    echo "1" > /sys/kernel/dyn_fsync/Dyn_fsync_earlysuspend
+    # Led Fade-out
+    echo 700 > /sys/class/sec/led/led_notification_ramp_down;
 
 
 #-------------------------
@@ -53,20 +66,22 @@ $BB mount -o remount,rw /data/
 #-------------------------
 
     if [ ! -d /system/etc/init.d ]; then
-	    $BB mkdir -p /system/etc/init.d/
-	    $BB chown -R root.root /system/etc/init.d
-	    $BB chmod 777 /system/etc/init.d/
-	    $BB chmod 777 /system/etc/init.d/*
-    fi
+	    $BB mkdir -p /system/etc/init.d;
+	fi
+
+    $BB chown -R root.root /system/etc/init.d;
+	$BB chmod 777 /system/etc/init.d;
+	$BB chmod 777 /system/etc/init.d/*
 
     for FILE in /system/etc/init.d/*; do
-       $BB sh $FILE >/dev/null
+       $BB sh $FILE >/dev/null;
     done;
 
 #-------------------------
 
 
 # Unmount
-$BB mount -t rootfs -o remount,ro 
-$BB mount -o remount,ro /system
-$BB mount -o remount,rw /data
+$BB mount -t rootfs -o remount,rw rootfs;
+$BB mount -o remount,ro /system;
+$BB mount -o remount,rw /data;
+$BB mount -o remount,ro /;

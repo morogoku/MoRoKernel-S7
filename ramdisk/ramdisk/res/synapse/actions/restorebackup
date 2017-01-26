@@ -1,13 +1,21 @@
 # Modified from original apb_axel & neobuddy89 implementations by UpInTheAir@XDA for SkyHigh kernels
 
-BB=/system/xbin/busybox;
+# Busybox 
+if [ -e /su/xbin/busybox ]; then
+	BB=/su/xbin/busybox;
+else if [ -e /sbin/busybox ]; then
+	BB=/sbin/busybox;
+else
+	BB=/system/xbin/busybox;
+fi;
+fi;
 
 if [ "$($BB mount | grep rootfs | cut -c 26-27 | grep -c ro)" -eq "1" ]; then
 	$BB mount -o remount,rw /;
 fi;
 
 if [ -d /data/data/com.af.synapse ]; then
-  SYNAPSE_SD_DIR=/sdcard/moro/Synapse;
+  SYNAPSE_SD_DIR=/sdcard/MoRoKernel/Synapse;
   SYNAPSE_BOOT_DIR=$SYNAPSE_SD_DIR/kernel_backups;
   SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/saved_configs;
 
@@ -60,7 +68,7 @@ case "$1" in
 		else
 			$BB dd if="$2" of="$SYNAPSE_BOOT_DIR/$BCK_PROF.img" 2> /dev/null;
 			$BB echo "None" > /res/synapse/moro/bck_prof;
-			$BB echo "$BCK_PROF.img saved to /sdcard/moro. Press the [Restart Synapse] button below to see updated list.";
+			$BB echo "$BCK_PROF.img saved to /sdcard/MoRoKernel. Press the [Restart Synapse] button below to see updated list.";
 		fi;
 	;;
 

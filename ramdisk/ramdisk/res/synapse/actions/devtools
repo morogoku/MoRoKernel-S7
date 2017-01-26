@@ -1,7 +1,15 @@
-BB=/system/xbin/busybox;
+# Busybox 
+if [ -e /su/xbin/busybox ]; then
+	BB=/su/xbin/busybox;
+else if [ -e /sbin/busybox ]; then
+	BB=/sbin/busybox;
+else
+	BB=/system/xbin/busybox;
+fi;
+fi;
 
 # SQLite log location
-LOGS=/sdcard/moro/Logs/SQLite.txt;
+LOGS=/sdcard/MoRoKernel/Logs/SQLite.txt;
 
 if [ "$($BB mount | grep rootfs | cut -c 26-27 | grep -c ro)" -eq "1" ]; then
 	$BB mount -o remount,rw /;
@@ -63,7 +71,7 @@ case $1 in
 	fi;
 
 	# Create Log folder on sdcard
-	LOG=/sdcard/moro/Logs;
+	LOG=/sdcard/MoRoKernel/Logs;
 
 	[ ! -d "$LOG" ] && mkdir -p "$LOG";
 	chmod 755 $LOG

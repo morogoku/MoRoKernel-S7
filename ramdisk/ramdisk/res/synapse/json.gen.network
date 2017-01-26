@@ -42,7 +42,7 @@ cat << CTAG
 	}},
 	{ SPane:{
 		title:"WiFi Passwords",
-		description:"Save or restore your WiFi Passwords in /sdcard/Super/wifi/ folder."
+		description:"Save or restore your WiFi Passwords in /sdcard/MoRoKernel/wifi/ folder."
 	}},
 	{ SSpacer:{
 		height:1

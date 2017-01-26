@@ -201,6 +201,34 @@ cat << CTAG
 	{ SSpacer:{
 		height:1
 	}},
+    { SPane:{
+		title:{
+            en:"Dynamic Filesync",
+            es:"Filesync Dynámico"
+        },
+		description:{
+			en:"When enabled and screen is on, fsync operation is asynchronous. When screen is off, this operation is done synchronously.",
+			es:"Cuando esté activado y la pantalla encendida, la operación fsync es asíncrona. Cuando la pantalla esté apagada, la operación fsync será síncrona."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Enable Dynamic FSYNC",
+			es:"Activar FSYNC Dynámico"
+		},
+		description:" ",
+		default:$(cat /sys/kernel/dyn_fsync/Dyn_fsync_active),
+		action:"generic /sys/kernel/dyn_fsync/Dyn_fsync_active",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
 	{ STitleBar:{
 		title:{
 			en:"Virtual Memory",

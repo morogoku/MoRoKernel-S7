@@ -37,9 +37,5 @@ rm -f /system/su.d/wakelock*
 rm -f /system/etc/init.d/wakelock*
 
  
-# Install Busybox if not exist
-mv /tmp/moro/busybox /system/xbin/busybox
-chmod 0755 /system/xbin/busybox
-ln -s /system/xbin/busybox /system/bin/busybox
-/system/xbin/busybox --install -s /system/xbin
+
 

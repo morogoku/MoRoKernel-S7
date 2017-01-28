@@ -1,9 +1,11 @@
 #!/bin/bash
-
+# kernel build script by Tkkg1994 v0.4 (optimized from apq8084 kernel source)
+# Modified by djb77 / XDA Developers
+# Remodified by morogoku /EspDesarrolladores
 
 # SETUP
 # -----
-
+export MODEL=herolte
 export ARCH=arm64
 export SUBARCH=arm64
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
@@ -13,12 +15,6 @@ export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linaro-6.3/bin/a
 export CROSS_COMPILE=$BUILD_CROSS_COMPILE
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
-export MODEL="G935F"
-export KERNEL_VERSION="MoRoKernel-S7-Nougat-v1.0"
-export REVISION="RC"
-export KBUILD_VERSION="1"
-
-KERNEL_DEFCONFIG=moro-hero2lte_defconfig
 
 RDIR=$(pwd)
 OUTDIR=$RDIR/arch/$ARCH/boot
@@ -29,6 +25,43 @@ INCDIR=$RDIR/include
 PAGE_SIZE=2048
 DTB_PADDING=0
 
+# PROGRAM START
+# -------------
+rm -rf ./build.log
+clear
+echo "**********************"
+echo "MoRoKernel Build Script"
+echo "**********************"
+echo "Script originally written by Tkkg1994, modified by djb77"
+echo "Remodified by morogoku with script of Javilonas"
+echo ""
+echo "Build Kernel for:"
+echo ""
+echo "(1)- S7 SM-G930F"
+echo "(2)- S7 Edge-SM-G935F"
+echo ""
+read -p "Build Kernel for (1) S7 or (2) S7 Edge? " prompt
+if [ $prompt == "2" ]
+then
+	export MODEL=hero2lte
+	
+fi
+if [ $MODEL = herolte ]
+then
+	KERNEL_DEFCONFIG=moro-herolte_defconfig
+	export MODEL_N="G930F"
+	echo "S7 Selected"
+	echo ""
+else [ $MODEL = hero2lte ]
+	KERNEL_DEFCONFIG=moro-hero2lte_defconfig
+	export MODEL_N="G935F"
+	echo "S7 Edge Selected"
+	echo ""
+fi
+
+export KERNEL_VERSION="MoRoKernel-$MODEL_N-v1.0"
+export REVISION="RC"
+export KBUILD_BUILD_VERSION="1"
 
 
 # FUNCTIONS
@@ -73,11 +106,23 @@ FUNC_BUILD_DTB()
 		echo "You need to run ./build.sh first!"
 		exit 1
 	}
-
-	DTSFILES="exynos8890-hero2lte_eur_open_00 exynos8890-hero2lte_eur_open_01
-			exynos8890-hero2lte_eur_open_03 exynos8890-hero2lte_eur_open_04
-			exynos8890-hero2lte_eur_open_08"
-
+	case $MODEL in
+	herolte)
+		DTSFILES="exynos8890-herolte_eur_open_00 exynos8890-herolte_eur_open_01
+				exynos8890-herolte_eur_open_02 exynos8890-herolte_eur_open_03
+				exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
+				exynos8890-herolte_eur_open_09"
+		;;
+	hero2lte)
+		DTSFILES="exynos8890-hero2lte_eur_open_00 exynos8890-hero2lte_eur_open_01
+				exynos8890-hero2lte_eur_open_03 exynos8890-hero2lte_eur_open_04
+				exynos8890-hero2lte_eur_open_08"
+		;;
+	*)
+		echo "Unknown device: $MODEL"
+		exit 1
+		;;
+	esac
 	mkdir -p $OUTDIR $DTBDIR
 	cd $DTBDIR || {
 		echo "Unable to cd to $DTBDIR!"
@@ -100,31 +145,66 @@ FUNC_BUILD_RAMDISK()
 {
 	mv $RDIR/arch/$ARCH/boot/Image $RDIR/arch/$ARCH/boot/boot.img-zImage
 	mv $RDIR/arch/$ARCH/boot/dtb.img $RDIR/arch/$ARCH/boot/boot.img-dtb
-
-	rm -f $RDIR/ramdisk/split_img/boot.img-zImage
-	rm -f $RDIR/ramdisk/split_img/boot.img-dtb
-	mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/split_img/boot.img-zImage
-	mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/split_img/boot.img-dtb
-	cd $RDIR/ramdisk
-	./repackimg.sh
-	echo SEANDROIDENFORCE >> image-new.img
-
+	case $MODEL in
+	herolte)
+		rm -f $RDIR/ramdisk/G930F/split_img/boot.img-zImage
+		rm -f $RDIR/ramdisk/G930F/split_img/boot.img-dtb
+		mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/G930F/split_img/boot.img-zImage
+		mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/G930F/split_img/boot.img-dtb
+		cd $RDIR/ramdisk/G930F
+		./repackimg.sh
+		echo SEANDROIDENFORCE >> image-new.img
+		;;
+	hero2lte)
+		rm -f $RDIR/ramdisk/G935F/split_img/boot.img-zImage
+		rm -f $RDIR/ramdisk/G935F/split_img/boot.img-dtb
+		mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/G935F/split_img/boot.img-zImage
+		mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/G935F/split_img/boot.img-dtb
+		cd $RDIR/ramdisk/G935F
+		./repackimg.sh
+		echo SEANDROIDENFORCE >> image-new.img
+		;;
+	*)
+		echo "Unknown device: $MODEL"
+		exit 1
+		;;
+	esac
 }
 
 FUNC_BUILD_FLASHABLES()
 {
-	cp image-new.img $RDIR/release/zip/boot.img
-	cp image-new.img $RDIR/release/tar/boot.img
+    case $MODEL in
+	herolte)
+	    cp image-new.img $RDIR/release/G930F/zip/boot.img
+	    cp image-new.img $RDIR/release/G930F/tar/boot.img
 
-	cd $RDIR
-	cd release/zip
-	zip -5 -r $KERNEL_VERSION.zip *
-	rm boot.img
-	cd ..
-	cd tar
-	tar cf $KERNEL_VERSION-$MODEL-$REVISION$KBUILD_VERSION.tar boot.img && ls -lh $KERNEL_VERSION-$MODEL-$REVISION$KBUILD_VERSION.tar
-	rm boot.img
+	    cd $RDIR
+	    cd release/G930F/zip
+	    zip -5 -r $KERNEL_VERSION.zip *
+	    rm boot.img
+	    cd ..
+	    cd tar
+	    tar cf $KERNEL_VERSION.tar boot.img && ls -lh $KERNEL_VERSION.tar
+	    rm boot.img
+        ;;
+    hero2lte)
+        cp image-new.img $RDIR/release/G935F/zip/boot.img
+	    cp image-new.img $RDIR/release/G935F/tar/boot.img
 
+	    cd $RDIR
+	    cd release/G935F/zip
+	    zip -5 -r $KERNEL_VERSION.zip *
+	    rm boot.img
+	    cd ..
+	    cd tar
+	    tar cf $KERNEL_VERSION.tar boot.img && ls -lh $KERNEL_VERSION.tar
+	    rm boot.img
+        ;;
+    *)
+		echo "Unknown device: $MODEL"
+		exit 1
+		;;
+	esac
 }
 
 # MAIN PROGRAM
@@ -143,7 +223,7 @@ FUNC_BUILD_FLASHABLES()
 	echo ""
 ) 2>&1	 | tee -a ./build.log
 
-	echo "Your flasheable release can be found in the release/zip or tar folder"
+	echo "Your flasheable release can be found in the release/zip/$MODEL_N or tar folder"
 	echo ""
 
 

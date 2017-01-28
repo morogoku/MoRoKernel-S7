@@ -1,3 +1,0 @@
-echo "$1" > /sys/class/sec/led/led_pattern
-
-echo "Done."

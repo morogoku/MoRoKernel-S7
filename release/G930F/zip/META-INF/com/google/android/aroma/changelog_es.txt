@@ -1,0 +1,21 @@
+<u><b><#selectbg_g>MoRoKernel-G930F-NN v1.0</#></b></u>
+<*>Sources Samsung G935FXXU1DPLT</*>
+<*>Compilado con Linaro 6.3.1</*>
+<*>Instalador AROMA</*>
+<*>Instalacion Magisk Root opcional</*>
+<*>Soporte Synapse con idioma Ingles y Español (a medias)</*>
+<*>Ajustes Synapse de CPU, I/O, Memoria, Bateria, Led, Network, Fs</*>
+<*>Desactivado DM-Verity, Knox, RKP, Tima, Rooting Restriction</*>
+<*>SELinux Permisivo</*>
+<*>IO Schedulers: row, bfq, fifo, fiops, sio, sioplus, tripndroid, vr y zen</*>
+<*>CPU Gobernadores: alucard, barry_allen, bioshock, conservative_x, dancedance, darkness, intelliactive, lionheart, nightmare, smartass2, smartmax_eps</*>
+<*>Reducidos wakelocks del wifi</*>
+<*>Desactivada CRC check data</*>
+<*>Compresion LZ4 en swap</*>
+<*>Dynamic Fsync</*>
+<*>Powersuspend</*>
+<*>Soporte Init.d</*>
+<*>Frandom</*>
+<*>Soporte NTFS</*>
+<*>Soporte CIFS</*>
+

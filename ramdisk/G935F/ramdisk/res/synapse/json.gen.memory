@@ -1,0 +1,284 @@
+-``#!/system/bin/sh
+
+BB=/system/xbin/busybox;
+
+cat << CTAG
+{
+    name:{
+		en:"MEMORY",
+		es:"MEMORIA"
+	},
+    elements:[
+	{ SLiveLabel:{
+		title:{
+			en:"Memory state",
+			es:"Estado Memoria"
+		},
+		refresh:1000,
+		action:"live LiveMemory"
+	}},
+	{ SLiveLabel:{
+		title:{
+			en:"Swap state",
+			es:"Estado Swap"
+		},
+		refresh:1000,
+		action:"live LiveSwap"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+			`if [ -f "/sys/module/lowmemorykiller/parameters/minfree" ]; then
+				$BB echo '{ SPane:{
+					title:"Low Memory Killer (LMK)",
+					description:{
+						en:"LMK Minfree controls how much memory each app type can hold, and is responsible for memory management for multitasking. All values are multiplied by 256 pages.",
+						es:"LMK Minfree controla la cantidad de memoria que cada tipo de aplicación puede contener y es responsable de la administración de memoria para multitarea"
+					}
+				}},
+				{ SSpacer:{
+					height:1
+				}},
+				{ SOptionList:{
+					title:{
+						en:"LMK Profile",
+						es:"Perfil LMK"
+					},
+					description:{
+						en:"This option will auto-tune LMK minfree values as per selected profile. More aggressive equals more free RAM but more killed apps (less multi-tasking).\n",
+						es:"Esta opción ajustará automáticamente los valores mínimos de LMK según el perfil seleccionado. Más agresivo equivale a más RAM libre pero más aplicaciones muertas (menos multitarea).\n"
+					},
+					default:Default,
+					action:"lmk profile",
+					values:[ Low, Medium, Custom, Default, Aggressive, Exterminate,
+					],
+					notify:[
+							{
+								on:APPLY,
+								do:[ REFRESH, APPLY ],
+								to:[ 
+										"lmk 1",
+										"lmk 2",
+										"lmk 3",
+										"lmk 4",
+										"lmk 5",
+										"lmk 6"
+								],
+							}
+					]
+				}},'
+					for LMK in 1 2 3 4 5 6; do
+						$BB echo '{ SSeekBar:{ '
+							case $LMK in
+								1)
+									$BB echo '
+										title:{
+											en:"Foreground App",
+											es:"App en primer plano"
+										},
+										description:{
+											en:"The application currenty on the screen and running.\nDefault: 72.\n",
+											es:"La aplicación actualmente en la pantalla y en ejecución.\nPor defecto: 72.\n"
+										}, 
+										default:72
+									' ;;
+								2)
+									$BB echo '
+										title:{
+											en:"Visible App", 
+											es:"App visible"
+										},
+										description:{
+											en:"The application that is open and running in background.\nDefault: 90.\n", 
+											es:"La aplicación que estáabierta y corriendo en segundo plano.\nPor defecto: 90.\n"
+										},
+										default:90
+									' ;;
+								3)
+									$BB echo '
+										title:{
+											en:"Secondary Server", 
+											es:"Servidor secundario"
+										},
+										description:{
+											en:"This is a service an application needs that is alive and ready.\nDefault: 108.\n", 
+											es:"Este es el servicio que necesita la aplicación que esté activa y lista.\nPor defecto: 108.\n"
+										},
+										default:108
+									' ;;
+								4)
+									$BB echo '
+										title:{
+											en:"Hidden App", 
+											es:"App oculta"
+										},
+										description:{
+											en:"An idle process that wakes up on application request.\nDefault: 126.\n", 
+											es:"Un proceso inactivo que se despierta con la solicitud de un aplicación.\nPor defecto: 126.\n"
+										},
+										default:126
+									' ;;
+								5)
+									$BB echo '
+										title:{
+											en:"Content Provider", 
+											es:"Proveedor de contenido"
+										},
+										description:{
+											en:"Apps that provide data (content) to the system.\nDefault: 219.\n",
+											es:"Aplicaciones que proporcionan datos (contenido) al sistema.\nPor defecto: 219.\n"
+										},
+										default:219
+									' ;;
+								6)
+									$BB echo '
+										title:{
+											en:"Empty App", 
+											es:"App vacía"
+										},
+										description:{
+											en:"Apps closed by the user but ready to run.\nDefault is 317.\n", 
+											es:"Apps cerradas por el usuario pero listas para ejecutarse.\nPor defecto: 317.\n"
+										},
+										default:317
+									' ;;
+							esac
+						$BB echo ', action:"lmk '${LMK}'",
+						unit:" MB", min:1, max:350 }},'
+					done
+			fi`
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:{
+			en:"Samsung SPCM Service",
+			es:"Servicio Samsung SPCM"
+		},
+		description:{
+			en:"Enabling will allow the Samsung SPCM service to kill apps running in the background, but those only that haven't been used for a period of time. Disabling will revert to standard OOM killer and may help prevent apps/services meant to run in the background being killed (eg. Facebook and Swiftkey).",
+			es:"Habilitando permitirá que el servicio SPCM de Samsung mate las aplicaciones que se ejecutan en segundo plano, pero sólo aquellas que no se han utilizado durante un tiempo. Deshabilitando volverá al estándar OOM Killer y puede ayudar a prevenir que las aplicaciones/servicios destinados a ejecutarse en segundo plano sean matadas (por ejemplo, Facebook y Swiftkey)."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Enable Samsung SPCM Service",
+			es:"Activar Servicio Samsung SPCM"
+		},
+		description:" ",
+		default:$(echo "$(/res/synapse/actions/devtools spcm_service)"),
+		action:"devtools spcm_service",
+		values:[Enabled, Disabled,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Filesync",
+		description:{
+			en:"While screen is on file sync is disabled, when screen is off a file sync is called to flush all outstanding writes and restore file sync operation as normal.",
+			es:"Al apagarse se llama a una sincronización de archivos para limpiar todas las escrituras pendientes y restaurar la operación de sincronización de archivos como de costumbre."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Enable FSYNC",
+			es:"Activar FSYNC"
+		},
+		description:" ",
+		default:Y,
+		action:"generic /sys/module/sync/parameters/fsync_enabled",
+		values:{
+			N:"Disabled", Y:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    { SPane:{
+		title:{
+            en:"Dynamic Filesync",
+            es:"Filesync Dynámico"
+        },
+		description:{
+			en:"When enabled and screen is on, fsync operation is asynchronous. When screen is off, this operation is done synchronously.",
+			es:"Cuando esté activado y la pantalla encendida, la operación fsync es asíncrona. Cuando la pantalla esté apagada, la operación fsync será síncrona."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Enable Dynamic FSYNC",
+			es:"Activar FSYNC Dynámico"
+		},
+		description:" ",
+		default:$(cat /sys/kernel/dyn_fsync/Dyn_fsync_active),
+		action:"generic /sys/kernel/dyn_fsync/Dyn_fsync_active",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ STitleBar:{
+		title:{
+			en:"Virtual Memory",
+			es:"Memoria Virtual"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Enable Virtual NAND Swap",
+			es:"Activar Virtual NAND Swap"
+		},
+		description:{
+			en:"VNSwap attempts to increase performance by avoiding paging on physical storage, instead using a compressed virtual device in RAM. Paging takes place in RAM until it is necessary to use the swap space on physical storage. Depending on the amount of swap currently in use, this process can take ~1 minute with Synapse being UNRESPONSIVE during this time. PLEASE WAIT for the process to finish.\n\n Disabling or Enabling will auto set swappiness to 0 or 190 respectively.\nDefault: Enabled.\n",
+			es:"VNSwap optimizará el rendimiento realizando la paginación en la RAM hasta que es necesario utilizar el Swap en el almacenamiento físico, en lugar de utilizar un dispositivo virtual comprimido en la RAM. Dependiendo de la cantidad de swap en uso, este proceso puede tardar ~ 1 minuto con Synapse quedando este BLOQUEADO durante este tiempo. POR FAVOR ESPERE a que termine.\n\nAl Desactivar o Activar se fijará el swappiness a 0 o 190 respectivamente.\nPor defecto: Enabled.\n"
+		},
+		default:Enabled,
+		action:"swaps vnswap0",
+		values:[Disabled, Enabled,],
+		notify:[
+			{
+				on:APPLY,
+				do:[ REFRESH, APPLY ],
+				to:"generic /proc/sys/vm/swappiness"
+			}
+		]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Swappiness",
+		description:{
+			en:"A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. Default is 190.\n",
+			es:"Un valor bajo evitará el intercambio tanto como sea posible, mientras que valor más alto intentará utilizar más agresivamente el swap."
+		},
+		max:200,
+		min:0,
+		step:10,
+		default:$(cat /proc/sys/vm/swappiness),
+		action:"generic /proc/sys/vm/swappiness",
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSpacer:{
+		height:1
+	}},		
+    ]
+}
+CTAG

@@ -1,11 +1,12 @@
 #!/bin/bash
-# kernel build script by Tkkg1994 v0.4 (optimized from apq8084 kernel source)
-# Modified by djb77 / XDA Developers
-# Remodified by morogoku /EspDesarrolladores
+#
+# Thanks to Tkkg1994 and djb77 for the script
+#
+# Script MoRoKernel v1.0
+#
 
 # SETUP
 # -----
-export MODEL=herolte
 export ARCH=arm64
 export SUBARCH=arm64
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
@@ -27,7 +28,6 @@ DTB_PADDING=0
 
 # PROGRAM START
 # -------------
-rm -rf ./build.log
 clear
 echo "**********************"
 echo "MoRoKernel Build Script"
@@ -41,25 +41,18 @@ echo "(1)- S7 SM-G930F"
 echo "(2)- S7 Edge-SM-G935F"
 echo ""
 read -p "Build Kernel for (1) S7 or (2) S7 Edge? " prompt
-if [ $prompt == "2" ]
-then
-	export MODEL=hero2lte
-	
-fi
-if [ $MODEL = herolte ]
-then
-	KERNEL_DEFCONFIG=moro-herolte_defconfig
-	export MODEL_N="G930F"
-	echo "S7 Selected"
-	echo ""
-else [ $MODEL = hero2lte ]
-	KERNEL_DEFCONFIG=moro-hero2lte_defconfig
-	export MODEL_N="G935F"
-	echo "S7 Edge Selected"
-	echo ""
+
+if [ $prompt == "1" ]; then
+	export MODEL=G930F
+    KERNEL_DEFCONFIG=moro-herolte_defconfig
+    echo "S7 Flat G930F Selected"
+else [ $prompt == "2" ]
+    export MODEL=G935F
+    KERNEL_DEFCONFIG=moro-hero2lte_defconfig
+    echo "S7 Edge G935F Selected"
 fi
 
-export KERNEL_VERSION="MoRoKernel-$MODEL_N-v1.0"
+export KERNEL_VERSION="MoRoKernel-$MODEL-v1.0"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 
@@ -107,13 +100,13 @@ FUNC_BUILD_DTB()
 		exit 1
 	}
 	case $MODEL in
-	herolte)
+	G930F)
 		DTSFILES="exynos8890-herolte_eur_open_00 exynos8890-herolte_eur_open_01
 				exynos8890-herolte_eur_open_02 exynos8890-herolte_eur_open_03
 				exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
 				exynos8890-herolte_eur_open_09"
 		;;
-	hero2lte)
+	G935F)
 		DTSFILES="exynos8890-hero2lte_eur_open_00 exynos8890-hero2lte_eur_open_01
 				exynos8890-hero2lte_eur_open_03 exynos8890-hero2lte_eur_open_04
 				exynos8890-hero2lte_eur_open_08"
@@ -145,70 +138,34 @@ FUNC_BUILD_RAMDISK()
 {
 	mv $RDIR/arch/$ARCH/boot/Image $RDIR/arch/$ARCH/boot/boot.img-zImage
 	mv $RDIR/arch/$ARCH/boot/dtb.img $RDIR/arch/$ARCH/boot/boot.img-dtb
-	case $MODEL in
-	herolte)
-		rm -f $RDIR/ramdisk/G930F/split_img/boot.img-zImage
-		rm -f $RDIR/ramdisk/G930F/split_img/boot.img-dtb
-		mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/G930F/split_img/boot.img-zImage
-		mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/G930F/split_img/boot.img-dtb
-		cd $RDIR/ramdisk/G930F
-		./repackimg.sh
-		echo SEANDROIDENFORCE >> image-new.img
-		;;
-	hero2lte)
-		rm -f $RDIR/ramdisk/G935F/split_img/boot.img-zImage
-		rm -f $RDIR/ramdisk/G935F/split_img/boot.img-dtb
-		mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/G935F/split_img/boot.img-zImage
-		mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/G935F/split_img/boot.img-dtb
-		cd $RDIR/ramdisk/G935F
-		./repackimg.sh
-		echo SEANDROIDENFORCE >> image-new.img
-		;;
-	*)
-		echo "Unknown device: $MODEL"
-		exit 1
-		;;
-	esac
+
+	rm -f $RDIR/ramdisk/$MODEL/split_img/boot.img-zImage
+	rm -f $RDIR/ramdisk/$MODEL/split_img/boot.img-dtb
+	mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/$MODEL/split_img/boot.img-zImage
+	mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/$MODEL/split_img/boot.img-dtb
+	cd $RDIR/ramdisk/$MODEL
+	./repackimg.sh
+	echo SEANDROIDENFORCE >> image-new.img
 }
 
 FUNC_BUILD_FLASHABLES()
 {
-    case $MODEL in
-	herolte)
-	    cp image-new.img $RDIR/release/G930F/zip/boot.img
-	    cp image-new.img $RDIR/release/G930F/tar/boot.img
+    cp image-new.img $RDIR/release/$MODEL/zip/boot.img
+    cp image-new.img $RDIR/release/$MODEL/tar/boot.img
 
-	    cd $RDIR
-	    cd release/G930F/zip
-	    zip -5 -r $KERNEL_VERSION.zip *
-	    rm boot.img
-	    cd ..
-	    cd tar
-	    tar cf $KERNEL_VERSION.tar boot.img && ls -lh $KERNEL_VERSION.tar
-	    rm boot.img
-        ;;
-    hero2lte)
-        cp image-new.img $RDIR/release/G935F/zip/boot.img
-	    cp image-new.img $RDIR/release/G935F/tar/boot.img
-
-	    cd $RDIR
-	    cd release/G935F/zip
-	    zip -5 -r $KERNEL_VERSION.zip *
-	    rm boot.img
-	    cd ..
-	    cd tar
-	    tar cf $KERNEL_VERSION.tar boot.img && ls -lh $KERNEL_VERSION.tar
-	    rm boot.img
-        ;;
-    *)
-		echo "Unknown device: $MODEL"
-		exit 1
-		;;
-	esac
+    cd $RDIR
+    cd release/$MODEL/zip
+    zip -5 -r $KERNEL_VERSION.zip *
+    rm boot.img
+    cd ..
+    cd tar
+    tar cf $KERNEL_VERSION.tar boot.img && ls -lh $KERNEL_VERSION.tar
+    rm boot.img
 }
 
 # MAIN PROGRAM
 # ------------
+rm -f ./build.log
 (
 	sh ./clean.sh
 	START_TIME=`date +%s`
@@ -221,9 +178,9 @@ FUNC_BUILD_FLASHABLES()
 	let "ELAPSED_TIME=$END_TIME-$START_TIME"
 	echo "Total compile time is $ELAPSED_TIME seconds"
 	echo ""
-) 2>&1	 | tee -a ./build.log
+) 2>&1 | tee -a ./build.log
 
-	echo "Your flasheable release can be found in the release/zip/$MODEL_N or tar folder"
+	echo "Your flasheable release can be found in the release/zip/$MODEL or tar folder"
 	echo ""
 
 

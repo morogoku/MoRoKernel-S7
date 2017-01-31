@@ -3597,9 +3597,9 @@ static void set_rotation_status(void *device_data)
 		int status = sec->cmd_param[0] % 2;
 
 		if (status)
-			fts_enable_feature(info, FTS_FEATURE_DUAL_SIDE_GUSTURE, true);
+			fts_enable_feature(info, FTS_FEATURE_DUAL_SIDE_GESTURE, true);
 		else
-			fts_enable_feature(info, FTS_FEATURE_DUAL_SIDE_GUSTURE, false);
+			fts_enable_feature(info, FTS_FEATURE_DUAL_SIDE_GESTURE, false);
 
 		snprintf(buff, sizeof(buff), "%s", "OK");
 		sec->cmd_state = SEC_CMD_STATUS_OK;

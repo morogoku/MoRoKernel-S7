@@ -13,6 +13,7 @@ cat << CTAG
 		`. /res/synapse/json.gen.led`,
 		`. /res/synapse/json.gen.network`,
 		`. /res/synapse/json.gen.fs`,
+		`. /res/synapse/json.gen.backup-restore`,
 		`. /res/synapse/json.gen.reboot`,
     ]
 }

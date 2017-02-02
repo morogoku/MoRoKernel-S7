@@ -16,10 +16,8 @@ rm -f $PWD/ramdisk/G935F/split_img/boot.img-dtb
 rm -f $PWD/ramdisk/G935F/split_img/boot.img-zImage
 
 # Remove Release files
-rm -f $PWD/release/G935F/zip/*.zip
-rm -f $PWD/release/G935F/tar/*.tar
-rm -f $PWD/release/G930F/zip/*.zip
-rm -f $PWD/release/G930F/tar/*.tar
+rm -f $PWD/release/G935F/*.zip
+rm -f $PWD/release/G930F/*.zip
 
 # Removed Created dtb Folder
 rm -rf $PWD/arch/arm64/boot/dtb
@@ -40,6 +38,3 @@ echo "" > ramdisk/G935F/ramdisk/proc/.placeholder
 echo "" > ramdisk/G935F/ramdisk/sys/.placeholder
 echo "" > ramdisk/G935F/ramdisk/system/.placeholder
 
-# Recreate Release Placeholders
-echo "" > release/G935F/tar/.placeholder
-echo "" > release/G930F/tar/.placeholder

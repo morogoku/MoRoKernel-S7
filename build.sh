@@ -150,16 +150,11 @@ FUNC_BUILD_RAMDISK()
 
 FUNC_BUILD_FLASHABLES()
 {
-    cp image-new.img $RDIR/release/$MODEL/zip/boot.img
-    cp image-new.img $RDIR/release/$MODEL/tar/boot.img
+    cp image-new.img $RDIR/release/$MODEL/boot.img
 
     cd $RDIR
-    cd release/$MODEL/zip
+    cd release/$MODEL
     zip -5 -r $KERNEL_VERSION.zip *
-    rm boot.img
-    cd ..
-    cd tar
-    tar cf $KERNEL_VERSION.tar boot.img && ls -lh $KERNEL_VERSION.tar
     rm boot.img
 }
 
@@ -180,7 +175,7 @@ rm -f ./build.log
 	echo ""
 ) 2>&1 | tee -a ./build.log
 
-	echo "Your flasheable release can be found in the release/zip/$MODEL or tar folder"
+	echo "Your flasheable release can be found in the release/$MODEL or tar folder"
 	echo ""
 
 

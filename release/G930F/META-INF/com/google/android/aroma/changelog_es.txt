@@ -1,4 +1,13 @@
-<u><b><#selectbg_g>MoRoKernel-G930F-NN v1.0</#></b></u>
+
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.1</#></b></u>
+<*>Añadidas mas frecuencias minimas y maximas de CPU<#textfg_gray>
+  <*>A72: 208MHz min -> 2.704MHz max</*>
+  <*>A53: 130MHz min -> 1.586MHz max</*></#></*>
+<*>Ajuste de voltajes erroneos para freq. míninas y máximas</*>
+<*>Synapse: añadido control de backups de perfiles</*>
+
+
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.0</#></b></u>
 <*>Sources Samsung G935FXXU1DPLT</*>
 <*>Compilado con Linaro 6.3.1</*>
 <*>Instalador AROMA</*>

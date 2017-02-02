@@ -21,6 +21,11 @@ sed -i /ro.config.iccc_version=/c\ro.config.iccc_version=0 /system/build.prop
 sed -i /security.mdpp.mass/d /system/build.prop
 sed -i /ro.hardware.keystore/d /system/build.prop
 
+# Clean Synapse data
+rm -rf /data/data/com.af.synapse
+rm -f /data/dalvik-cache/arm64/system@app@Synapse*
+rm -f /data/dalvik-cache/arm64/system@priv-app@Synapse*
+rm -f /data/dalvik-cache/arm64/data@app@com.af.synapse*
 
 # Delete wrongs files
 rm -rf /system/app/TuiService /system/app/mcRegistry

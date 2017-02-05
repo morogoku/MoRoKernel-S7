@@ -154,7 +154,7 @@ FUNC_BUILD_FLASHABLES()
 
     cd $RDIR
     cd release/$MODEL
-    zip -5 -r $KERNEL_VERSION.zip *
+    zip -9 -r $KERNEL_VERSION.zip *
     rm boot.img
 }
 

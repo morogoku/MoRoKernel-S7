@@ -79,9 +79,11 @@ Sorry for my bad English ;)",				0   #-- selected.0 = 2
 
 if prop("lang.prop","selected.0")=="1" then
 	loadlang("langs/es.lang");
+	setvar("changelog", "changelog_es.txt");
 endif;
 if prop("lang.prop","selected.0")=="2" then
 	loadlang("langs/en.lang");
+	setvar("changelog", "changelog_en.txt");
 endif;
 
 ###
@@ -106,32 +108,17 @@ viewbox(
 # Changelog
 #
 
-if prop("lang.prop","selected.0")=="1" then
-	textbox(
+textbox(
 	"<~changelog.title>",
 	"<~changelog.desc>",
 	"@agreement",
-	resread("changelog_es.txt")
+	resread(getvar("changelog"))
 );
-endif;
-if prop("lang.prop","selected.0")=="2" then
-	textbox(
-	"<~changelog.title>",
-	"<~changelog.desc>",
-	"@agreement",
-	resread("changelog_en.txt")
-);
-endif;
-
-
-
-
 
 
 ###
 # Instalacion
 #
-	
 
 form(
 	"<~menu.title>",
@@ -142,14 +129,16 @@ form(
 	"group1",     "<b><~menu.group1></b>",  "",                     	"group",
 	  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
 	  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
+	  "opt3",     "<b><~menu.5></b>",       "<~menu.5desc>",         	"select",
 	"group2",     "<b><~menu.group2></b>",  "",                     	"group",
 	  "chk1",     "<b><~menu.3></b>",       "<~menu.3desc>",			"check",
 	  "chk2",     "<b><~menu.4></b>",       "<~menu.4desc>",			"check.checked"
-	);
+);
 	
-	if prop("menu.prop","group1")=="opt2" then
-		
-		selectbox(
+# Menu apps Magisk
+if prop("menu.prop","group1")=="opt2" then
+	
+	selectbox(
 		"<~magisk.title>",
 		"<~magisk.desc>",
 		"icons/default",
@@ -159,15 +148,14 @@ form(
 		"<b><~magisk.1></b>",		"<~magisk.1desc>",	1,	#-- selected.1 = 1
 		"<b><~magisk.2></b>",		"<~magisk.2desc>",	0	#-- selected.1 = 2
 	);
-			
-	endif;
-
+		
+endif;
 	
-
 
 #########################################################################################
 # Confirmar
 #
+
 viewbox(
 	"<~confirm.1>",
 	"\n\n<~confirm.2>\n\n"+
@@ -179,6 +167,7 @@ viewbox(
 #########################################################################################
 # Instalacion
 #
+
 setvar("retstatus",
 	install(
 		"<~inst.1>",
@@ -194,17 +183,20 @@ setvar("retstatus",
 #########################################################################################
 # Final
 #
-checkviewbox(
+
+
+#set Next text fo Finish
+ini_set("text_next", "<~text_finish>");
+
+
+viewbox(
 	"",
 	"<#selectbg_g><b><~final.1></b></#>\n\n"+
-	"<b>"+ini_get("rom_name")+"</b> <~final.2>",
-	"@welcome",
-	"<~final.3>",
-	"1",
-	"reboot_it"
+	"<b>"+ini_get("rom_name")+"</b> <~final.2>\n\n"+
+	"<~final.4>",
+	"@welcome"
 );
-if
-	getvar("reboot_it")=="1"
-	then
-	reboot("onfinish");
-endif;
+
+
+
+

@@ -32,6 +32,7 @@ text_about=About
 text_calibrating=Calibrating Tools
 text_quit=Quit Installation
 text_quit_msg=Are you sure to quit the installer?
+text_finish=Finish
 
 #
 #-- CUSTOM STRING RESOURCE
@@ -82,6 +83,8 @@ menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
 menu.2=Magisk 10.2
 menu.2desc=Magisk Manager + Root + Apps.
+menu.5=SuperSU 2.79-SR3
+menu.5desc=Famous Root of Chainfire, v2.79-SR3
 menu.group2=Other options
 menu.3=Synapse
 menu.3desc=Application for kernel management
@@ -113,3 +116,7 @@ inst.4=PRESS <b>Next</b> TO CONTINUE
 final.1=INSTALATION COMPLETED
 final.2=IS INSTALLED IN YOUR PHONE
 final.3=REBOOT DEVICE
+final.4=TAP FINISH, AND REBOOT YOUR DEVICE.\
+\
+THANKS
+

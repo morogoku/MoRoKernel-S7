@@ -5,7 +5,7 @@
 # Created by lyapota
 
 # Remove
-#magisk
+# Magisk
 rm -rf /cache/magisk.log /cache/last_magisk.log /cache/magiskhide.log \
        /cache/magisk /cache/magisk_merge /cache/magisk_mount /cache/unblock \
        /data/Magisk.apk /data/magisk.img /data/magisk_merge.img /data/stock_boot.img \

@@ -32,6 +32,7 @@ text_about=Acerca de
 text_calibrating=Calibrar pantalla
 text_quit=Salir de la instalación
 text_quit_msg=¿Seguro que quieres salir?
+text_finish=Finalizar
 
 #
 #-- CUSTOM STRING RESOURCE
@@ -82,6 +83,8 @@ menu.1=Sin Root
 menu.1desc=Recomendado si va a instalar otro tipo de root por su cuenta.
 menu.2=Magisk 10.2
 menu.2desc=Magisk Manager + Root, junto con sus apps
+menu.5=SuperSU 2.79-SR3
+menu.5desc=Famoso root de Chainfire, v2.79-SR3
 menu.group2=Otras opciones
 menu.3=Synapse
 menu.3desc=Aplicación para la gestión del kernel
@@ -113,5 +116,7 @@ inst.4=PULSE <b>Siguiente</b> PARA CONTINUAR
 final.1=INSTALACION COMPLETADA
 final.2=ESTA AHORA INSTALADA EN SU TELEFONO
 final.3=REINICIAR DISPOSITIVO
-
+final.4=PULSE FINALIZAR Y REINICIE EL DISPOSITIVO\
+\
+GRACIAS!.
 

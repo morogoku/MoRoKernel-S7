@@ -4,62 +4,19 @@ cat << CTAG
 {
     name:"CPU A72 big",
     elements:[
+		{ SPane:{
+		    title:{
+                en:"A72 big Cores Frequencies",
+                es:"Frecuencias big cores A72"
+        	},
+		}},
         { SLiveLabel:{
 		    title:{
-			    en:"A72 big Cores live frequency",
-			    es:"Frecuencias A72 big Cores"
+			    en:"Current frequency",
+			    es:"Frecuencia actual"
 		    },
 		    refresh:500,
 		    action:"live LiveCPUFrequency_big"
-	    }},
-	    { SSpacer:{
-		    height:1
-	    }},
-	    { SPane:{
-		    title:{
-			    en:"A72 CPU Governor",
-			    es:"Gobernador CPU A72"
-		    },
-		    description:{
-			    en:"The CPU governor determines how the CPU behaves in response to changes in workload.",
-			    es:"El gobernador CPU determina cómo se comporta la CPU en respuesta a los cambios en la carga de trabajo."
-		    }
-	    }},
-	    { SSpacer:{
-		    height:1
-	    }},
-	    { SOptionList:{
-		    title:{
-			    en:"Current governor",
-			    es:"Gobernador actual"
-		    },
-		    description:{
-			    en:"Set your governor for A72 cores.\n",
-			    es:"Seleccione el gobernador para los cores A72.\n"
-		    },
-		    default:$(cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor),
-		    action:"governor2 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor",
-		    values:[
-`
-			    for GOVERNOR in \`cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_governors\` ; do
-				    echo "\"$GOVERNOR\","
-			    done
-`
-		    ],
-		
-	    }},
-        { SSpacer:{
-		    height:1
-	    }},
-        { SPane:{
-		    title:{
-                en:"A72 big Cores Frequency Scaling",
-                es:"Escalado de frecuencias big cores A72"
-        },
-		    description:{
-                en:"Note: For protection of device hardware, frequencies may be temporarily limited by Samsung thermal throttling.",
-                es:"Nota: Para la protección del dispositivo, las frecuencias pueden ser limitadas temporalmente por el Samsung thermal throttling."
-        }
 	    }},
 	    { SSpacer:{
 		    height:1
@@ -110,6 +67,58 @@ cat << CTAG
 	    { SSpacer:{
 		    height:1
 	    }},
+		{ SPane:{
+			title:{
+				en:"A72 big Cores Voltage Control",
+				es:"Control de Voltaje big Cores A72"
+			},
+			description:{
+				en:"Decreasing voltage will lower power consumption of the CPU. Increasing it on overclocked frequencies improves stability.\nToo low voltage may cause instabilities and freezes.",
+				es:"Disminuir el voltaje reducirá el consumo de energía de la CPU. Aumentarla en frecuencias de overclock mejora la estabilidad.\nUn voltaje demasiado bajo puede causar inestabilidad y congelaciones."
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:{
+				en:"Voltage Profile",
+				es:"Perfil Voltaje"
+			},
+			description:{
+				en:"Choose a profile to adjust all voltages at a time.\nIt takes about 5 seconds to make the change.\n",
+				es:"Elija un perfil para ajustar todos los voltajes a la vez.\nTarda unos 5 segundos en hacer el cambio.\n"
+			},
+			default:Stock,
+			action:"c1volt profile",
+			values:[ +25mV, Stock, -25mV, -50mV, -75mV, 
+			],
+			notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:[ 
+`
+							while read -r FREQ VOLT; do
+								echo "\"c1volt ${FREQ}\","
+							done < /data/.moro/bk/bk_orig_cl1_voltage
+`
+						],
+					}
+			]
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+`
+		while read -r FREQ VOLT; do
+			echo '{ SSeekBar:{ default:'"$VOLT"', title:"'$(($FREQ / 1000))' MHz"'
+			echo ', action:"c1volt '"${FREQ}"'", unit:" mV", weight:0.001, min:500000, step:6250, max:1575000 }},'
+		done < /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_volt_table
+`
+		{ SSpacer:{
+			height:1
+		}},
 	]
 }
 CTAG

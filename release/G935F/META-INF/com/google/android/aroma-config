@@ -14,10 +14,10 @@ ini_set("force_colorspace", "rgba");
 
 # Datos Rom
 ini_set("rom_name",         "MoRoKernel-Nougat");
-ini_set("rom_version",      "V1.1");
+ini_set("rom_version",      "V1.2");
 ini_set("rom_author",       "MoroGoku");
 ini_set("rom_device",       "S7 EDGE (SM-G935F)");
-ini_set("rom_date",         "02/02/2017");
+ini_set("rom_date",         "07/02/2017");
 
 # Splash
 # splash(4000,"splash/splash");
@@ -131,25 +131,8 @@ form(
 	  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
 	  "opt3",     "<b><~menu.5></b>",       "<~menu.5desc>",         	"select",
 	"group2",     "<b><~menu.group2></b>",  "",                     	"group",
-	  "chk1",     "<b><~menu.3></b>",       "<~menu.3desc>",			"check",
 	  "chk2",     "<b><~menu.4></b>",       "<~menu.4desc>",			"check.checked"
 );
-	
-# Menu apps Magisk
-if prop("menu.prop","group1")=="opt2" then
-	
-	selectbox(
-		"<~magisk.title>",
-		"<~magisk.desc>",
-		"icons/default",
-		"magisk.prop",
-		
-		"<b><~magisk.group></b>", 	"",					2,	#-- Grupo 1
-		"<b><~magisk.1></b>",		"<~magisk.1desc>",	1,	#-- selected.1 = 1
-		"<b><~magisk.2></b>",		"<~magisk.2desc>",	0	#-- selected.1 = 2
-	);
-		
-endif;
 	
 
 #########################################################################################

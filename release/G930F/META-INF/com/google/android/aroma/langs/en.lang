@@ -81,15 +81,15 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
-menu.2=Magisk 10.2
-menu.2desc=Magisk Manager + Root + Apps.
+menu.2=Magisk 11.1
+menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.79-SR3
 menu.5desc=Famous Root of Chainfire, v2.79-SR3
 menu.group2=Other options
 menu.3=Synapse
 menu.3desc=Application for kernel management
 menu.4=Busybox
-menu.4desc=Busybox 1.26.0-Dorimanx.\
+menu.4desc=Busybox 1.26.0\
 Necessary. Uncheck only if you have a higher version.
 
 # Magisk App

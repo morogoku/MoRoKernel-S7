@@ -1,4 +1,12 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.2</#></b></u>
+<*>Adjusted minimum speed big A72 to 416MHz</*>
+<*>Voltage settings with profiles +25mV, -25mV, -50mV, -75mV</*>
+<*>Adjustable CPU Governors in A72 y A53</*>
+<*>Magisk 11.1 and Magisk Manager 4.1</*>
+<*>Busybox 1.26.2</*>
+<*>Aroma Fixes</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.1</#></b></u>
 <*>Added more minimum and maximum CPU frequencies<#textfg_gray>
   <*>A72: 208MHz min -> 2.704MHz max</*>

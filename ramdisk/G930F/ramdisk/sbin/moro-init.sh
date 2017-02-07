@@ -64,6 +64,12 @@ $BB mount -o remount,rw /;
 # KERNEL INIT VALUES
 #-------------------------
 
+    # CPU freq. values
+    echo 2600000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq;
+    echo 4160000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq;
+    echo 1586000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+    echo 130000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+
     # Led Fade-out
     echo 700 > /sys/class/sec/led/led_notification_ramp_down;
 

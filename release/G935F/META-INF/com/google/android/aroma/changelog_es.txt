@@ -1,5 +1,9 @@
 
-<u><b><#selectbg_g>MoRoKernel-G930F-N v1.2</#></b></u>
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.2.1</#></b></u>
+<*>Fix ajuste de velocidad minima big A72 a 416MHz</*>
+<*>Fix error en synpse al cambir perfil voltaje</*>
+
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.2</#></b></u>
 <*>Ajustada velocidad minima big A72 a 416MHz</*>
 <*>Ajustes de voltaje con perfiles +25mV, -25mV, -50mV, -75mV</*>
 <*>Gobernadores CPU ajustables en A72 y A53</*>
@@ -7,7 +11,7 @@
 <*>Busybox 1.26.2</*>
 <*>Fixes en Aroma</*>
 
-<u><b><#selectbg_g>MoRoKernel-G930F-N v1.1</#></b></u>
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.1</#></b></u>
 <*>Añadidas mas frecuencias minimas y maximas de CPU<#textfg_gray>
   <*>A72: 208MHz min -> 2.704MHz max</*>
   <*>A53: 130MHz min -> 1.586MHz max</*></#></*>
@@ -15,7 +19,7 @@
 <*>Synapse: añadido control de backups de perfiles</*>
 
 
-<u><b><#selectbg_g>MoRoKernel-G930F-N v1.0</#></b></u>
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.0</#></b></u>
 <*>Sources Samsung G935FXXU1DPLT</*>
 <*>Compilado con Linaro 6.3.1</*>
 <*>Instalador AROMA</*>

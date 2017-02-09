@@ -1,4 +1,8 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.2.1</#></b></u>
+<*>Fix ajuste de velocidad minima big A72 a 416MHz</*>
+<*>Fix error en synpse al cambir perfil voltaje</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.2</#></b></u>
 <*>Ajustada velocidad minima big A72 a 416MHz</*>
 <*>Ajustes de voltaje con perfiles +25mV, -25mV, -50mV, -75mV</*>

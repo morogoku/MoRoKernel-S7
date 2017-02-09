@@ -13,6 +13,8 @@ else
 fi;
 fi;
 
+DATA_PATH=/data/.moro
+
 
 # Mount
 $BB mount -t rootfs -o remount,rw rootfs;
@@ -30,10 +32,26 @@ $BB mount -o remount,rw /;
     /sbin/uci
 
 
-    # Make internal storage directory.
-    if [ ! -d /data/.moro ]; then
-	    $BB mkdir /data/.moro;
+	# Make internal storage directory.
+    if [ ! -d $DATA_PATH ]; then
+	    $BB mkdir $DATA_PATH;
     fi;
+
+	$BB chmod 0777 $DATA_PATH;
+	$BB chown 0.0 $DATA_PATH;
+
+	# Delete backup directory
+	$BB rm -rf $DATA_PATH/bk;
+
+    # Make backup directory.
+	$BB mkdir $DATA_PATH/bk;
+	$BB chmod 0777 $DATA_PATH/bk;
+	$BB chown 0.0 $DATA_PATH/bk;
+
+	# Save original voltages
+	$BB cat /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_volt_table > $DATA_PATH/bk/bk_orig_cl1_voltage
+	$BB cat /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster0_volt_table > $DATA_PATH/bk/bk_orig_cl0_voltage
+	$BB chmod -R 755 $DATA_PATH/bk/*;
 
 
 #-------------------------

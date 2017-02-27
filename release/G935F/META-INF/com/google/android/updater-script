@@ -31,18 +31,20 @@ run_program("/tmp/moro/system_patch.sh");
 ui_print("@-> Copy correct fingerprint files");
 package_extract_dir("system", "/system");
 
-ui_print("@-> Synapse App");
-run_program("/tmp/moro/clean_synapse.sh");
-package_extract_dir("synapse", "/system/priv-app");
+ui_print("@-> Busybox ");
+run_program("/tmp/moro/busybox.sh");
+
 
 ####################################################
 # OTHER OPTIONS
 ####################################################
 
-# Busybox
+# Synapse
 if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
-	ui_print("@-> Busybox ");
-	run_program("/tmp/moro/busybox.sh");
+	ui_print("@-> Synapse App");
+	run_program("/tmp/moro/clean_synapse.sh");
+	run_program("/tmp/moro/clean.sh", "synapse");
+	package_extract_dir("synapse", "/data/app");
 endif;
 
 
@@ -51,17 +53,40 @@ endif;
 ####################################################
 set_progress(0.10);
 
+# Stock
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt1" then
+	if file_getprop("/tmp/aroma/stock.prop","selected.1") == "2" then
+		ui_print("@-> Without Root");
+		ui_print("   '-> Clearing previous root");
+		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_magisk_apps.sh");
+		run_program("/tmp/moro/clean.sh", "magisk");
+		run_program("/tmp/moro/clean_supersu_app.sh");
+		run_program("/tmp/moro/clean.sh", "supersu");
+	endif;
+endif;
+
+	
 # Magisk Root
 if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt2" then
-show_progress(0.95, "-12000");
+show_progress(0.95, "-8000");
 	ui_print("@-> Rooting with Magisk Manager");
-	
+
 	ui_print("   '-> Clearing previous root");
 	run_program("/tmp/moro/clean_su.sh");
-	run_program("/tmp/moro/clean_magisk_apps.sh");
-	
-	ui_print("   '-> App Magisk Manager v4.1");
-	package_extract_dir("magisk/app", "/system/priv-app");
+	run_program("/tmp/moro/clean_supersu_app.sh");
+	run_program("/tmp/moro/clean.sh", "supersu");
+
+	if file_getprop("/tmp/aroma/magisk.prop","selected.1") == "2" then
+		
+		ui_print("   '-> Clearing magisk app & data");
+		run_program("/tmp/moro/clean_magisk_apps.sh");
+		run_program("/tmp/moro/clean.sh", "magisk");
+		
+		ui_print("   '-> App Magisk Manager v4.2.6");
+		package_extract_dir("magisk/app", "/data/app");
+
+	endif;
 		
 	ui_print("   '-> Magisk 11.1");
 	ui_print(" ");
@@ -72,13 +97,16 @@ endif;
 
 # SuperSU Root
 if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt3" then
-show_progress(0.95, "-30000");
+show_progress(0.95, "-34000");
 	ui_print("@-> Rooting with SuperSU");
 	
 	ui_print("   '-> Clearing previous root");
 	run_program("/tmp/moro/clean_su.sh");
 	run_program("/tmp/moro/clean_magisk_apps.sh");
-	
+	run_program("/tmp/moro/clean.sh", "magisk");
+	run_program("/tmp/moro/clean_supersu_app.sh");
+	run_program("/tmp/moro/clean.sh", "supersu");
+			
 	ui_print("   '-> SuperSU 2.79-SR3");
 	ui_print(" ");
 	package_extract_dir("supersu", "/tmp/moro/supersu");

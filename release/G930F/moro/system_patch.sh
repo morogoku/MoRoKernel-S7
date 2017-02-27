@@ -23,5 +23,3 @@ rm -f /system/su.d/wakelock*
 rm -f /system/etc/init.d/wakelock*
 
 
-# Synapse clean data
-rm -rf /data/data/com.af.synapse

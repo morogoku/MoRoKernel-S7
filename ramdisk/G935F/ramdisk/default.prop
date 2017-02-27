@@ -9,7 +9,6 @@ ro.adb.secure=1
 ro.allow.mock.location=0
 ro.debuggable=1
 persist.sys.usb.config=mtp,adb
-persist.service.adb.enable=1
 ro.zygote=zygote64_32
 pm.dexopt.first-boot=interpret-only
 pm.dexopt.boot=verify-profile
@@ -36,23 +35,18 @@ security.mdpp=
 ro.security.mdpp.ver=
 ro.security.mdpp.release=
 security.mdpp.result=
-ro.hardware.keystore=default
 ro.security.vpnpp.ver=
 ro.security.vpnpp.release=
 ro.securestorage.support=false
-security.mdpp.mass=
 ro.config.tima=0
-ro.config.timaversion=3.0
 ro.config.dmverity=false
 ro.config.rkp=false
 ro.config.kap_default_on=false
 ro.config.kap=false
-ddk.set.afbc=
-ro.security.vaultkeeper.feature=0
 
-#
+##
 # BOOTIMAGE_BUILD_PROPERTIES
 #
-ro.bootimage.build.date=Fri Dec 30 20:24:49 KST 2016
-ro.bootimage.build.date.utc=1483097089
-ro.bootimage.build.fingerprint=samsung/hero2ltexx/hero2lte:7.0/NRD90M/G935FXXU1DPLT:user/test-keys
+ro.bootimage.build.date=Thu Feb 2 15:57:30 KST 2017
+ro.bootimage.build.date.utc=1486018650
+ro.bootimage.build.fingerprint=samsung/hero2ltexx/hero2lte:7.0/NRD90M/G935FXXU1DQB7:user/test-keys

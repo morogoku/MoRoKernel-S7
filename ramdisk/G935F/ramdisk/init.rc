@@ -631,10 +631,6 @@ on post-fs-data
 
     mkdir /data/anr 0775 system system
 
-    # symlink to bugreport storage location
-    rm /data/bugreports
-    symlink /data/user_de/0/com.android.shell/files/bugreports /data/bugreports
-
 # [ SEC_SELINUX_PORTING_COMMON
     # Separate location for storing security policy files on data    
     mkdir /data/security 0700 system system
@@ -1423,7 +1419,7 @@ service iod /system/bin/iod
 
 on property:sys.boot_completed=1
     start iod
-    start moro-init
+	start moro-init
 
 # icd
 on property:init.svc.media=restarting

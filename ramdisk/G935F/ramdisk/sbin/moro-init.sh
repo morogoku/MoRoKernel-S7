@@ -22,6 +22,13 @@ $BB mount -o remount,rw /system;
 $BB mount -o remount,rw /data;
 $BB mount -o remount,rw /;
 
+#-------------------------
+# FAKE KNOX 0
+#-------------------------
+
+/sbin/resetprop -v -n ro.boot.warranty_bit 0
+/sbin/resetprop -v -n ro.warranty_bit 0
+
 
 #-------------------------
 # SYNAPSE

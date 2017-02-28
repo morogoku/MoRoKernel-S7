@@ -1,4 +1,5 @@
 # Modified from original apb_axel & neobuddy89 implementations by UpInTheAir@XDA for SkyHigh kernels
+# Modified by morogoku for Synapsemod
 
 # Busybox 
 if [ -e /su/xbin/busybox ]; then
@@ -21,25 +22,27 @@ if [ -f "/system/xbin/sqlite3" ]; then SQL3=/system/xbin/sqlite3; else SQL3=/sys
 
 SYNAPSE_SD_DIR=/sdcard/MoRoKernel/Synapse;
 SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/saved_configs;
-SYNAPSE_DATA=/data/data/com.af.synapse/databases;
-DISABLED_ACTIONS="AND key NOT LIKE 'cpuvolt%' AND key NOT LIKE 'gamma%' AND key NOT LIKE 'restorebackup%' AND key NOT LIKE 'soundfaux%' AND key NOT LIKE 'speakerfaux%' AND key NOT LIKE 'voltage%'";
+SYNAPSE_DATA=/data/data/com.moro.synapsemod/databases;
+DISABLED_ACTIONS="AND key NOT LIKE 'c0volt%' AND key NOT LIKE 'c1volt%'";
+
+
+[ ! -d "$SYNAPSE_CONFIG_DIR" ] && mkdir -p "$SYNAPSE_CONFIG_DIR";
+chmod 755 $SYNAPSE_CONFIG_DIR
+
+
 
 case "$1" in
 	ExportConfigSynapse)
-		BCK_PROF=$($BB cat /res/synapse/moro/bck_prof);
+		BCK_PROF=$2
 		BCK_PROF=$($BB echo "${BCK_PROF// /_}");
 		
-		if [ "$BCK_PROF" == "None" ]; then
-			$BB echo "Enter a config name first and then apply.";
-		else
-			$BB echo "None" > /res/synapse/moro/bck_prof;
-			cd $SYNAPSE_DATA || exit;
-			$SQL3 -separator '=' actionValueStore "SELECT key, value FROM action_value WHERE context = 'global' AND key NOT IN ($DISABLED_SETTINGS) $DISABLED_ACTIONS ORDER BY key ASC;" > "$SYNAPSE_CONFIG_DIR/$BCK_PROF.txt" 2> /dev/null;
-			$BB echo "$BCK_PROF.txt saved to /sdcard/MoRoKernel. Press the Restart Synapse button below to see updated list.";
-		fi;
+		
+		cd $SYNAPSE_DATA || exit;
+		$SQL3 -separator '=' actionValueStore "SELECT key, value FROM action_value WHERE context = 'global' AND key NOT IN ($DISABLED_SETTINGS) $DISABLED_ACTIONS ORDER BY key ASC;" > "$SYNAPSE_CONFIG_DIR/$BCK_PROF.txt" 2> /dev/null;
 	;;
+	
 	ImportConfigSynapse)
-		SYNAPSE_CONFIG=$($BB cat "$SYNAPSE_CONFIG_DIR/.selected_config_profile");
+		SYNAPSE_CONFIG=$2.txt;
 		
 		if [ -f "$SYNAPSE_CONFIG_DIR/$SYNAPSE_CONFIG" ]; then
 			cd $SYNAPSE_DATA || exit;

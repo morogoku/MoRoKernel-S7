@@ -1,4 +1,17 @@
 
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.3</#></b></u>
+<*>Actualizados sources y ramdisk a G935FXXU1DQB7</*>
+<*>Nuevo Synapse MOD<#textfg_gray>
+  <*>Soporte nativo de perfiles</*>
+  <*>Nuevo tema Material Red</*></#></*>
+<*>Fix Fingerprint nuevas bases (Gracias Tkkg1994)</*>
+<*>Mod Fake Knox 0 (Gracias Lyapota)</*>
+<*>Nuevo script limpieza de apps, ahora se instalan correctamente.</*>
+<*>Busybox 1.26.2-meefik</*>
+<*>Magisk Manager 4.2.6</*>
+<*>Añadidos ajustes DOZE</*>
+<*>Añadidos ajustes wakelocks</*>
+
 <u><b><#selectbg_g>MoRoKernel-G935F-N v1.2.1</#></b></u>
 <*>Fix ajuste de velocidad minima big A72 a 416MHz</*>
 <*>Fix error en synpse al cambir perfil voltaje</*>

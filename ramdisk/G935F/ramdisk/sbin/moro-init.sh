@@ -115,6 +115,14 @@ $BB mount -o remount,rw /;
        $BB sh $FILE >/dev/null;
     done;
 
+
+#-------------------------
+# APPLY PERMISSIONS
+#-------------------------
+
+	$BB chown 0.0 /system/xbin/sqlite3;
+	$BB chmod 755 /system/xbin/sqlite3;
+
 #-------------------------
 
 

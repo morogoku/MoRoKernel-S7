@@ -43,25 +43,31 @@ cat << CTAG
 	{ SSpacer:{
 		height:1
 	}},
-	{ SOptionList:{
-		title:{
-			en:"Storage scheduler SD card",
-			es:"Scheduler de SD externa"
-		},
-		description:" ",
-		default:$(cat /sys/block/mmcblk0/queue/scheduler | $BB awk 'NR>1{print $1}' RS=[ FS=]),
-		action:"ioset scheduler_ext",
-		values:[
 `
-			for IOSCHED in \`cat /sys/block/mmcblk0/queue/scheduler | $BB sed -e 's/\]//;s/\[//'\`; do
-				echo "\"$IOSCHED\",";
-			done;
-`
-],
-	}},
+	if [ -f "/sys/block/mmcblk0/queue/scheduler" ]; then
+
+		$BB echo '{ SOptionList:{
+			title:{
+				en:"Storage scheduler SD card",
+				es:"Scheduler de SD externa"
+			},
+			description:" ",
+			default:'$(cat /sys/block/mmcblk0/queue/scheduler | $BB awk 'NR>1{print $1}' RS=[ FS=]),
+			$BB echo 'action:"ioset scheduler_ext",
+			values:['
+
+				for IOSCHED in \`cat /sys/block/mmcblk0/queue/scheduler | $BB sed -e 's/\]//;s/\[//'\`; do
+					echo "\"$IOSCHED\",";
+				done;
+
+		$BB echo '],
+			}},
 	{ SSpacer:{
 		height:1
-	}},
+	}},'
+
+	fi
+`
 	{ SSeekBar:{
 		title:{
 			en:"Storage Read-Ahead Internal",
@@ -78,22 +84,28 @@ cat << CTAG
 	{ SSpacer:{
 		height:1
 	}},
-	{ SSeekBar:{
-		title:{
-			en:"Storage Read-Ahead SD Card",
-			es:"Cacheado SD externa"
-		},
-		description:" ",
-		max:4096,
-		min:64,
-		unit:" KB",
-		step:64,
-		default:$(cat /sys/block/mmcblk0/queue/read_ahead_kb),
-		action:"ioset queue_ext read_ahead_kb"
-	}},
-	{ SSpacer:{
-		height:1
-	}},
+`
+	if [ -f "/sys/block/mmcblk0/queue/read_ahead_kb" ]; then
+
+		$BB echo '{ SSeekBar:{
+			title:{
+				en:"Storage Read-Ahead SD Card",
+				es:"Cacheado SD externa"
+			},
+			description:" ",
+			max:4096,
+			min:64,
+			unit:" KB",
+			step:64,
+			default:'$(cat /sys/block/mmcblk0/queue/read_ahead_kb),
+			$BB echo 'action:"ioset queue_ext read_ahead_kb"
+		}},
+		{ SSpacer:{
+			height:1
+		}},'
+
+	fi
+`
 	]
 }
 CTAG

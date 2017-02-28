@@ -33,20 +33,20 @@ case $1 in
   ;;
   cleardata)
 	echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
-	am force-stop com.af.synapse 2> /dev/null;
-	$BB rm -R /data/data/com.af.synapse/*;
-	$BB rm -f /data/dalvik-cache/arm64/data@app@com.af.synapse*;
-	$BB rm -f /data/dalvik-cache/profiles/com.af.synapse;
+	am force-stop com.af.synapsemod 2> /dev/null;
+	$BB rm -R /data/data/com.af.synapsemod/*;
+	$BB rm -f /data/dalvik-cache/arm64/data@app@com.af.synapsemod*;
+	$BB rm -f /data/dalvik-cache/profiles/com.af.synapsemod;
 	$BB sync;
 	$BB sleep 1;
 	/system/bin/reboot;
   ;;
   restart)
-    	am force-stop com.af.synapse 2> /dev/null;
+    	am force-stop com.af.synapsemod 2> /dev/null;
     	reset_uci;
 	$BB sync;
     	$BB sleep 1;
-    	am start -a android.intent.action.MAIN -n com.af.synapse/.MainActivity 2> /dev/null;
+    	am start -a android.intent.action.MAIN -n com.af.synapsemod/.MainActivity 2> /dev/null;
   ;;
   fix_wifi)
 	svc wifi disable 2> /dev/null;

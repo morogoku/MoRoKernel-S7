@@ -20,4 +20,9 @@ case "${1}" in
 	$BB mount -t rootfs -o rw,remount rootfs;
 	$BB rm -f $CONFIG_JSON;
 	$BB mount -t rootfs -o rw,remount rootfs;;
+  restart)
+	am force-stop com.moro.synapsemod 2> /dev/null;
+	$BB sync;
+	$BB sleep 1;
+	am start -a android.intent.action.MAIN -n com.moro.synapsemod/.MainActivity 2> /dev/null;;
 esac;

@@ -1,5 +1,3 @@
-# CPU volt profile for synapse
-# Made by Morogoku, http://www.esp-desarrolladores.com
 
 BB=/system/xbin/busybox;
 
@@ -21,51 +19,11 @@ readValue() {
 	done < $P
 }
 
-write_values(){
 
-	while read FREQ VOLT; do
-		CL1_VOLT=`expr $VOLT $uv`;
-		echo $FREQ $CL1_VOLT > $P;
-	done < /data/.moro/bk/bk_orig_cl1_voltage
-}
-
-
-
-#Profiles
-+25mV(){
-	uv="+ 25000";
-}
-
-Stock(){
-	uv="";
-}
-
--25mV(){
-	uv="- 25000";
-}
-
--50mV(){
-	uv="- 50000";
-}
-
--75mV(){
-	uv="- 75000";
-}
-
-if [ "$1" == "profile" ]; then
-	if [[ ! -z $2 ]]; then
-		$BB echo "$2" > /res/synapse/moro/c1volt_prof;
-		$2;
-		write_values;
-	fi;
-	
-	$BB echo "$(cat /res/synapse/moro/c1volt_prof)";
-else
 	if [[ ! -z $2 ]]; then
 		echo $1 $2 > $P
 	fi
 
 	echo $(readValue $1)
-fi;
 
 $BB mount -t rootfs -o remount,ro rootfs;

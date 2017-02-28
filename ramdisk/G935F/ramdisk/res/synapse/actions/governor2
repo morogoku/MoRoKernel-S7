@@ -1,5 +1,5 @@
 refresh () {
-	am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpufreq"}}' &> /dev/null;
+	am startservice -n com.af.synapsemod/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpufreq"}}' &> /dev/null;
 }
 
 if [ -f "$1" ];then

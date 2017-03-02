@@ -120,8 +120,12 @@ $BB mount -o remount,rw /;
 # APPLY PERMISSIONS
 #-------------------------
 
+	# sqlite3
 	$BB chown 0.0 /system/xbin/sqlite3;
 	$BB chmod 755 /system/xbin/sqlite3;
+
+	# Fix SafetyNet by Repulsa
+	$BB chmod 640 /sys/fs/selinux/enforce
 
 #-------------------------
 

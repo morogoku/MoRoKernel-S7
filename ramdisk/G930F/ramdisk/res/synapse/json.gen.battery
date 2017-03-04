@@ -506,7 +506,10 @@ cat << CTAG
 	}},
 	{ SPane:{
 		title:"Store Mode",
-		description:"Enable to set MAX & MIN battery capacity limits whilst on charge."
+		description:{
+			en:"WARNING! This option can't be disabled.\nEnable to set MAX 90% & MIN 20% battery capacity limits whilst on charge.",
+			es:"ATENCION! Esta opción no se puede desactivar.\nEnable to set MAX 90% & MIN 20% battery capacity limits whilst on charge."
+		}
 	}},
 	{ SSpacer:{
 		height:1

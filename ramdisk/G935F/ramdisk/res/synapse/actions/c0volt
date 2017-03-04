@@ -1,3 +1,5 @@
+# CPU volt profile for synapse
+# Made by Morogoku, http://www.esp-desarrolladores.com
 
 BB=/system/xbin/busybox;
 
@@ -9,6 +11,12 @@ fi;
 P=/sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster0_volt_table;
 
 
+write_values(){
+	while read FREQ VOLT; do
+		CL0_VOLT=`expr $VOLT $uv`;
+		echo $FREQ $CL0_VOLT > $P;
+	done < /data/.moro/bk/bk_orig_cl0_voltage
+}
 
 readValue() {
 	while read FREQ UVOLT; do
@@ -20,10 +28,52 @@ readValue() {
 }
 
 
-	if [[ ! -z $2 ]]; then
-		echo $1 $2 > $P
-	fi
+#Profiles
+Custom(){
 
-	echo $(readValue $1)
+}
+
++25mV(){
+	uv="+ 25000";
+	write_values;
+}
+
+Stock(){
+	uv="";
+	write_values;
+}
+
+-25mV(){
+	uv="- 25000";
+	write_values;
+}
+
+-50mV(){
+	uv="- 50000";
+	write_values;
+}
+
+-75mV(){
+	uv="- 75000";
+	write_values;
+}
+
+
+if [ "$1" == "profile" ]; then
+	if [[ ! -z $2 ]]; then
+		$BB echo "$2" > /res/synapse/moro/c0volt_prof;
+		$2;
+	else
+		$(cat /res/synapse/moro/c0volt_prof);
+	fi;
+	
+	$BB echo "$(cat /res/synapse/moro/c0volt_prof)";
+else
+	if [[ ! -z $2 ]]; then
+		$BB echo $1 $2 > $P;
+	fi;
+
+	$BB echo $(readValue $1);
+fi;
 
 $BB mount -t rootfs -o remount,ro rootfs;

@@ -1,4 +1,11 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.3.2</#></b></u>
+<*>Add "Custom" voltaje profile</*>
+<*>Set battery Store Mode at 90-20</*>
+
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.3.1</#></b></u>
+<*>Fix Magisk SafetyNet (Thanks to Repulsa)</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.3</#></b></u>
 <*>Updated sources and ramdisk to G935FXXU1DQB7</*>
 <*>New Synapse MOD<#textfg_gray>

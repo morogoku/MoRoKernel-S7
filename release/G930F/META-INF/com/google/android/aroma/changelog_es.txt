@@ -1,4 +1,7 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.3.3</#></b></u>
+<*>Corregido error al restaurar voltajes de los perfiles synapse</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.3.2</#></b></u>
 <*>Añadido perfil de voltaje "Custom"</*>
 <*>Ajustado el Store Mode de la bateria a 90-20</*>

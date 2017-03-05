@@ -90,8 +90,9 @@ cat << CTAG
 				es:"Elija un perfil para ajustar todos los voltajes a la vez.\nTarda unos 5 segundos en hacer el cambio.\n"
 			},
 			default:Stock,
-			action:"c0volt profile",
-			values:[ Custom, +25mV, Stock, -25mV, -50mV, -75mV ],
+			action:"c0v-profile",
+			values:[ +25mV, Stock, -25mV, -50mV, -75mV, 
+			],
 			notify:[
 					{
 						on:APPLY,

@@ -91,8 +91,7 @@ cat << CTAG
 			},
 			default:Stock,
 			action:"c1v-profile",
-			values:[ +25mV, Stock, -25mV, -50mV, -75mV, 
-			],
+			values:[ Custom, +25mV, Stock, -25mV, -50mV, -75mV ],
 			notify:[
 					{
 						on:APPLY,

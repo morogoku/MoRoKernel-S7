@@ -22,34 +22,41 @@ write_values(){
 
 
 #Profiles
+Custom(){
+
+}
+
 +25mV(){
 	uv="+ 25000";
+	write_values;
 }
 
 Stock(){
 	uv="";
+	write_values;
 }
 
 -25mV(){
 	uv="- 25000";
+	write_values;
 }
 
 -50mV(){
 	uv="- 50000";
+	write_values;
 }
 
 -75mV(){
 	uv="- 75000";
+	write_values;
 }
 
 
 	if [[ ! -z $1 ]]; then
 		$BB echo "$1" > /res/synapse/moro/c1volt_prof;
 		$1;
-		write_values;
 	else	
 		$(cat /res/synapse/moro/c1volt_prof);
-		write_values;
 	fi;
 	
 	$BB echo "$(cat /res/synapse/moro/c1volt_prof)";

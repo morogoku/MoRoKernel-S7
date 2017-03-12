@@ -76,6 +76,14 @@ config IOSCHED_FIFO
 	  Fifo is similar to no-op I/O scheduler and it's a minimal scheduler that does basic merging
 	  and sorting. Ported from: https://github.com/AndroidDeveloperAlliance/ZenKernel_TUNA/blob/master/block/fifo-iosched.c
 
+config IOSCHED_FIOPS
+	tristate "IOPS based I/O scheduler"
+	default y
+	---help---
+	  This is an IOPS based I/O scheduler. It will try to distribute
+          IOPS equally among all processes in the system. It's mainly for
+          Flash based storage.
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -115,6 +123,9 @@ choice
 	config DEFAULT_FIFO
 		bool "fifo" if IOSCHED_FIFO=y
 
+	config DEFAULT_FIOPS
+		bool "FIOPS" if IOSCHED_FIOPS=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -125,6 +136,7 @@ config DEFAULT_IOSCHED
 	default "row" if DEFAULT_ROW
 	default "bfq" if DEFAULT_BFQ
 	default "fifo" if DEFAULT_FIFO	
+	default "fiops" if DEFAULT_FIOPS	
 
 endmenu
 

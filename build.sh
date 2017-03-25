@@ -52,7 +52,7 @@ else [ $prompt == "2" ]
     echo "S7 Edge G935F Selected"
 fi
 
-export KERNEL_VERSION="MoRoKernel-$MODEL-N-v1.4b1"
+export KERNEL_VERSION="MoRoKernel-$MODEL-N-v1.4b7"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 

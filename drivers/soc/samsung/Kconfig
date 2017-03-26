@@ -75,6 +75,9 @@ config MCINFO_SYSFS
 	depends on EXYNOS_MCINFO
 	default	y if SYSFS
 
+config STATE_NOTIFIER
+    bool "State Notifier"
+
 config THUNDERPLUG_CONTROL
 	bool "Enable plugging down/up of cores based on load per core"
 	depends on SMP && HOTPLUG_CPU

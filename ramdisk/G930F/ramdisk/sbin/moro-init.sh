@@ -94,7 +94,7 @@ $BB mount -o remount,rw /;
 #-------------------------
 
     # CPU freq. values
-    echo 2600000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq;
+    echo 2288000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq;
     echo 416000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq;
     echo 1586000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
     echo 130000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;

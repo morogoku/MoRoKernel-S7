@@ -1,4 +1,25 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.5</#></b></u>
+<*>CPU A72 a freq. Stock</*>
+<*>Sources y ramdisk XXU1DQCG</*>
+<*>Magisk 12 & App 4.3.1</*>
+<*>Revertido Actualizacion Powersuspend</*>
+<*>Revertido Thunderplug Hotplug Driver</*>
+<*>Revertido ajustes DVFS</*>
+<*>Revertido Zen-tune 4.5</*>
+
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.4</#></b></u>
+<*>Sources y ramdisk XXU1DQC5</*>
+<*>Actualizado Powersuspend</*>
+<*>Ajustes Voltage y Overclock de GPU</*>
+<*>Thunderplug Hotplug Driver</*>
+<*>Magisk 11.6 & App 4.2.7</*>
+<*>F2FS</*>
+<*>Ajustes DVFS</*>
+<*>Zen-tune 4.5</*>
+<*>Actualizados Gobernadores Ondemand y Conservative</*>
+<*>Mas ajustes safetynet</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.3.3</#></b></u>
 <*>Corregido error al restaurar voltajes de los perfiles synapse</*>
 

@@ -1,4 +1,25 @@
 
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.5</#></b></u>
+<*>CPU A72 to freq. Stock</*>
+<*>Sources amd ramdisk XXU1DQCG</*>
+<*>Magisk 12 & App 4.3.1</*>
+<*>Revert Powersuspend updated</*>
+<*>Revert Thunderplug Hotplug Driver</*>
+<*>Revert DVFS settings</*>
+<*>Revert Zen-tune 4.5</*>
+
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.4</#></b></u>
+<*>Sources and ramdisk XXU1DQC5</*>
+<*>Powersuspend updated</*>
+<*>GPU Voltage & Overclock settings</*>
+<*>Thunderplug Hotplug Driver</*>
+<*>Magisk 11.6 & App 4.2.7</*>
+<*>F2FS</*>
+<*>DVFS settings</*>
+<*>Zen-tune 4.5</*>
+<*>Updated Ondemand and  Conservative governors</*>
+<*>More settings for safetynet</*>
+
 <u><b><#selectbg_g>MoRoKernel-G935F-N v1.3.3</#></b></u>
 <*>Fixed error restoring voltages in synapse profiles</*>
 

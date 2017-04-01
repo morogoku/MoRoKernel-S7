@@ -83,12 +83,12 @@ show_progress(0.95, "-8000");
 		run_program("/tmp/moro/clean_magisk_apps.sh");
 		run_program("/tmp/moro/clean.sh", "magisk");
 		
-		ui_print("   '-> App Magisk Manager v4.2.7");
+		ui_print("   '-> App Magisk Manager");
 		package_extract_dir("magisk/app", "/data/app");
 
 	endif;
 		
-	ui_print("   '-> Magisk 11.6");
+	ui_print("   '-> Magisk 12");
 	ui_print(" ");
 	package_extract_dir("magisk/magisk", "/tmp/moro/magisk");
 	run_program("/sbin/busybox", "unzip", "/tmp/moro/magisk/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/magisk");

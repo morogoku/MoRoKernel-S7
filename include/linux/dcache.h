@@ -160,7 +160,7 @@ struct dentry_operations {
 	char *(*d_dname)(struct dentry *, char *, int);
 	struct vfsmount *(*d_automount)(struct path *);
 	int (*d_manage)(struct dentry *, bool);
-	struct inode *(*d_select_inode)(struct dentry *, unsigned);
+	void (*d_canonical_path)(const struct path *, struct path *);
 } ____cacheline_aligned;
 
 /*

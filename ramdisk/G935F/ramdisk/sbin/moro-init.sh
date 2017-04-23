@@ -14,7 +14,7 @@ fi;
 fi;
 
 DATA_PATH=/data/.moro
-MTWEAKS_PATH=/data/.mtweaks2
+MTWEAKS_PATH=/data/.mtweaks
 
 
 # Mount
@@ -74,7 +74,7 @@ $BB mount -o remount,rw /;
 	
 
 #-------------------------
-# MTWEAKS 2
+# MTWEAKS
 #-------------------------
 
 	# Make internal storage directory.

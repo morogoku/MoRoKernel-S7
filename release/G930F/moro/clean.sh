@@ -85,6 +85,10 @@ if [[ ! -z $1 ]]; then
 		ruta='codePath="/system/app/Synapse'
 		run_script;
 	  ;;
+	  mtweaks)
+		ruta='codePath="/data/app/com.moro.mtweaks'
+		run_script;
+	  ;;
 	esac;
 fi	
 	

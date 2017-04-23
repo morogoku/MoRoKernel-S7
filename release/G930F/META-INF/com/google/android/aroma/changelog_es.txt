@@ -31,7 +31,7 @@
 <*>Fix Magisk SafetyNet (Gracias a Repulsa)</*>
 
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.3</#></b></u>
-<*>Actualizados sources y ramdisk a G935FXXU1DQB7</*>
+<*>Actualizados sources y ramdisk a G930FXXU1DQB7</*>
 <*>Nuevo Synapse MOD<#textfg_gray>
   <*>Soporte nativo de perfiles</*>
   <*>Nuevo tema Material Red</*></#></*>
@@ -64,7 +64,7 @@
 
 
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.0</#></b></u>
-<*>Sources Samsung G935FXXU1DPLT</*>
+<*>Sources Samsung G930FXXU1DPLT</*>
 <*>Compilado con Linaro 6.3.1</*>
 <*>Instalador AROMA</*>
 <*>Instalacion Magisk Root opcional</*>

@@ -86,9 +86,9 @@ menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.79-SR3
 menu.5desc=Famous Root of Chainfire, v2.79-SR3
 menu.group2=Other options
-menu.3=SynapseMOD
-menu.3desc=Application for kernel management\
-Mod of Synapse with profile management.
+menu.3=MTweaks
+menu.3desc=Aplicación para la gestión del kernel\
+Mod de Kernel Adiutor para S7.
 menu.4=Busybox
 menu.4desc=Busybox 1.26.0\
 Necessary. Uncheck only if you have a higher version.

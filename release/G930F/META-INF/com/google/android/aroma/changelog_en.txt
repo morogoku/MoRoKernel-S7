@@ -1,4 +1,7 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.6.1</#></b></u>
+<*>MTweaks 2.0.1, fixed rebooting error</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.6</#></b></u>
 <*>Sources XXU1DQD1</*>
 <*>Ramdisk XXU1DQD2</*>

@@ -1,4 +1,12 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.6</#></b></u>
+<*>Sources XXU1DQD1</*>
+<*>Ramdisk XXU1DQD2</*>
+<*>Updated mcRegistry a DQD2</*>
+<*>Re-add DVFS control</*>
+<*>Changed control App MTweaks<#textfg_gray>
+  <*>A KernelAdiutor Mod for S7</*></#></*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.5</#></b></u>
 <*>CPU A72 to freq. Stock</*>
 <*>Sources amd ramdisk XXU1DQCG</*>

@@ -1,4 +1,12 @@
 
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.6</#></b></u>
+<*>Sources XXU1DQD1</*>
+<*>Ramdisk XXU1DQD2</*>
+<*>Actualizado mcRegistry a DQD2</*>
+<*>Re-añadido control DVFS</*>
+<*>Cambiada App de control por MTweaks<#textfg_gray>
+  <*>Mod de KernelAdiutor para S7</*></#></*>
+
 <u><b><#selectbg_g>MoRoKernel-G935F-N v1.5</#></b></u>
 <*>CPU A72 a freq. Stock</*>
 <*>Sources y ramdisk XXU1DQCG</*>

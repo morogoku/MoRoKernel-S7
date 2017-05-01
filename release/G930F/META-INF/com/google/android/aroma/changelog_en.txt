@@ -1,4 +1,12 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.6.2</#></b></u>
+<*>MTweaks 2.1</*>
+<*>Toolchain GCC 6.3.0 of Tkkg1994, fix voLTE</*>
+<*>fix OTG</*>
+<*>fix FC animated photo</*>
+<*>Samsung Hotplug setting</*>
+<*>Magisk Manager 4.3.3</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.6.1</#></b></u>
 <*>MTweaks 2.0.1, fixed rebooting error</*>
 

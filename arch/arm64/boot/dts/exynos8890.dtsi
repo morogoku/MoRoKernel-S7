@@ -425,7 +425,7 @@
 		/* For CPUFREQ table */
 		/* APO */
 		cl0_idx_num = <19>;
-		cl0_max_support_idx = <4>;
+		cl0_max_support_idx = <2>;
 		cl0_min_support_idx = <18>;
 		cl0_boot_max_qos = <1586000>;
 		cl0_boot_min_qos = <1586000>;
@@ -433,7 +433,7 @@
 
 		/* MNGS */
 		cl1_idx_num = <28>;
-		cl1_max_support_idx = <3>;
+		cl1_max_support_idx = <2>;
 		cl1_min_support_idx = <27>;
 		cl1_boot_max_qos = <2288000>;
 		cl1_boot_min_qos = <2288000>;
@@ -443,8 +443,8 @@
 		cl1_reboot_limit_freq = <728000>;
 
 		cl1_max_support_idx_table = < 3	   /* Number of online core is 0 */
-			                      3    /* Number of online core is 1 */
-			                      3    /* Number of online core is 2 */
+			                      2    /* Number of online core is 1 */
+			                      2    /* Number of online core is 2 */
 			                      3    /* Number of online core is 3 */
 			                      3 >; /* Number of online core is 4 */
 

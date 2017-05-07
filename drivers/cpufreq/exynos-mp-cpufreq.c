@@ -92,16 +92,6 @@ static struct lpj_info global_lpj_ref;
 static unsigned int freq_min[CL_END] __read_mostly;	/* Minimum (Big/Little) clock frequency */
 static unsigned int freq_max[CL_END] __read_mostly;	/* Maximum (Big/Little) clock frequency */
 
-static int min_flexible_freq = 1352000;
-static int max_flexible_freq = 2080000;
-
-enum cpu_dvfs_mode {
-	BATTERY_MODE = 0,
-	BALANCE_MODE,
-	PERFORMANCE_MODE,
-};
-static enum cpu_dvfs_mode current_mode = BALANCE_MODE;
-
 static struct exynos_dvfs_info *exynos_info[CL_END];
 static unsigned int volt_offset;
 static struct cpufreq_freqs *freqs[CL_END];
@@ -116,7 +106,6 @@ static bool suspend_prepared = false;
 static bool hmp_boosted = false;
 #endif
 static bool cluster1_hotplugged = false;
-extern bool is_cpu_thermal;
 #endif
 
 #ifdef CONFIG_SW_SELF_DISCHARGING
@@ -1422,18 +1411,15 @@ static void save_cpufreq_min_limit(int input)
 
 	if (cluster1_input >= (int)freq_min[CL_ONE]) {
 #ifdef CONFIG_SCHED_HMP
-		if (!is_cpu_thermal && current_mode == PERFORMANCE_MODE) {
-			if (!hmp_boosted) {
-				if (set_hmp_boost(1) < 0)
-					pr_err("%s: failed HMP boost enable\n",
-								__func__);
-				else
-					hmp_boosted = true;
-			}
-			cluster1_input = min(cluster1_input, (int)freq_max[CL_ONE]);
-		} else
+		if (!hmp_boosted) {
+			if (set_hmp_boost(1) < 0)
+				pr_err("%s: failed HMP boost enable\n",
+							__func__);
+			else
+				hmp_boosted = true;
+		}
 #endif
-		cluster1_input = min(cluster1_input, min_flexible_freq);
+		cluster1_input = min(cluster1_input, (int)freq_max[CL_ONE]);
 		if (exynos_info[CL_ZERO]->boost_freq)
 			cluster0_input = exynos_info[CL_ZERO]->boost_freq;
 		else
@@ -1529,10 +1515,7 @@ static void save_cpufreq_max_limit(int input)
 			cluster1_hotplugged = false;
 		}
 
-		if (is_cpu_thermal && current_mode == BATTERY_MODE)
-			cluster1_input = max(cluster1_input, (int)freq_min[CL_ONE]);
-		else
-			cluster1_input = max(cluster1_input, max_flexible_freq);
+		cluster1_input = max(cluster1_input, (int)freq_min[CL_ONE]);
 		cluster0_input = core_max_qos_const[CL_ZERO].default_value;
 	} else if (cluster1_input < (int)freq_min[CL_ONE]) {
 		if (cluster1_input < 0) {
@@ -1856,30 +1839,6 @@ static ssize_t store_cluster0_volt_table(struct kobject *kobj, struct attribute 
 	return store_volt_table(kobj, attr, buf, count, CL_ZERO);
 }
 
-static ssize_t show_cpu_dvfs_mode_control(struct kobject *kobj,
-				struct attribute *attr, char *buf)
-{
-	return snprintf(buf, PAGE_SIZE, "%u\n", current_mode);
-}
-
-static ssize_t store_cpu_dvfs_mode_control(struct kobject *kobj, struct attribute *attr,
-					const char *buf, size_t count)
-{
-	int mode;
-
-	if (!sscanf(buf, "%8d", &mode))
-		return -EINVAL;
-
-	if (mode < 0 || mode > 2) {
-		pr_err("%s: invalid value (%d)\n", __func__, mode);
-		return -EINVAL;
-	}
-
-	current_mode = mode;
-
-	return count;
-}
-
 define_one_global_ro(cluster1_freq_table);
 define_one_global_rw(cluster1_min_freq);
 define_one_global_rw(cluster1_max_freq);
@@ -1888,7 +1847,6 @@ define_one_global_ro(cluster0_freq_table);
 define_one_global_rw(cluster0_min_freq);
 define_one_global_rw(cluster0_max_freq);
 define_one_global_rw(cluster0_volt_table);
-define_one_global_rw(cpu_dvfs_mode_control);
 
 static struct attribute *mp_attributes[] = {
 	&cluster1_freq_table.attr,
@@ -1899,7 +1857,6 @@ static struct attribute *mp_attributes[] = {
 	&cluster0_min_freq.attr,
 	&cluster0_max_freq.attr,
 	&cluster0_volt_table.attr,
-	&cpu_dvfs_mode_control.attr,
 	NULL
 };
 

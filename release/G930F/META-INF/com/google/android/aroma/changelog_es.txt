@@ -1,4 +1,14 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.7</#></b></u>
+<*>Toolchain UBER 6.3.1 MoRo</*>
+<*>Freq. Max Big 2800MHz, y LITTLE 1794MHz</*>
+<*>Revertido Control DVFS</*>
+<*>ARCH Power, mejora la bateria</*>
+<*>AIK Kitchen 2.7</*>
+<*>Sources XXU1DQD7</*>
+<*>Ramdisk XXU1DQD9</*>
+<*>Actualizado mcRegistry a DQD9</*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.6.2</#></b></u>
 <*>MTweaks 2.1</*>
 <*>Toolchain GCC 6.3.0 of Tkkg1994, fix voLTE</*>

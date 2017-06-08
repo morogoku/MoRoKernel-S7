@@ -296,9 +296,11 @@ on init
 
     # change own for camera preview lagging
     chown system system /sys/kernel/hmp/down_threshold
+    chown system system /sys/kernel/hmp/up_threshold
 
     # set permission to 0660 for camera preview lagging
-    chmod 0660 /sys/kernel/hmp/down_threshold 
+    chmod 0660 /sys/kernel/hmp/down_threshold
+    chmod 0660 /sys/kernel/hmp/up_threshold
 
     # qtaguid will limit access to specific data based on group memberships.
     #   net_bw_acct grants impersonation of socket owners.
@@ -363,6 +365,7 @@ on load_persist_props_action
     load_persist_props
     start logd
     start logd-reinit
+    start scs
 
 # Indicate to fw loaders that the relevant mounts are up.
 on firmware_mounts_complete
@@ -1419,7 +1422,7 @@ service iod /system/bin/iod
 
 on property:sys.boot_completed=1
     start iod
-	start moro-init
+    start moro-init
 
 # icd
 on property:init.svc.media=restarting

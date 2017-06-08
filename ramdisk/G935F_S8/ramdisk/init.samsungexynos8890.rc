@@ -647,6 +647,18 @@ service fingerprintd /system/bin/fingerprintd
     user system
     group system
 
+# faced
+service faced /system/bin/faced
+    class late_start
+    user system
+    group system
+
+# irisd
+service irisd /system/bin/irisd
+    class late_start
+    user system
+    group system
+
 # Copy DRM Key
     copy /system/app/wv.keys /factory/wv.keys
 
@@ -771,6 +783,12 @@ on property:ro.securestorage.support=true
     chmod 0711 /dev/.secure_storage
     chown system system /dev/.secure_storage
     start secure_storage
+
+# AIR
+service visiond /system/bin/visiond
+    class main
+    user system
+    group system camera media media_rw
 
 # SSWAP
 service swapon /sbin/sswap -s -f 2048

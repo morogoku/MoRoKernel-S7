@@ -5,6 +5,8 @@
 make clean
 make ARCH=arm64 distclean
 
+rm -f ./build.log
+
 # Remove Created Ramdisk Files
 rm -f $PWD/ramdisk/G930F/image-new.img
 rm -f $PWD/ramdisk/G930F/ramdisk-new.cpio.gz

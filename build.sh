@@ -2,7 +2,7 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# Script MoRoKernel v1.0
+# Script MoRoKernel v1.1
 #
 
 # SETUP
@@ -185,7 +185,7 @@ FUNC_BUILD_FLASHABLES()
 
 # MAIN PROGRAM
 # ------------
-rm -f ./build.log
+
 (
 	sh ./clean.sh
 	START_TIME=`date +%s`

@@ -1,0 +1,132 @@
+ui_print("***********************************************");
+ui_print("* MoRoKernel Nougat Kernel");
+ui_print("* For SM-G935F");
+ui_print("* Running android Nougat");
+ui_print("* Developed by MoroGoku");
+ui_print("* http://www.esp-desarrolladores.com");
+ui_print("***********************************************");
+set_progress(0.01);
+
+
+if is_mounted("/system") == "/system" then
+    assert(run_program("/sbin/busybox", "umount", "/system"));
+endif;
+
+if is_mounted("/data") == "/data" then
+    assert(run_program("/sbin/busybox", "umount", "/data"));
+endif;
+	
+ui_print("@-> Mounting partitions");
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
+
+ui_print("@-> Flashing kernel");
+package_extract_file("boot.img", "/dev/block/platform/155a0000.ufs/by-name/BOOT");
+
+ui_print("@-> Patching /system");
+package_extract_dir("moro", "/tmp/moro");
+set_perm_recursive(0, 0, 0777, 0777, "/tmp/moro");
+run_program("/tmp/moro/system_patch.sh");
+
+ui_print("@-> Copy correct fingerprint files");
+package_extract_dir("system", "/system");
+
+ui_print("@-> Busybox ");
+run_program("/tmp/moro/busybox.sh");
+
+
+####################################################
+# OTHER OPTIONS
+####################################################
+
+# MTweaks
+if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
+	ui_print("@-> MTWeaks App");
+	run_program("/tmp/moro/clean_mtweaks.sh");
+	run_program("/tmp/moro/clean_synapse.sh");
+	run_program("/tmp/moro/clean.sh", "mtweaks");
+	package_extract_dir("mtweaks", "/data/app");
+endif;
+
+
+####################################################
+# ROOT
+####################################################
+set_progress(0.10);
+
+# Stock
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt1" then
+	if file_getprop("/tmp/aroma/stock.prop","selected.1") == "2" then
+		ui_print("@-> Without Root");
+		ui_print("   '-> Clearing previous root");
+		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_magisk_apps.sh");
+		run_program("/tmp/moro/clean.sh", "magisk");
+		run_program("/tmp/moro/clean_supersu_app.sh");
+		run_program("/tmp/moro/clean.sh", "supersu");
+	endif;
+endif;
+
+	
+# Magisk Root
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt2" then
+show_progress(0.95, "-8000");
+	ui_print("@-> Rooting with Magisk Manager");
+
+	ui_print("   '-> Clearing previous root");
+	run_program("/tmp/moro/clean_su.sh");
+	run_program("/tmp/moro/clean_supersu_app.sh");
+	run_program("/tmp/moro/clean.sh", "supersu");
+
+	if file_getprop("/tmp/aroma/magisk.prop","selected.1") == "2" then
+		
+		ui_print("   '-> Clearing magisk app & data");
+		run_program("/tmp/moro/clean_magisk_apps.sh");
+		run_program("/tmp/moro/clean.sh", "magisk");
+		
+		ui_print("   '-> App Magisk Manager");
+		package_extract_dir("magisk/app", "/data/app");
+
+	endif;
+		
+	ui_print("   '-> Magisk 12");
+	ui_print(" ");
+	package_extract_dir("magisk/magisk", "/tmp/moro/magisk");
+	run_program("/sbin/busybox", "unzip", "/tmp/moro/magisk/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/magisk");
+	run_program("/sbin/busybox", "sh", "/tmp/moro/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/magisk/magisk.zip");
+endif;
+
+# SuperSU Root
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt3" then
+show_progress(0.95, "-34000");
+	ui_print("@-> Rooting with SuperSU");
+	
+	ui_print("   '-> Clearing previous root");
+	run_program("/tmp/moro/clean_su.sh");
+	run_program("/tmp/moro/clean_magisk_apps.sh");
+	run_program("/tmp/moro/clean.sh", "magisk");
+	run_program("/tmp/moro/clean_supersu_app.sh");
+	run_program("/tmp/moro/clean.sh", "supersu");
+			
+	ui_print("   '-> SuperSU 2.79-SR3");
+	ui_print(" ");
+	package_extract_dir("supersu", "/tmp/moro/supersu");
+	run_program("/sbin/busybox", "unzip", "/tmp/moro/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/supersu");
+	run_program("/sbin/busybox", "sh", "/tmp/moro/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/supersu/supersu.zip");
+endif;
+set_progress(0.95);
+#####################################################
+
+ui_print(" ");
+ui_print("@-> Setting Permissions");
+set_metadata_recursive("/system/app/mcRegistry", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/data/app", "uid", 1000, "gid", 1000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+
+ui_print("@-> Unmounting Partition");
+ifelse(is_mounted("/system"), unmount("/system"));
+delete_recursive("/tmp/moro");
+set_progress(1.00);
+ui_print(" ");
+ui_print("** Done **");
+ui_print(" ");
+

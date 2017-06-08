@@ -1,0 +1,451 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:DOZE,
+    elements:[
+	{ SDescription:{ 
+		description:{
+			en:"Doze reduces battery consumption by deferring background CPU and network activity for apps when the device is unused for long periods of time. More info: <a href='http://developer.android.com/training/monitoring-device-state/doze-standby.html'>developer.android.com</a>",
+			es:"Doze o Descanso, reduce el consumo de la batería al aplazar la actividad en segundo plano de la CPU y de la actividad de red para las aplicaciones cuando el dispositivo no se utiliza durante largos períodos de tiempo. Más info: <a href='http://developer.android.com/training/monitoring-device-state/doze-standby.html'>developer.android.com</a>"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{ 
+		description:{
+			en:"WARNING: Notifications may be delayed if changed from STOCK !",
+			es:"ATENCION: Las notificaciones pueden retrasarse si se cambia el modo STOCK !"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:{
+			en:"Doze Idle Mode",
+			es:"Modo Doze de Reposo"
+		},
+		description:{
+			en:"Here you can either Enable or Disable Doze completely.",
+			es:"Aquí puede activar o desactivar Doze completamente."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+        title:"Doze Idle Mode",
+		description:" ",
+		default:$(echo "$(/res/synapse/actions/doze doze_idle_mode)"),
+		action:"doze doze_idle_mode",
+		values:[Disabled, Enabled]
+	}},
+	{ SSpacer:{
+		height:2
+	}},
+	{ SPane:{
+		title:{
+			en:"Doze Idle State",
+			es:"Estado Doze de Reposo"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{ 
+		description:{
+			en:"STOCK = Return to 'ACTIVE' state.",
+			es:"STOCK = Regresa al estado 'ACTIVO'."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{ 
+		description:{
+			en:"AGGRESSIVE = Force directly to 'IDLE' state.",
+			es:"AGGRESSIVE = Fuerza directamente al estado 'Reposo'."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{ 
+		description:{
+			en:"AUTO = Force 'IDLE' state when screen is OFF (if not in-call) & 'ACTIVE' state when screen is ON",
+			es:"AUTO = Fuerza el estado de 'Reposo' cuando la pantalla está apagada (si no esta en llamada) y al estado 'ACTIVO' cuando la pantalla está encendida"
+		}
+	}},
+	{ SSpacer:{
+		height:2
+	}},
+	{ SOptionList:{
+        title:{
+			en:"Device Idle State",
+			es:"Estado de Reposo del Dispositivo"
+		},
+		description:" ",
+		default:$(echo "$(/res/synapse/actions/cortex cortexbrain_doze_auto)"),
+		action:"cortex cortexbrain_doze_auto",
+		values:[Stock, Aggressive, Auto]
+	}},
+	{ SSpacer:{
+		height:2
+	}},
+	{ SPane:{
+		title:{
+			en:"Doze Profiles",
+			es:"Perfiles Doze"
+		},
+		description:{
+			en:"'User' profile permits you to manually set parameters. The device may be unresponsive for a few seconds whilst applying profiles.",
+			es:"Perfil 'User' le permite ajustar manualmente los parametros. El dispositivo puede no responder durante unos segundos mientras se aplica el perfil."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Doze Profiles",
+			es:"Perfiles de Doze"
+		},
+		description:" ",
+		default:$(echo "$(/res/synapse/actions/doze doze_profile)"),
+		action:"doze doze_profile",
+		values:[Stock, Battery, User],
+		notify:[
+			{
+				on:APPLY,
+				do:[ REFRESH, APPLY ],
+				to:[
+					"doze /res/synapse/moro/doze_inactive_to",
+					"doze /res/synapse/moro/doze_sensing_to",
+					"doze /res/synapse/moro/doze_locating_to",
+					"doze /res/synapse/moro/doze_location_accuracy",
+					"doze /res/synapse/moro/doze_motion_inactive_to",
+					"doze /res/synapse/moro/doze_idle_after_inactive_to",
+					"doze /res/synapse/moro/doze_idle_pending_to",
+					"doze /res/synapse/moro/doze_max_idle_pending_to",
+					"doze /res/synapse/moro/doze_idle_pending_factor",
+					"doze /res/synapse/moro/doze_idle_to",
+					"doze /res/synapse/moro/doze_max_idle_to",
+					"doze /res/synapse/moro/doze_idle_factor",
+					"doze /res/synapse/moro/doze_min_time_to_alarm",
+					"doze /res/synapse/moro/doze_max_temp_app_whitelist_duration",
+					"doze /res/synapse/moro/doze_mms_temp_app_whitelist_duration",
+					"doze /res/synapse/moro/doze_sms_temp_app_whitelist_duration"
+				],
+			}
+		]
+	}},
+	{ SSpacer:{
+		height:2
+	}},
+	{ SPane:{
+		title:{
+			en:"Doze Parameters",
+			es:"Párametros de Doze"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{ 
+		description:{
+			en:"Apply user Parameter changes & then PRESS the button !",
+			es:"Aplicar los cambios de los Parámetros y luego PRESIONAR el botón !"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:{
+			en:"Apply User Parameters",
+			es:"Aplicar Parametros de Usuario"
+		},
+		action:"sh /res/synapse/actions/doze_apply"
+	}},
+	{ SSpacer:{
+		height:2
+	}},
+        { SLiveLabel:{
+		title:"SENSORS",
+		refresh:10000000,
+		style:"bold",
+		action:"echo "
+        }},
+	{ SSeekBar:{
+		title:{
+			en:"Inactive Timeout",
+			es:"Tiempo de espera inactivo"
+		},
+		description:{
+			en:"This is the time, after becoming inactive, at which we start looking at the motion sensor to determine if the device is being left alone. We don't do this immediately after going inactive just because we don't want to be continually running the significant motion sensor whenever the screen is off.\n",
+			es:"Este es el momento, despues de entrar en inactividad, cuando empezamos a revisar el sensor de movimiento para determinar si el dispositivo ha sido dejado tranquilo. Esto no lo hacemos inmediatamente después de entrar en inactividad por que no queremos que quede andando continuamente el sensor principal de movimiento cada vez que la pantalla este apagada.\n"
+		},
+		unit:" min", min:0, step:1, max:30,
+		default:30,
+		action:"doze /res/synapse/moro/doze_inactive_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Sensing Timeout",
+			es:"Detección de tiempo de espera"
+		},
+		description:{
+			en:"If we don't receive a callback from AnyMotion in this amount of time + locating_to, we will change from STATE_SENSING to STATE_INACTIVE, and any AnyMotion callbacks while not in STATE_SENSING will be ignored.\n",
+			es:"Si no recibimos una lectura desde cualquier sensor de movimiento en este tiempo de espera ademas de la localización, cambiaremos desde MODO_SENSIBLE a MODO_INACTIVO, y cualquier lectura de movimiento mientras no se esté en MODO_SENSIBLE será ignorado.\n"
+		},
+		unit:" min", min:0, step:1, max:4,
+		default:4,
+		action:"doze /res/synapse/moro/doze_sensing_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Locating Timeout",
+			es:"Tiempo de Espera de la ubicación"
+		},
+		description:{
+			en:"This is how long we will wait to try to get a good location fix before going in to idle mode.\n",
+			es:"Esto quiere decir cuanto tiempo esperaremos obtener una buena última ubicacion antes de entrar en modo reposo.\n"
+		},
+		unit:" sec", min:0, step:1, max:30,
+		default:30,
+		action:"doze /res/synapse/moro/doze_locating_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Location Accuracy",
+			es:"Exactitud de la Ubicación"
+		},
+		description:{
+			en:"The desired maximum accuracy (in meters) we consider the location to be good enough to go on to idle. We will be trying to get an accuracy fix at least this good or until locating_to expires.\n",
+			en:"El nivel de máxima exactitud (en metros) que consideremos que es suficiente antes de entrar en modo reposo. Estaremos tratando de obtener un Fix en exactitud al menos así de bueno o hasta que la localización expire.\n"
+		},
+		unit:" m", min:20, step:1, max:50,
+		default:20,
+		action:"doze /res/synapse/moro/doze_location_accuracy"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Motion Inactive Timeout",
+			es:"Tiempo de espera de la inactividad de la ubicación"
+		},
+		description:{
+			en:"This is the time, after seeing motion, that we wait after becoming inactive from that until we start looking for motion again.\n",
+			es:"Esto es el tiempo, después de registrar la ubicación, que esperamos después de volverse inactivo y desde donde volvemos a buscar la ubicación.\n"
+		},
+		unit:" min", min:0, step:1, max:10,
+		default:10,
+		action:"doze /res/synapse/moro/doze_motion_inactive_to"
+        }},
+	{ SSpacer:{
+		height:2
+	}},
+    { SLiveLabel:{
+		title:"IDLE",
+		refresh:10000000,
+		style:"bold",
+		action:"echo "
+        }},
+	{ SSeekBar:{
+		title:{
+			en:"Idle After Inactive Timeout",
+			es:"Reposo después del tiempo de espera de la inactividad"
+		},
+		description:{
+			en:"This is the time, after the inactive timeout elapses, that we will wait looking for significant motion until we truly consider the device to be idle.\n",
+			es:"Este es el momento, después de que el conteo del tiempo de espera concluye, que esperaremosmos a observar algún movimiento significativo hasta que verdaderamente consideramos al terminal en reposo.\n"
+		},
+		unit:" min", min:0, step:1, max:30,
+		default:30,
+		action:"doze /res/synapse/moro/doze_idle_after_inactive_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Idle Pending Timeout",
+			es:"Tiempo de espera del modo Pendiente de repozar"
+		},
+		description:{
+			en:"This is the initial time, after being idle, that we will allow ourself to be back in the IDLE_PENDING state allowing the system to run normally until we return to idle.\n",
+			es:"Este es el momento inicial, después de estar en reposo, donde podemos volver al modo REPOSO_PENDIENTE permitiendo al sistema correr de forma normal hasta regresar al reposo.\n"
+		},
+		unit:" min", min:0, step:1, max:5,
+		default:5,
+		action:"doze /res/synapse/moro/doze_idle_pending_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Max Idle Pending Timeout",
+			es:"Tiempo de espera máximo del modo REPOSO_PENDIENTE"
+		},
+		description:{
+			en:"Maximum pending idle timeout (time spent running) we will be allowed to use.\n",
+			es:"Tiempo de espera máximo del modo REPOSO_PENDIENTE (lo que demora funcionando) y que podremos usarlo.\n"
+		},
+		unit:" min", min:0, step:1, max:10,
+		default:10,
+		action:"doze /res/synapse/moro/doze_max_idle_pending_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Idle Pending Factor",
+			es:"factor de reposo pendiente"
+		},
+		description:{
+			en:"Scaling factor to apply to current pending idle timeout each time we cycle through that state.\n",
+			es:"Escala de factores que aplican al actual modo de reposo pendiente cada vez que hagamos un ciclo atraves de este modo.\n"
+		},
+		unit:"", min:1, step:1, max:2,
+		default:2,
+		action:"doze /res/synapse/moro/doze_idle_pending_factor"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Idle Timeout",
+			es:"Tiempo de espera del reposo"
+		},
+		description:{
+			en:"This is the initial time that we want to sit in the idle state before waking up again to return to pending idle and allowing normal work to run.\n",
+			es:"Este es el momento inicial en el que queremos esperar en el estado de reposo despés de volver a despertar para regresar al modo de reposo pendiente y permitamos el trabajo normal.\n"
+		},
+		unit:" min", min:0, step:1, max:60,
+		default:60,
+		action:"doze /res/synapse/moro/doze_idle_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Max Idle Timeout",
+			es:"Tiempo de espera maximo del reposo"
+		},
+		description:{
+			en:"Maximum idle duration we will be allowed to use.\n",
+			es:"duracion maxima del reposo que será permitida para usar.\n"
+		},
+		unit:" hr", min:1, step:1, max:6,
+		default:6,
+		action:"doze /res/synapse/moro/doze_max_idle_to"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Idle Factor",
+			es:"Factor de reposo"
+		},
+		description:{
+			en:"Scaling factor to apply to current idle timeout each time we cycle through that state.\n",
+			es:"Escala de factores que aplican durante el tiempo de espera del reposo cada vez que atravesemos n ciclo en ese estado.\n"
+		},
+		unit:"", min:1, step:1, max:2,
+		default:2,
+		action:"doze /res/synapse/moro/doze_idle_factor"
+        }},
+	{ SSpacer:{
+		height:2
+	}},
+    { SLiveLabel:{
+		title:"APPS",
+		refresh:10000000,
+		style:"bold",
+		action:"echo "
+        }},
+	{ SSeekBar:{
+		title:{
+			en:"Min Time to Alarm",
+			es:"Tiempo minimo de alarmas"
+		},
+		description:{
+			en:"This is the minimum time we will allow until the next upcoming alarm for us to actually go in to idle mode.\n",
+			es:"Este es el tiempo minimo que permetiremos hasta la siguiente alarma antes de que entremos al modo reposo.\n"
+		},
+		unit:" min", min:0, step:1, max:60,
+		default:60,
+		action:"doze /res/synapse/moro/doze_min_time_to_alarm"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"Max Temp App Whitelist Duration",
+			es:"Max Temp App Whitelist Duration"
+		},
+		description:{
+			en:"Max amount of time to temporarily whitelist an app when it receives a high tickle.\n",
+			es:"Axima cantidad de tiempo para meter una aplicacion en la lista blanca cuando recive una notificacion.\n"
+		},
+		unit:" min", min:0, step:1, max:5,
+		default:5,
+		action:"doze /res/synapse/moro/doze_max_temp_app_whitelist_duration"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"MMS Temp App Whitelist Duration",
+			es:"Duracion en la lista blanca de una aplicacion de MMS"
+		},
+		description:{
+			en:"Amount of time we would like to whitelist an app that is receiving an MMS.\n",
+			es:"cantidad de tiempo que mantendremos a una aplicacion de MMS en la lista blanca.\n"
+		},
+		unit:" sec", min:0, step:1, max:60,
+		default:60,
+		action:"doze /res/synapse/moro/doze_mms_temp_app_whitelist_duration"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:{
+			en:"SMS Temp App Whitelist Duration",
+			es:"Duración en la lista blanca de una aplicación de SMS"
+		},
+		description:{
+			en:"Amount of time we would like to whitelist an app that is receiving an SMS.\n",
+			es:"cantidad de tiempo que mantendremos una aplicacion de SMS en lalista blanca.\n"
+		},
+		unit:" sec", min:0, step:1, max:20,
+		default:20,
+		action:"doze /res/synapse/moro/doze_sms_temp_app_whitelist_duration"
+        }},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG

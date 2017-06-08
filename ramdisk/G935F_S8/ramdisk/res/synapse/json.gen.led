@@ -1,0 +1,172 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:LED,
+    elements:[
+	{ SPane:{
+		title:"LED",
+		description:{
+			en:"NOTE: 3rd party apps may override controls.",
+			es:"NOTA: Las aplicaciones de terceros pueden anular los controles"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"Enable LED Notifications",
+			es:"LED de Notificaciones"
+		},
+		description:{
+			en:"Enable or disable all LED notifications !\nDefault: Enabled.\n",
+			es:"Activar o desactivar todas las notificaciones LED\nPor defecto: Enabled.\n"
+		},
+		default:0,
+		action:"generic /sys/class/sec/led/led_always_disable",
+		values:{
+			0:"Enabled", 1:"Disable"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:{
+			en:"LED Notification Delay",
+			es:"Delay Notificación LED"
+		},
+		description:{
+			en:"Control LED delay for missed notifications.",
+			es:"Controle el tiempo que permanece encendido y apagado el LED de notificaciones."
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Delay ON",
+		description:{
+			en:"Divider for delay ON.\nDefault: 0.5\n",
+			es:"Tiempo que permanece encendido del LED.\nPor defecto: 0.5\n"
+		},
+		unit:" sec",
+		weight:0.001,
+		min:0,
+		max:3000,
+		step:100,
+		default:$(cat /sys/class/sec/led/led_notification_delay_on),
+		action:"generic /sys/class/sec/led/led_notification_delay_on"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Delay OFF",
+		description:{
+			en:"Divider for delay OFF.\nDefault: 5\n",
+			es:"Tiempo que permanece apagado el LED.\nPor defecto: 5\n"
+		},
+		unit:" sec",
+		weight:0.001,
+		min:0,
+		max:10000,
+		step:100,
+		default:$(cat /sys/class/sec/led/led_notification_delay_off),
+		action:"generic /sys/class/sec/led/led_notification_delay_off"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:{
+			en:"LED Fade-in/out Time Period",
+			es:"Efecto LED Fade-in/out"
+		},
+		description:{
+			en:"Control LED fade-in/out time period for missed notifications.",
+			es:"Controle el tiempo del efecto Fade-in/out para las notificaciones"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:{
+			en:"LED Fade Control",
+			es:"Control Fade LED"
+		},
+		description:" ",
+		default:0,
+		action:"generic /sys/class/sec/led/led_notification_ramp_control",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Fade-in",
+		description:{
+			en:"Sets the time period of the rising slope.\nDefault: 0.8\n",
+			es:"Controla la duracion del efecto fade de encendido.\nPor defecto: 0.8\n"
+		},
+		unit:" sec",
+		weight:0.001,
+		min:0,
+		max:1900,
+		step:100,
+		default:$(cat /sys/class/sec/led/led_notification_ramp_up),
+		action:"generic /sys/class/sec/led/led_notification_ramp_up"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SSeekBar:{
+		title:"Fade-out",
+		description:{
+			en:"Sets the time period of the falling slope. (no fade-out time = 0 / default = 1)\n",
+			es:"Controla la duracion del efecto fade de apagado.\nPor defecto: 1\n"
+		},
+		unit:" sec",
+		weight:0.001,
+		min:0,
+		max:1900,
+		step:100,
+		default:$(cat /sys/class/sec/led/led_notification_ramp_down),
+		action:"generic /sys/class/sec/led/led_notification_ramp_down"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Test"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:{
+			en:"Test Notification",
+			es:"Test Notificación"
+		},
+		action:"led 3"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:{
+			en:"Stop Notification",
+			es:"Stop Notificación"
+		},
+		action:"led 0"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG

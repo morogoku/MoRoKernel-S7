@@ -1,0 +1,29 @@
+
+BB=/system/xbin/busybox;
+
+
+if [ "$($BB mount | grep rootfs | cut -c 26-27 | grep -c ro)" -eq "1" ]; then
+	$BB mount -o remount,rw /;
+fi;
+
+P=/sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster0_volt_table;
+
+
+
+readValue() {
+	while read FREQ UVOLT; do
+		if [ $FREQ == $1 ]; then
+			echo $UVOLT
+			return
+		fi
+	done < $P
+}
+
+
+	if [[ ! -z $2 ]]; then
+		echo $1 $2 > $P
+	fi
+
+	echo $(readValue $1)
+
+$BB mount -t rootfs -o remount,ro rootfs;

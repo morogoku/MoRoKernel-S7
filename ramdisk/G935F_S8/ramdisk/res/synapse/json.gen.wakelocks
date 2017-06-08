@@ -1,0 +1,120 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:WAKELOCK,
+    elements:[
+      	{ SPane:{
+			title:{
+				en:"Wakelock control",
+				es:"Control Wakelock"
+			},
+			description:{
+				en:"Manage wakelock for drivers. WARNING: Disabling of wakelocks may have unintended impact on various ROM features, apps or hardware. Leave them default if unsure.",
+				es:"Manage wakelock for drivers. WARNING: Disabling of wakelocks may have unintended impact on various ROM features, apps or hardware. Leave them default if unsure."
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SDescription:{
+			description:{
+				en:"WARNING: Disabling of wakelocks may have impact on various ROM features or apps such as S-Health & Google Fit.",
+				es:"WARNING: Disabling of wakelocks may have impact on various ROM features or apps such as S-Health & Google Fit."
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:{
+				en:"SensorHub",
+				es:"SensorHub"
+			},
+			description:" The SensorHub Wakelock is one of the biggest wake sources. Disable for better deep sleep and less awake time. Enable for stock behavior.\n",
+			default:`cat /sys/module/wakeup/parameters/enable_sensorhub_wl`,
+			action:"generic /sys/module/wakeup/parameters/enable_sensorhub_wl",
+			values:{ Y:"Enabled", N:"Disabled"
+			}	
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:"SSP",
+			description:" The SSP Wakelock is one of the biggest wake sources after Sensorhub. Disable for better deep sleep and less awake time. Enable for stock behavior.\n",
+			default:`cat /sys/module/wakeup/parameters/enable_ssp_wl`,
+			action:"generic /sys/module/wakeup/parameters/enable_ssp_wl",
+			values:{ Y:"Enabled", N:"Disabled"
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:"GPS",
+			description:" The bcm4359 Wakelock (GPS chip) is one of the biggest wake sources after Sensorhub & SSP. Disable for better deep sleep and less awake time. Enable for stock behavior.\n",
+			default:`cat /sys/module/wakeup/parameters/enable_bcmdhd4359_wl`,
+			action:"generic /sys/module/wakeup/parameters/enable_bcmdhd4359_wl",
+			values:{ Y:"Enabled", N:"Disabled"
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:"Wireless",
+			description:" Wireless Wakelock. Disable for better deep sleep and less awake time. Enable for stock behavior.\n",
+			default:`cat /sys/module/wakeup/parameters/enable_wlan_wake_wl`,
+			action:"generic /sys/module/wakeup/parameters/enable_wlan_wake_wl",
+			values:{ Y:"Enabled", N:"Disabled"
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:"Bluetooth",
+			description:" Bluetooth Wakelock. Disable for better deep sleep and less awake time. Enable for stock behavior.\n",
+			default:`cat /sys/module/wakeup/parameters/enable_bluedroid_timer_wl`,
+			action:"generic /sys/module/wakeup/parameters/enable_bluedroid_timer_wl",
+			values:{ Y:"Enabled", N:"Disabled"
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SPane:{
+			title:"Battery",
+			description:" "
+		}},
+		{ SSeekBar:{
+			title:"Battery polling",
+			description:"Default = 10 (Lower = lower wake time)\n",
+			unit:"",
+			min:1,
+			max:20,
+			step:1,
+			default:`cat /sys/module/sec_battery/parameters/wl_polling`,
+			action:"generic /sys/module/sec_battery/parameters/wl_polling"
+		}},
+		{ SPane:{
+			title:"NFC",
+			description:" "
+		}},
+		{ SSeekBar:{
+			title:"NFC",
+			description:"Default = 2 (Lower = lower wake time)\n",
+			unit:"",
+			min:1,
+			max:3,
+			step:1,
+			default:`cat /sys/module/sec_nfc/parameters/wl_nfc`,
+			action:"generic /sys/module/sec_nfc/parameters/wl_nfc"
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+    ]
+}
+CTAG

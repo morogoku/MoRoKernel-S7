@@ -1,0 +1,123 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"CPU A72 big",
+    elements:[
+		{ SPane:{
+		    title:{
+                en:"A72 big Cores Frequencies",
+                es:"Frecuencias big cores A72"
+        	},
+		}},
+        { SLiveLabel:{
+		    title:{
+			    en:"Current frequency",
+			    es:"Frecuencia actual"
+		    },
+		    refresh:500,
+		    action:"live LiveCPUFrequency_big"
+	    }},
+	    { SSpacer:{
+		    height:1
+	    }},
+	    { SSeekBar:{
+		    title:{
+                en:"MAX frequency",
+                es:"Freq. MAXIMA"
+            },
+		    description:{
+                en:"Set the maximum frequency the CPU scales up to.\n",
+                es:"Ajuste la frecuencia máxima a la que la CPU puede subir.\n"
+            },
+		    default:`cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq`,
+		    action:"generic /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq",
+		    values:{
+`
+			    for FREQ in $(cat /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_freq_table); do
+				    LABEL=$(($FREQ / 1000))
+				    echo "$FREQ:\"${LABEL} MHz\", "
+			    done
+`
+		    }
+	    }},
+	    { SSpacer:{
+		    height:1
+	    }},
+	    { SSeekBar:{
+		    title:{
+                en:"MIN frequency",
+                es:"Freq. MINIMA"
+            },
+		    description:{
+                en:"Set the minimum frequency the CPU scales down to.\n",
+                es:"Ajuste la frecuencia mínima a la que la CPU bajar.\n"
+            },
+		    default:`cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq`,
+		    action:"generic /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq",
+		    values:{
+`
+			    for FREQ in $(cat /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_freq_table); do
+				    LABEL=$(($FREQ / 1000))
+				    echo "$FREQ:\"${LABEL} MHz\", "
+			    done
+`
+		    }
+        }},
+	    { SSpacer:{
+		    height:1
+	    }},
+		{ SPane:{
+			title:{
+				en:"A72 big Cores Voltage Control",
+				es:"Control de Voltaje big Cores A72"
+			},
+			description:{
+				en:"Decreasing voltage will lower power consumption of the CPU. Increasing it on overclocked frequencies improves stability.\nToo low voltage may cause instabilities and freezes.",
+				es:"Disminuir el voltaje reducirá el consumo de energía de la CPU. Aumentarla en frecuencias de overclock mejora la estabilidad.\nUn voltaje demasiado bajo puede causar inestabilidad y congelaciones."
+			}
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+		{ SOptionList:{
+			title:{
+				en:"Voltage Profile",
+				es:"Perfil Voltaje"
+			},
+			description:{
+				en:"Choose a profile to adjust all voltages at a time.\nIt takes about 5 seconds to make the change.\n",
+				es:"Elija un perfil para ajustar todos los voltajes a la vez.\nTarda unos 5 segundos en hacer el cambio.\n"
+			},
+			default:Stock,
+			action:"c1v-profile",
+			values:[ Custom, +25mV, Stock, -25mV, -50mV, -75mV ],
+			notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:[ 
+`
+							while read -r FREQ VOLT; do
+								echo "\"c1volt ${FREQ}\","
+							done < /data/.moro/bk/bk_orig_cl1_voltage
+`
+						],
+					}
+			]
+		}},
+		{ SSpacer:{
+			height:1
+		}},
+`
+		while read -r FREQ VOLT; do
+			echo '{ SSeekBar:{ default:'"$VOLT"', title:"'$(($FREQ / 1000))' MHz"'
+			echo ', action:"c1volt '"${FREQ}"'", unit:" mV", weight:0.001, min:500000, step:6250, max:1575000 }},'
+		done < /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_volt_table
+`
+		{ SSpacer:{
+			height:1
+		}},
+	]
+}
+CTAG

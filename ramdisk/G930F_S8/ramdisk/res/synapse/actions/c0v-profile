@@ -1,0 +1,65 @@
+# CPU volt profile for synapse
+# Made by Morogoku, http://www.esp-desarrolladores.com
+
+BB=/system/xbin/busybox;
+
+
+if [ "$($BB mount | grep rootfs | cut -c 26-27 | grep -c ro)" -eq "1" ]; then
+	$BB mount -o remount,rw /;
+fi;
+
+P=/sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster0_volt_table;
+
+
+write_values(){
+
+	while read FREQ VOLT; do
+		CL0_VOLT=`expr $VOLT $uv`;
+		echo $FREQ $CL0_VOLT > $P;
+	done < /data/.moro/bk/bk_orig_cl0_voltage
+}
+
+
+
+#Profiles
+Custom(){
+
+}
+
++25mV(){
+	uv="+ 25000";
+	write_values;
+}
+
+Stock(){
+	uv="";
+	write_values;
+}
+
+-25mV(){
+	uv="- 25000";
+	write_values;
+}
+
+-50mV(){
+	uv="- 50000";
+	write_values;
+}
+
+-75mV(){
+	uv="- 75000";
+	write_values;
+}
+
+
+	if [[ ! -z $1 ]]; then
+		$BB echo "$1" > /res/synapse/moro/c0volt_prof;
+		$1;
+	else	
+		$(cat /res/synapse/moro/c0volt_prof);
+	fi;
+	
+	$BB echo "$(cat /res/synapse/moro/c0volt_prof)";
+
+
+$BB mount -t rootfs -o remount,ro rootfs;

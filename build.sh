@@ -45,16 +45,20 @@ echo ""
 read -p "Build Kernel for (1) S7 or (2) S7 Edge? " prompt
 
 if [ $prompt == "1" ]; then
-	export MODEL=G930F
+    export MODEL=G930F
+    export MODEL2=G930F_S8
     KERNEL_DEFCONFIG=moro-herolte_defconfig
     echo "S7 Flat G930F Selected"
 else [ $prompt == "2" ]
     export MODEL=G935F
+    export MODEL2=G935F_S8
     KERNEL_DEFCONFIG=moro-hero2lte_defconfig
     echo "S7 Edge G935F Selected"
 fi
 
-export KERNEL_VERSION="MoRoKernel-$MODEL-N-v1.7.1b5"
+export K_VERSION="v1.7.5"
+export KERNEL_VERSION="MoRoKernel-$MODEL-N-$K_VERSION"
+export KERNEL_VERSION2=MK-$MODEL-N-S8Port-$K_VERSION
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 
@@ -141,22 +145,41 @@ FUNC_BUILD_RAMDISK()
 	mv $RDIR/arch/$ARCH/boot/Image $RDIR/arch/$ARCH/boot/boot.img-zImage
 	mv $RDIR/arch/$ARCH/boot/dtb.img $RDIR/arch/$ARCH/boot/boot.img-dtb
 
+	# S7 version
 	rm -f $RDIR/ramdisk/$MODEL/split_img/boot.img-zImage
 	rm -f $RDIR/ramdisk/$MODEL/split_img/boot.img-dtb
-	mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/$MODEL/split_img/boot.img-zImage
-	mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/$MODEL/split_img/boot.img-dtb
+	cp -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/$MODEL/split_img/boot.img-zImage
+	cp -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/$MODEL/split_img/boot.img-dtb
 	cd $RDIR/ramdisk/$MODEL
+	./repackimg.sh
+	echo SEANDROIDENFORCE >> image-new.img
+
+	# PortS8 version
+	rm -f $RDIR/ramdisk/$MODEL2/split_img/boot.img-zImage
+	rm -f $RDIR/ramdisk/$MODEL2/split_img/boot.img-dtb
+	mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/$MODEL2/split_img/boot.img-zImage
+	mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/$MODEL2/split_img/boot.img-dtb
+	cd $RDIR/ramdisk/$MODEL2
 	./repackimg.sh
 	echo SEANDROIDENFORCE >> image-new.img
 }
 
 FUNC_BUILD_FLASHABLES()
 {
-    cp image-new.img $RDIR/release/$MODEL/boot.img
+    # S7 version
+    cp $RDIR/ramdisk/$MODEL/image-new.img $RDIR/release/$MODEL/boot.img
 
     cd $RDIR
     cd release/$MODEL
     zip -9 -r $KERNEL_VERSION.zip *
+    rm boot.img
+
+    # PortS8 version
+    cp $RDIR/ramdisk/$MODEL2/image-new.img $RDIR/release/$MODEL2/boot.img
+
+    cd $RDIR
+    cd release/$MODEL2
+    zip -9 -r $KERNEL_VERSION2.zip *
     rm boot.img
 }
 
@@ -177,7 +200,7 @@ rm -f ./build.log
 	echo ""
 ) 2>&1 | tee -a ./build.log
 
-	echo "Your flasheable release can be found in the release/$MODEL or tar folder"
+	echo "Your flasheable release can be found in the release/$MODEL and $MODEL2 folder"
 	echo ""
 
 

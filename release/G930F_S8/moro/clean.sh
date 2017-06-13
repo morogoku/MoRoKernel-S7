@@ -1,6 +1,6 @@
 #!/sbin/sh
 #
-# Clean Supersu app script v1.1
+# Clean app script v1.2
 # By morogoku 
 # http://www.esp-desarrolladores.com
 #
@@ -86,6 +86,10 @@ if [[ ! -z $1 ]]; then
 		run_script;
 	  ;;
 	  mtweaks)
+		ruta='codePath="/system/app/com.moro.mtweaks'
+		run_script;
+		ruta='codePath="/system/priv-app/com.moro.mtweaks'
+		run_script;
 		ruta='codePath="/data/app/com.moro.mtweaks'
 		run_script;
 	  ;;

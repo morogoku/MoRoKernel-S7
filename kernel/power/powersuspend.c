@@ -160,11 +160,13 @@ void set_power_suspend_state(int new_state)
 			queue_work(suspend_work_queue, &power_resume_work);
 		}
 		spin_unlock_irqrestore(&state_lock, irqflags);
-	#ifdef CONFIG_POWERSUSPEND_DEBUG
-	} else {
-		pr_info("[POWERSUSPEND] state change requested, but unchanged ?! Ignored !\n");
-	#endif
 	}
+	#ifdef CONFIG_POWERSUSPEND_DEBUG
+	else {
+		pr_info("[POWERSUSPEND] state change requested, but unchanged ?! Ignored !\n");
+	}
+	#endif
+
 }
 
 void set_power_suspend_state_panel_hook(int new_state)
@@ -208,7 +210,7 @@ static ssize_t power_suspend_state_store(struct kobject *kobj,
 }
 
 static struct kobj_attribute power_suspend_state_attribute =
-	__ATTR(power_suspend_state, 0660,
+	__ATTR(power_suspend_state, 0666,
 		power_suspend_state_show,
 		power_suspend_state_store);
 
@@ -236,7 +238,7 @@ static ssize_t power_suspend_mode_store(struct kobject *kobj,
 }
 
 static struct kobj_attribute power_suspend_mode_attribute =
-	__ATTR(power_suspend_mode, 0660,
+	__ATTR(power_suspend_mode, 0666,
 		power_suspend_mode_show,
 		power_suspend_mode_store);
 

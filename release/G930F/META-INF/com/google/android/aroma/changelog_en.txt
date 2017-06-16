@@ -1,4 +1,25 @@
 
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.8</#></b></u>
+<*>Magisk 13 beta</*>
+<*>SuperSU 2.82 SR1</*>
+<*>Spectrum App support</*>
+<*>Spectrum Profiles made by Guillermo</*>
+<*>set vnswap as fast device</*>
+<*>Zen-tune 4.10</*>
+<*>ZEN IO Scheduler 1.1</*>
+<*>Blue_active CPU Governor</*>
+<*>Sources XXU1DQE7</*>
+<*>Ramdisk </*>
+<*>XXU1DQEF</*>
+
+<u><b><#selectbg_g>MoRoKernel-G930F-N v1.7.5</#></b></u>
+<*>MTweaks 2.3</*>
+<*>Fix adb detection</*>
+<*>Removed Mod Charge Control</*>
+<*>Increased USB charge, USB accessory and MHL USB</*>
+<*>PWMfree brightness control<#textfg_gray>
+  <*>Selectable from MTweaks, menu Misc</*></#></*>
+
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.7</#></b></u>
 <*>Toolchain UBER 6.3.1 MoRo</*>
 <*>Freq. Max Big 2800MHz, y LITTLE 1794MHz</*>
@@ -6,8 +27,6 @@
 <*>ARCH Power, better battery</*>
 <*>AIK Kitchen 2.7</*>
 <*>Sources XXU1DQD7</*>
-<*>Ramdisk XXU1DQD9</*>
-<*>Updated mcRegistry to DQD9</*>
 
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.6.2</#></b></u>
 <*>MTweaks 2.1</*>
@@ -60,7 +79,7 @@
 <*>Fix Magisk SafetyNet (Thanks to Repulsa)</*>
 
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.3</#></b></u>
-<*>Updated sources and ramdisk to G930FXXU1DQB7</*>
+<*>Updated sources and ramdisk to G935FXXU1DQB7</*>
 <*>New Synapse MOD<#textfg_gray>
   <*>Native profiles support</*>
   <*>New Material Red Theme</*></#></*>
@@ -92,7 +111,7 @@
 <*>Synapse: Added control of profile backups</*>
 
 <u><b><#selectbg_g>MoRoKernel-G930F-N v1.0</#></b></u>
-<*>Sources Samsung G930FXXU1DPLT</*>
+<*>Sources Samsung G935FXXU1DPLT</*>
 <*>Compiled with Linaro 6.3.1</*>
 <*>AROMA Installer</*>
 <*>Magisk Instalation optional</*>

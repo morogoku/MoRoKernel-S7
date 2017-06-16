@@ -1,4 +1,17 @@
 
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.8</#></b></u>
+<*>Magisk 13 beta</*>
+<*>SuperSU 2.82 SR1</*>
+<*>Spectrum App support</*>
+<*>Perfiles Spectrum realizados por Guillermo</*>
+<*>set vnswap as fast device</*>
+<*>Zen-tune 4.10</*>
+<*>ZEN IO Scheduler 1.1</*>
+<*>Blue_active Gobernador CPU</*>
+<*>Sources XXU1DQE7</*>
+<*>Ramdisk </*>
+<*>XXU1DQEF</*>
+
 <u><b><#selectbg_g>MoRoKernel-G935F-N v1.7.5</#></b></u>
 <*>MTweaks 2.3</*>
 <*>Fix detección adb</*>

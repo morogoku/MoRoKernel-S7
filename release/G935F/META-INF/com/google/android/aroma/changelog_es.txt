@@ -1,4 +1,25 @@
 
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.8</#></b></u>
+<*>Magisk 13 beta</*>
+<*>SuperSU 2.82 SR1</*>
+<*>Spectrum App support</*>
+<*>Perfiles Spectrum realizados por Guillermo</*>
+<*>set vnswap as fast device</*>
+<*>Zen-tune 4.10</*>
+<*>ZEN IO Scheduler 1.1</*>
+<*>Blue_active Gobernador CPU</*>
+<*>Sources XXU1DQE7</*>
+<*>Ramdisk </*>
+<*>XXU1DQEF</*>
+
+<u><b><#selectbg_g>MoRoKernel-G935F-N v1.7.5</#></b></u>
+<*>MTweaks 2.3</*>
+<*>Fix detección adb</*>
+<*>Eliminado Mod control de carga</*>
+<*>Aumentada carga USB, Accesorio USB y MHL USB</*>
+<*>PWMfree brightness control<#textfg_gray>
+  <*>Seleccionable desde MTweaks, menu Varios</*></#></*>
+
 <u><b><#selectbg_g>MoRoKernel-G935F-N v1.7</#></b></u>
 <*>Toolchain UBER 6.3.1 MoRo</*>
 <*>Freq. Max Big 2800MHz, y LITTLE 1794MHz</*>
@@ -6,8 +27,6 @@
 <*>ARCH Power, mejora la bateria</*>
 <*>AIK Kitchen 2.7</*>
 <*>Sources XXU1DQD7</*>
-<*>Ramdisk XXU1DQD9</*>
-<*>Actualizado mcRegistry a DQD9</*>
 
 <u><b><#selectbg_g>MoRoKernel-G935F-N v1.6.2</#></b></u>
 <*>MTweaks 2.1</*>

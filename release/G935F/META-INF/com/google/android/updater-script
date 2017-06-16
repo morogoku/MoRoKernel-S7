@@ -19,6 +19,7 @@ endif;
 ui_print("@-> Mounting partitions");
 run_program("/sbin/mount", "/system");
 run_program("/sbin/mount", "/data");
+run_program("/sbin/mount", "/sdcard");
 
 ui_print("@-> Flashing kernel");
 package_extract_file("boot.img", "/dev/block/platform/155a0000.ufs/by-name/BOOT");
@@ -30,6 +31,9 @@ run_program("/tmp/moro/system_patch.sh");
 
 ui_print("@-> Copy correct fingerprint files");
 package_extract_dir("system", "/system");
+
+ui_print("@-> Copy Spectrum Profiles");
+package_extract_dir("Spectrum", "/sdcard/Spectrum");
 
 ui_print("@-> Busybox ");
 run_program("/tmp/moro/busybox.sh");
@@ -89,7 +93,7 @@ show_progress(0.95, "-8000");
 
 	endif;
 		
-	ui_print("   '-> Magisk 12");
+	ui_print("   '-> Magisk");
 	ui_print(" ");
 	package_extract_dir("magisk/magisk", "/tmp/moro/magisk");
 	run_program("/sbin/busybox", "unzip", "/tmp/moro/magisk/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/magisk");
@@ -108,7 +112,7 @@ show_progress(0.95, "-34000");
 	run_program("/tmp/moro/clean_supersu_app.sh");
 	run_program("/tmp/moro/clean.sh", "supersu");
 			
-	ui_print("   '-> SuperSU 2.79-SR3");
+	ui_print("   '-> SuperSU");
 	ui_print(" ");
 	package_extract_dir("supersu", "/tmp/moro/supersu");
 	run_program("/sbin/busybox", "unzip", "/tmp/moro/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/supersu");

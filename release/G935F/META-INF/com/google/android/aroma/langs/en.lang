@@ -81,7 +81,7 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
-menu.2=Magisk 12
+menu.2=Magisk 13 b3da28e
 menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR1
 menu.5desc=Famous Root of Chainfire, v2.79-SR3
@@ -103,13 +103,13 @@ stock.2=Yess
 stock.2desc=The apps of Magisk and Supersu, and any Root rest will be deleted.
 
 # Magisk App
-magisk.title=Magisk APPs
-magisk.desc=Do you want to install the Magisk app?
-magisk.group=Magisk APPs
+magisk.title=Magisk
+magisk.desc=Do you want to delete data from Magisk?
+magisk.group=Magisk
 magisk.1=No
-magisk.1desc=Select it if you already have it installed and you do not want to delete the configuration of Magisk.
+magisk.1desc=Leave the current configuration of Magisk.
 magisk.2=Yes
-magisk.2desc=Select it if you do not have it and want to install it by cleaning the previous configuration.
+magisk.2desc=Erase data from Magisk and do clean installation.
 
 # Confirmar
 confirm.1=CONFIRM

@@ -10,6 +10,7 @@ on property:sys.boot_completed=1
    exec u:r:su:s0 root root -- /init.spectrum.sh
    # Enable Spectrum support
    setprop spectrum.support 1
+   setprop persist.spectrum.kernel MoRo
 
 # Balance (default profile, Samsung Stock)
 on property:persist.spectrum.profile=0

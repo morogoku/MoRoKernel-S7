@@ -50,6 +50,7 @@ if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
 	run_program("/tmp/moro/clean_synapse.sh");
 	run_program("/tmp/moro/clean.sh", "mtweaks");
 	package_extract_dir("mtweaks", "/data/app");
+	set_metadata_recursive("/data/app/com.moro.mtweaks-1", "uid", 1000, "gid", 1000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 endif;
 
 # Spectrum
@@ -58,6 +59,7 @@ if file_getprop("/tmp/aroma/menu.prop", "chk3") == "1" then
 	run_program("/tmp/moro/clean_spectrum.sh");
 	run_program("/tmp/moro/clean.sh", "spectrum");
 	package_extract_dir("Spectrum/app", "/data/app");
+	set_metadata_recursive("/data/app/org.frap129.spectrum-1", "uid", 1000, "gid", 1000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 endif;
 
 
@@ -126,8 +128,9 @@ set_progress(0.95);
 
 ui_print(" ");
 ui_print("@-> Setting Permissions");
-set_metadata_recursive("/system/app/mcRegistry", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata_recursive("/data/app", "uid", 1000, "gid", 1000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/system/xbin", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 
 ui_print("@-> Unmounting Partition");
 ifelse(is_mounted("/system"), unmount("/system"));

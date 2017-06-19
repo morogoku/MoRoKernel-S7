@@ -1,6 +1,6 @@
 #!/sbin/sh
 
-rm -rf /system/app/mcRegistry
+rm -f /system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin
 rm -f /system/vendor/lib/libsecure_storage.so
 rm -f /system/vendor/lib64/libsecure_storage.so
 

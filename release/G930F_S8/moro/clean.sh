@@ -1,6 +1,6 @@
 #!/sbin/sh
 #
-# Clean app script v1.2
+# Clean app in packages.xml script v1.3
 # By morogoku 
 # http://www.esp-desarrolladores.com
 #
@@ -91,6 +91,10 @@ if [[ ! -z $1 ]]; then
 		ruta='codePath="/system/priv-app/com.moro.mtweaks'
 		run_script;
 		ruta='codePath="/data/app/com.moro.mtweaks'
+		run_script;
+	  ;;
+	  spectrum)
+		ruta='codePath="/data/app/org.frap129.spectrum'
 		run_script;
 	  ;;
 	esac;

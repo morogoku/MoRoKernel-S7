@@ -33,7 +33,7 @@ ui_print("@-> Copy correct fingerprint files");
 package_extract_dir("system", "/system");
 
 ui_print("@-> Copy Spectrum Profiles");
-package_extract_dir("Spectrum", "/sdcard/Spectrum");
+package_extract_dir("Spectrum/profiles", "/sdcard/Spectrum/profiles");
 
 ui_print("@-> Busybox ");
 run_program("/tmp/moro/busybox.sh");
@@ -50,6 +50,14 @@ if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
 	run_program("/tmp/moro/clean_synapse.sh");
 	run_program("/tmp/moro/clean.sh", "mtweaks");
 	package_extract_dir("mtweaks", "/data/app");
+endif;
+
+# Spectrum
+if file_getprop("/tmp/aroma/menu.prop", "chk3") == "1" then
+	ui_print("@-> Spectrum App");
+	run_program("/tmp/moro/clean_spectrum.sh");
+	run_program("/tmp/moro/clean.sh", "spectrum");
+	package_extract_dir("Spectrum/app", "/data/app");
 endif;
 
 

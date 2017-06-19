@@ -92,6 +92,8 @@ Mod de Kernel Adiutor para S7.
 menu.4=Busybox
 menu.4desc=Busybox 1.26.2\
 Imprescindible. Desmárquela solo si tiene una versión superior.
+menu.6=Spectrum
+menu.6desc=Sencilla app para la gestion de 4 perfiles ya predefinidos, Balanced, Battery, Performance y Gaming.
 
 # Sin Root
 stock.title=Sin Root

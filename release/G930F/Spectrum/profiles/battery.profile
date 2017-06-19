@@ -33,8 +33,8 @@
    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/mode
    chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/boost
    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/boost
-   chmod 644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
-   echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
+   chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy
+   echo 1 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy
    chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/param_index
    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/param_index
    chmod 644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration

@@ -1,4 +1,9 @@
 
+<u><b><#selectbg_g>MoRoKernel-N v1.8.1</#></b></u>
+<*>Corregidos perfiles Spectrum</*>
+<*>Spectrum App en el instalador Aroma</*>
+<*>Cambiado adb</*>
+
 <u><b><#selectbg_g>MoRoKernel-N v1.8</#></b></u>
 <*>Magisk 13 beta</*>
 <*>SuperSU 2.82 SR1</*>

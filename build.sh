@@ -2,7 +2,7 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# Script MoRoKernel v1.1
+# Script MoRoKernel v1.2
 #
 
 # SETUP
@@ -169,18 +169,26 @@ FUNC_BUILD_FLASHABLES()
     # S7 version
     cp $RDIR/ramdisk/$MODEL/image-new.img $RDIR/release/$MODEL/boot.img
 
-    cd $RDIR
-    cd release/$MODEL
-    zip -9 -r $KERNEL_VERSION.zip *
-    rm boot.img
+    mkdir $RDIR/release/build
+    cd $RDIR/release
+    cp -R common/* build
+    cp -R $MODEL/* build
+    cd build
+    zip -9 -r $RDIR/release/$KERNEL_VERSION.zip *
+    rm $RDIR/release/$MODEL/boot.img
+    rm -rf $RDIR/release/build
 
     # PortS8 version
     cp $RDIR/ramdisk/$MODEL2/image-new.img $RDIR/release/$MODEL2/boot.img
 
-    cd $RDIR
-    cd release/$MODEL2
-    zip -9 -r $KERNEL_VERSION2.zip *
-    rm boot.img
+    mkdir $RDIR/release/build
+    cd $RDIR/release
+    cp -R common/* build
+    cp -R $MODEL2/* build
+    cd build
+    zip -9 -r $RDIR/release/$KERNEL_VERSION2.zip *
+    rm $RDIR/release/$MODEL2/boot.img
+    rm -rf $RDIR/release/build
 }
 
 # MAIN PROGRAM

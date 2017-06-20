@@ -26,10 +26,8 @@ rm -f $PWD/ramdisk/G935F_S8/split_img/boot.img-dtb
 rm -f $PWD/ramdisk/G935F_S8/split_img/boot.img-zImage
 
 # Remove Release files
-rm -f $PWD/release/G935F/*.zip
-rm -f $PWD/release/G930F/*.zip
-rm -f $PWD/release/G935F_S8/*.zip
-rm -f $PWD/release/G930F_S8/*.zip
+rm -f $PWD/release/*.zip
+
 
 # Removed Created dtb Folder
 rm -rf $PWD/arch/arm64/boot/dtb

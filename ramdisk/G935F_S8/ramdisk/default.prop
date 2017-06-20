@@ -9,6 +9,7 @@ ro.adb.secure=1
 ro.allow.mock.location=0
 ro.debuggable=1
 persist.sys.usb.config=mtp,adb
+persist.service.adb.enable=1
 ro.zygote=zygote64_32
 pm.dexopt.first-boot=interpret-only
 pm.dexopt.boot=verify-profile
@@ -29,7 +30,10 @@ dalvik.vm.usejitprofiles=true
 dalvik.vm.appimageformat=lz4
 debug.atrace.tags.enableflags=0
 
+
+ro.sys.fw.bg_apps_limit=60
 ro.securestorage.support=false
+wlan.wfd.hdcp=disable
 
 ##
 # BOOTIMAGE_BUILD_PROPERTIES

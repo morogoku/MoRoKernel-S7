@@ -1,4 +1,8 @@
 
+<u><b><#selectbg_g>MoRoKernel-N v1.8.2</#></b></u>
+<*>Add Yankactive CPU Governor</*>
+<*>Disabled adb notify adb</*>
+
 <u><b><#selectbg_g>MoRoKernel-N v1.8.1</#></b></u>
 <*>Fixed Spectrum profiles</*>
 <*>Spectrum App in Aroma installer</*>

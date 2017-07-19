@@ -32,9 +32,6 @@ run_program("/tmp/moro/system_patch.sh");
 ui_print("@-> Copy correct fingerprint files");
 package_extract_dir("system", "/system");
 
-ui_print("@-> Copy Spectrum Profiles");
-package_extract_dir("Spectrum/profiles", "/sdcard/Spectrum/profiles");
-
 ui_print("@-> Busybox ");
 run_program("/tmp/moro/busybox.sh");
 
@@ -58,7 +55,7 @@ if file_getprop("/tmp/aroma/menu.prop", "chk3") == "1" then
 	ui_print("@-> Spectrum App");
 	run_program("/tmp/moro/clean_spectrum.sh");
 	run_program("/tmp/moro/clean.sh", "spectrum");
-	package_extract_dir("Spectrum/app", "/data/app");
+	package_extract_dir("spectrum", "/data/app");
 	set_metadata_recursive("/data/app/org.frap129.spectrum-1", "uid", 1000, "gid", 1000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 endif;
 

@@ -9,4 +9,4 @@ function write() {
 }
 
 # Load profile data
-source /data/media/0/Spectrum/profiles/${profile}.profile;
+source /res/spectrum/${profile}.profile;

@@ -1462,6 +1462,9 @@ service preparefbe_de /system/bin/preparefbe storage_de
     oneshot
     disabled
 
+on property:sys.sf.restart=1
+    restart surfaceflinger
+
 # Kernel script
 service moro-init /sbin/moro-init.sh
     class main

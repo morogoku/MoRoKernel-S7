@@ -1,4 +1,12 @@
 
+<u><b><#selectbg_g>MoRoKernel-N v1.9</#></b></u>
+<*>Sources XXU1DQFM</*>
+<*>Ramdisk XXU1DQFM</*>
+<*>Spectrum profiles return to ramdisk</*>
+<*>Magisk 13.3 & Manager 5.1.1</*>
+<*>AIK Kitchen 2.8</*>
+<*>Mali GPU Note7 FE driver R15P0</*>
+
 <u><b><#selectbg_g>MoRoKernel-N v1.8.2</#></b></u>
 <*>Add Yankactive CPU Governor</*>
 <*>Disabled adb notify adb</*>

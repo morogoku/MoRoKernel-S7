@@ -14,10 +14,10 @@ ini_set("force_colorspace", "rgba");
 
 # Datos Rom
 ini_set("rom_name",         "MoRoKernel-Nougat");
-ini_set("rom_version",      "V1.8.2 S8 Port");
+ini_set("rom_version",      "V1.9 S8/Note7 Port");
 ini_set("rom_author",       "MoroGoku");
 ini_set("rom_device",       "S7 EDGE (SM-G935F)");
-ini_set("rom_date",         "20/06/2017");
+ini_set("rom_date",         "24/07/2017");
 
 # Splash
 # splash(4000,"splash/splash");

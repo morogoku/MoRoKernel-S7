@@ -2,6 +2,24 @@ if BLOCK
 
 menu "IO Schedulers"
 
+config IOSCHED_CFQ
+	tristate "CFQ I/O scheduler"
+	default y
+	---help---
+	  The CFQ I/O scheduler tries to distribute bandwidth equally
+	  among all processes in the system. It should provide a fair
+	  and low latency working environment, suitable for both desktop
+	  and server systems.
+
+	  This is the default I/O scheduler.
+
+config CFQ_GROUP_IOSCHED
+	bool "CFQ Group Scheduling support"
+	depends on IOSCHED_CFQ && BLK_CGROUP
+	default n
+	---help---
+	  Enable group IO scheduling in CFQ.
+
 config IOSCHED_NOOP
 	bool
 	default y
@@ -51,23 +69,12 @@ config BFQ_GROUP_IOSCHED
 	Enable hierarchical scheduling in BFQ, using the blkio
 	(cgroups-v1) or io (cgroups-v2) controller.
 
-config IOSCHED_CFQ
-	tristate "CFQ I/O scheduler"
+config IOSCHED_FIFO
+	bool
 	default y
 	---help---
-	  The CFQ I/O scheduler tries to distribute bandwidth equally
-	  among all processes in the system. It should provide a fair
-	  and low latency working environment, suitable for both desktop
-	  and server systems.
-
-	  This is the default I/O scheduler.
-
-config CFQ_GROUP_IOSCHED
-	bool "CFQ Group Scheduling support"
-	depends on IOSCHED_CFQ && BLK_CGROUP
-	default n
-	---help---
-	  Enable group IO scheduling in CFQ.
+	  Fifo is similar to no-op I/O scheduler and it's a minimal scheduler that does basic merging
+	  and sorting. Ported from: https://github.com/AndroidDeveloperAlliance/ZenKernel_TUNA/blob/master/block/fifo-iosched.c
 
 choice
 	prompt "Default I/O scheduler"
@@ -105,6 +112,9 @@ choice
 		  any workload. It also tries to guarantee low latency to
 		  interactive and soft real-time applications.
 
+	config DEFAULT_FIFO
+		bool "fifo" if IOSCHED_FIFO=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -114,6 +124,8 @@ config DEFAULT_IOSCHED
 	default "noop" if DEFAULT_NOOP
 	default "row" if DEFAULT_ROW
 	default "bfq" if DEFAULT_BFQ
+	default "fifo" if DEFAULT_FIFO	
+
 endmenu
 
 endif

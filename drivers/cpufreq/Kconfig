@@ -119,6 +119,13 @@ config CPU_FREQ_DEFAULT_GOV_SCHED
 	  Use the CPUfreq governor 'sched' as default. This scales
 	  cpu frequency using CPU utilization estimates from the
 	  scheduler.
+
+config CPU_FREQ_DEFAULT_GOV_BIOSHOCK
+	bool "BioShock"
+	select CPU_FREQ_GOV_BIOSHOCK
+	help
+	  Default governor of BioShock kernel
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -231,6 +238,12 @@ config CPU_FREQ_GOV_SCHED
 	  If in doubt, say N.
 
 comment "CPU frequency scaling drivers"
+
+config CPU_FREQ_GOV_BIOSHOCK
+	tristate "'bioshock' cpufreq bioshock"
+	depends on CPU_FREQ
+	help
+	  'bioshock' - More aggressive version of conservative
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

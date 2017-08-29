@@ -141,6 +141,16 @@ config CPU_FREQ_DEFAULT_GOV_DANCEDANCE
             help
               Use the CPUFreq governor 'dancedance' as default.
 
+config CPU_FREQ_DEFAULT_GOV_ELECTRODEMAND
+	bool "electrodemand"
+	select CPU_FREQ_GOV_ELECTRODEMAND
+        select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'electrodemand' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'electrodemand' governor for latency-sensitive workloads.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -276,6 +286,16 @@ config CPU_FREQ_GOV_DANCEDANCE
            help
              dancedance' - a "smart" optimized governor!
              If in doubt, say N.
+
+config CPU_FREQ_GOV_ELECTRODEMAND
+	tristate "'electrodemand' cpufreq policy governor"
+        depends on CPU_FREQ
+	help
+	  'electrodemand' - A tweaked "ondemand" based smart and smooth optimized
+           governor designed for optimization in transition and a balance between
+           performance and power.
+	
+	   If in doubt, say N.
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

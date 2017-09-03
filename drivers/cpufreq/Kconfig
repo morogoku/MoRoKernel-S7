@@ -176,6 +176,12 @@ config CPU_FREQ_DEFAULT_GOV_SMARTMAX
 	help
 	  Use the CPUFreq governor 'smartmax' as default.
 
+config CPU_FREQ_DEFAULT_GOV_SMARTMAX_EPS
+	bool "smartmax_eps"
+	select CPU_FREQ_GOV_SMARTMAX_EPS
+	help
+	  Use the CPUFreq governor 'smartmax eps' as defau
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -360,6 +366,12 @@ config CPU_FREQ_GOV_SMARTMAX
 	help
 	  'smartmax' - a "smart" optimized governor!
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_SMARTMAX_EPS
+	tristate "'smartmax EPS' cpufreq policy governor"
+	select CPU_FREQ_TABLE
+	help
+	  'smartmax EPS' is the extreme powersaving version of smartmax
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

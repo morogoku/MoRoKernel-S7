@@ -181,6 +181,15 @@ config CPU_FREQ_DEFAULT_GOV_SMARTMAX_EPS
 	help
 	  Use the CPUFreq governor 'smartmax eps' as default.
 
+config CPU_FREQ_DEFAULT_GOV_CAFACTIVE
+	bool "cafactive"
+	select CPU_FREQ_GOV_CAFACTIVE
+	help
+	  Use the CPUFreq governor 'cafactive' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'cafactive' governor for latency-sensitive workloads.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -355,6 +364,15 @@ config CPU_FREQ_GOV_SMARTMAX_EPS
 
 
 comment "CPU frequency scaling drivers"
+
+config CPU_FREQ_GOV_CAFACTIVE
+	tristate "'cafactive' cpufreq policy governor"
+	help
+	  'cafactive' - CodeAurora(Qualcomm) version of interactive
+	  cpufreq policy governor.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_cafactive.
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

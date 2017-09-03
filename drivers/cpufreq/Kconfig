@@ -170,6 +170,12 @@ config CPU_FREQ_DEFAULT_GOV_SMARTASS2
 	help
 	  Use the CPUFreq governor 'smartass2' as default.
 
+config CPU_FREQ_DEFAULT_GOV_SMARTMAX
+	bool "smartmax"
+	select CPU_FREQ_GOV_SMARTMAX
+	help
+	  Use the CPUFreq governor 'smartmax' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -347,6 +353,13 @@ config CPU_FREQ_GOV_SMARTASS2
 	depends on CPU_FREQ
 	help
 	  'smartassV2' - a "smart" govern
+
+config CPU_FREQ_GOV_SMARTMAX
+	tristate "'smartmax' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  'smartmax' - a "smart" optimized governor!
+	  If in doubt, say N.
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

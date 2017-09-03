@@ -182,6 +182,12 @@ config CPU_FREQ_DEFAULT_GOV_SMARTMAX_EPS
 	help
 	  Use the CPUFreq governor 'smartmax eps' as defau
 
+config CPU_FREQ_DEFAULT_GOV_PEGASUSQ
+	bool "pegasusq"
+	select CPU_FREQ_GOV_PEGASUSQ
+	help
+	  Use the CPUFreq governor 'pegasusq' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -372,6 +378,9 @@ config CPU_FREQ_GOV_SMARTMAX_EPS
 	select CPU_FREQ_TABLE
 	help
 	  'smartmax EPS' is the extreme powersaving version of smartmax
+
+config CPU_FREQ_GOV_PEGASUSQ
+	tristate "'pegasusq' cpufreq policy governor"
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

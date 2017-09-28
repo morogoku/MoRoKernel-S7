@@ -14,6 +14,7 @@ import /init.${ro.zygote}.rc
 import /init.container.rc
 import /init.wifi.rc
 import /init.services.rc
+import /init.spectrum.rc
 
 on early-init
     # Set init and its forked children's oom_adj.

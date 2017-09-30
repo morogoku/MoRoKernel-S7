@@ -1,0 +1,59 @@
+	
+<b>KERNEL INFORMATION:</b>
+
+	NAME	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
+	VERSION	: <b><#selectbg_g>v2.0</#></b>
+	DATE	: <b><#selectbg_g>29/09/2017</#></b>
+	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
+
+	<#f00><b>ONLY FOR Galaxy S7</b></#>
+
+
+<b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.0</#></b></u>
+<*>Sources y ramdisk XXU1DQH8</*>
+<*>MTweaks v2.5.5, kernel settings app</*>
+<*>Mali GPU Note7 FE driver R15P0 (Only for PortS8/NoteFE)</*>
+<*>Min freq.GPU to 112MHz</*>
+<*>Batery STORE MODE, MAX:90 & MIN:20, Set the Min & Max limit of battery charge, to extend battery life.</*>
+<*>Disabled adb notification</*>
+<*>Spectrum support and profiles, thanks to Guillermo</*>
+<*>UKSM - Ultra Kernel Samepage Merging 1.2.3</*>
+<*>CPU & GPU Voltage settings</*>
+<*>Battery settings</*>
+<*>set vnswap as fast device</*>
+<*>Zen-tune 4.10</*>
+<*>Increased USB charge, USB accesory USB and MHL USB</*>
+<*>PWMfree brightness control</*>
+<*>ARCH Power, better battery</*>
+<*>AIK Kitchen 2.9</*>
+<*>Powersuspend 4 modes, Autosleep, Userspace, LCD panel, Hybrid</*>
+<*>GPU Voltage & Overclock settings</*>
+<*>F2FS</*>
+<*>Zen-tune 4.5</*>
+<*>Updated Ondemand and  Conservative governors</*>
+<*>Add "Custom" voltaje profile</*>
+<*>Mod Fake Knox 0</*>
+<*>Wakelocks settings</*>
+<*>Busybox 1.27.2</*>
+<*>Max Freq. big A72 -> 2800MHz</*>
+<*>Max Freq. LITTLE A53 -> 1794MHz</*>
+<*>Min Freq. CPU big A72 -> 208MHz</*>
+<*>Min Freq. CPU LITTLE A53 -> 130MHz</*>
+<*>Toolchain UBER 6.3.1 MoRo</*>
+<*>SuperSu 2.82-SR4</*>
+<*>Magisk 14.2 b1420 & Manager 5.3.5</*>
+<*>Disasbled DM-Verity, Knox, RKP, Tima, Rooting Restriction</*>
+<*>SELinux Permissive</*>
+<*>IO Schedulers: noop, deadline, row, cfq, bfq, fifo, fiops, sio, sioplus, tripndroid, vr, zen, maple</*>
+<*>CPU Governors: cafactive, relaxed, ondemand_x, pegasusq, smartmax_eps, smartmax, smartassV2, intellidemand,HYPER, electrodemand, dancedance, blue_active, conservative, ondemand, bioshock, interactive, performance</*>
+<*>Reduced wifi wakelocks</*>
+<*>CRC check Enable/Disable setting</*>
+<*>Swap with LZ4 compression</*>
+<*>Dynamic Fsync</*>
+<*>Init.d support</*>
+<*>Frandom</*>
+<*>NTFS support</*>
+<*>CIFS support</*>
+

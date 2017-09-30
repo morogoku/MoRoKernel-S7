@@ -1,0 +1,140 @@
+ui_print("***********************************************");
+ui_print("* MoRoKernel Nougat Kernel");
+ui_print("* For Samsung Galaxy S7");
+ui_print("* Developed by MoroGoku");
+ui_print("* http://www.esp-desarrolladores.com");
+ui_print("***********************************************");
+set_progress(0.01);
+
+
+if is_mounted("/system") == "/system" then
+    assert(run_program("/sbin/busybox", "umount", "/system"));
+endif;
+
+if is_mounted("/data") == "/data" then
+    assert(run_program("/sbin/busybox", "umount", "/data"));
+endif;
+	
+ui_print("@-> Mounting partitions");
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
+run_program("/sbin/mount", "/sdcard");
+
+# Copy scripts
+package_extract_dir("moro", "/tmp/moro");
+set_perm_recursive(0, 0, 0777, 0777, "/tmp/moro");
+
+ui_print("@-> Flashing kernel");
+ifelse
+(
+is_substring("G935", getprop("ro.boot.bootloader"))
+,
+ui_print("    - G935 S7 Edge");
+,
+ui_print("    - G930 S7 Flat");
+);
+run_program("/tmp/moro/flash_kernel.sh");
+ui_print("    - Done.");
+
+ui_print("@-> Patching /system");
+package_extract_dir("system", "/system");
+run_program("/tmp/moro/del_wakelock.sh");
+delete("/system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin");
+
+ui_print("@-> Busybox ");
+run_program("/tmp/moro/busybox.sh");
+
+ui_print("@-> Setting Permissions");
+set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+
+
+####################################################
+# OTHER OPTIONS
+####################################################
+
+# MTweaks
+if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
+	ui_print("@-> MTWeaks App");
+	run_program("/tmp/moro/clean_mtweaks.sh");
+	run_program("/tmp/moro/clean.sh", "mtweaks");
+	package_extract_dir("mtweaks", "/data/app");
+	set_metadata_recursive("/data/app/com.moro.mtweaks-1", "uid", 1000, "gid", 1000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+endif;
+
+
+####################################################
+# ROOT
+####################################################
+set_progress(0.10);
+
+# Stock
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt1" then
+	
+	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
+		ui_print("@-> Clearing root data");
+		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_magisk_apps.sh");
+		run_program("/tmp/moro/clean.sh", "magisk");
+		run_program("/tmp/moro/clean_supersu_app.sh");
+		run_program("/tmp/moro/clean.sh", "supersu");
+	endif;
+
+	ui_print("@-> Without Root");
+endif;
+
+# Magisk Root
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt2" then
+show_progress(0.85, "-19000");
+	
+	# Clean opposite kernel
+	run_program("/tmp/moro/clean_supersu_app.sh");
+	run_program("/tmp/moro/clean.sh", "supersu");
+
+	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
+		ui_print("@-> Clearing root data");
+		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_magisk_apps.sh");
+		run_program("/tmp/moro/clean.sh", "magisk");
+	endif;
+		
+	ui_print("@-> Rooting with Magisk Manager");
+	ui_print(" ");
+	package_extract_dir("magisk", "/tmp/moro/magisk");
+	run_program("/sbin/busybox", "unzip", "/tmp/moro/magisk/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/magisk");
+	run_program("/sbin/busybox", "sh", "/tmp/moro/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/magisk/magisk.zip");
+endif;
+
+# SuperSU Root
+if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt3" then
+show_progress(0.85, "-34000");
+	
+	# Clean opposite kernel
+	run_program("/tmp/moro/clean_magisk_apps.sh");
+	run_program("/tmp/moro/clean.sh", "magisk");
+
+	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
+		ui_print("@-> Clearing root data");
+		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_supersu_app.sh");
+		run_program("/tmp/moro/clean.sh", "supersu");
+	endif;	
+			
+	ui_print("@-> Rooting with SuperSU");
+	ui_print(" ");
+	package_extract_dir("supersu", "/tmp/moro/supersu");
+	run_program("/sbin/busybox", "unzip", "/tmp/moro/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/supersu");
+	run_program("/sbin/busybox", "sh", "/tmp/moro/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/supersu/supersu.zip");
+endif;
+
+#####################################################
+
+ui_print(" ");
+ui_print("@-> Unmounting Partition");
+ifelse(is_mounted("/system"), unmount("/system"));
+delete_recursive("/tmp/moro");
+set_progress(1.00);
+ui_print(" ");
+ui_print("** Done **");
+ui_print(" ");
+

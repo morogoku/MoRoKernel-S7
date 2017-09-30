@@ -1,0 +1,59 @@
+	
+<b>INFORMACIÓN DEL KERNEL:</b>
+
+	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
+	VERSIÓN	: <b><#selectbg_g>v2.0</#></b>
+	FECHA	: <b><#selectbg_g>29/09/2017</#></b>
+	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
+
+	<#f00><b>SOLO PARA Galaxy S7</b></#>
+
+
+<b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.0</#></b></u>
+<*>Sources y ramdisk XXU1DQH8</*>
+<*>MTweaks v2.5.5, app de control de ajustes del kernel</*>
+<*>Mali GPU Note7 FE driver R15P0 (Solo en PortS8/NoteFE)</*>
+<*>Frecuencia minima de GPU a 112MHz</*>
+<*>STORE MODE de bateria, MAX:90 y MIN:20, Ajuste el límite máxima y mínima de carga de la bateria.</*>
+<*>Disactivada notificacion adb</*>
+<*>Soporte y perfiles Spectrum gracias a Guillermo</*>
+<*>UKSM - Ultra Kernel Samepage Merging 1.2.3</*>
+<*>Ajustes de voltage en CPU y GPU</*>
+<*>Ajustes de bateria</*>
+<*>set vnswap as fast device</*>
+<*>Zen-tune 4.10</*>
+<*>Aumentada la carga USB, accesorios USB y MHL USB</*>
+<*>PWMfree brightness control</*>
+<*>ARCH Power, better battery</*>
+<*>AIK Kitchen 2.9</*>
+<*>Powersuspend 4 modos, Autosleep, Userspace, LCD panel, Hybrid</*>
+<*>GPU Voltage & Overclock settings</*>
+<*>F2FS</*>
+<*>Zen-tune 4.5</*>
+<*>Updated Ondemand and  Conservative governors</*>
+<*>Add "Custom" voltaje profile</*>
+<*>Mod Fake Knox 0</*>
+<*>Wakelocks settings</*>
+<*>Busybox 1.27.2</*>
+<*>Frecuencia máxima CPU big A72 -> 2800MHz</*>
+<*>Frecuencia máxima CPU LITTLE A53 -> 1794MHz</*>
+<*>Frecuencia mínima CPU big A72 -> 208MHz</*>
+<*>Frecuencia mínima CPU LITTLE A53 -> 130MHz</*>
+<*>Toolchain UBER 6.3.1 MoRo</*>
+<*>SuperSu 2.82-SR4</*>
+<*>Magisk 14.2 b1420 & Manager 5.3.5</*>
+<*>Disasbled DM-Verity, Knox, RKP, Tima, Rooting Restriction</*>
+<*>SELinux Permissive</*>
+<*>IO Schedulers: noop, deadline, row, cfq, bfq, fifo, fiops, sio, sioplus, tripndroid, vr, zen, maple</*>
+<*>CPU Governors: cafactive, relaxed, ondemand_x, pegasusq, smartmax_eps, smartmax, smartassV2, intellidemand,HYPER, electrodemand, dancedance, blue_active, conservative, ondemand, bioshock, interactive, performance</*>
+<*>Reduced wifi wakelocks</*>
+<*>Ajuste de activacion/desactivacion CRC check data</*>
+<*>Swap with LZ4 compression</*>
+<*>Dynamic Fsync</*>
+<*>Init.d support</*>
+<*>Frandom</*>
+<*>NTFS support</*>
+<*>CIFS support</*>
+

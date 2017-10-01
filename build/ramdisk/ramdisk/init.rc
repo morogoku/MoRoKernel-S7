@@ -1288,8 +1288,8 @@ on property:ro.debuggable=1
     chmod 0773 /data/misc/trace
     start console
 
-service vaultkeeperd /system/bin/vaultkeeperd
-    class core
+#service vaultkeeperd /system/bin/vaultkeeperd
+#    class core
 
 service ss_kb_service /system/bin/ss_kbservice_daemon
     class main

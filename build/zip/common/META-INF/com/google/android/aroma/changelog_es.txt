@@ -3,7 +3,7 @@
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
 	VERSIÓN	: <b><#selectbg_g>v2.0</#></b>
-	FECHA	: <b><#selectbg_g>29/09/2017</#></b>
+	FECHA	: <b><#selectbg_g>01/10/2017</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
@@ -12,7 +12,7 @@
 <b>CHANGELOG:</b>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.0</#></b></u>
-<*>Sources y ramdisk XXU1DQH8</*>
+<*>Sources y ramdisk XXU1DQIC</*>
 <*>MTweaks v2.5.5, app de control de ajustes del kernel</*>
 <*>Mali GPU Note7 FE driver R15P0 (Solo en PortS8/NoteFE)</*>
 <*>Frecuencia minima de GPU a 112MHz</*>

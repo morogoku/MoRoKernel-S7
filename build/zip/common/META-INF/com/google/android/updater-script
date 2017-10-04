@@ -37,16 +37,19 @@ run_program("/tmp/moro/flash_kernel.sh");
 ui_print("    - Done.");
 
 ui_print("@-> Patching /system");
-package_extract_dir("system", "/system");
+run_program("/tmp/moro/system.sh");
 run_program("/tmp/moro/del_wakelock.sh");
 delete("/system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin");
+ui_print("    - Done.");
 
 ui_print("@-> Busybox ");
 run_program("/tmp/moro/busybox.sh");
 
 ui_print("@-> Setting Permissions");
-set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib64/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 
 
 ####################################################

@@ -13,10 +13,12 @@ rm -f ./Edge_build.log
 rm -f ./Flat_build.log
 
 
+
 # Remove Release files
 rm -f $PWD/build/*.zip
 rm -rf $PWD/build/temp
 rm -rf $PWD/build/temp2
+rm -f $PWD/arch/arm64/configs/tmp_defconfig
 
 
 # Removed Created dtb Folder

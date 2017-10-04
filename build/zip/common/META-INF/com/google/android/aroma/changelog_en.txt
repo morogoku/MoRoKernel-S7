@@ -2,14 +2,20 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSION	: <b><#selectbg_g>v2.0</#></b>
-	DATE	: <b><#selectbg_g>01/10/2017</#></b>
+	VERSION	: <b><#selectbg_g>v2.0.1</#></b>
+	DATE	: <b><#selectbg_g>04/10/2017</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.0.1</#></b></u>
+<*>Add GPU libs and full perms</*>
+<*>Add Wheatley Governor</*>
+<*>Add Impulse Governor</*>
+<*>Fix Bluetooth</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.0</#></b></u>
 <*>Sources y ramdisk XXU1DQIC</*>

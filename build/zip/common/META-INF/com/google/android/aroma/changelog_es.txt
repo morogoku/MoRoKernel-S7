@@ -2,14 +2,23 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v2.0.1</#></b>
-	FECHA	: <b><#selectbg_g>04/10/2017</#></b>
+	VERSIÓN	: <b><#selectbg_g>v2.1</#></b>
+	FECHA	: <b><#selectbg_g>14/10/2017</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.1</#></b></u>
+<*>SuperSU 2.82-SR5</*>
+<*>Port libs GPU r12</*>
+<*>Port driver GPU r12</*>
+<*>Actualizados perfiles Spectrum</*>
+<*>Intento corregir fallo foto animada en roms viejas</*>
+<*>MTweaks 2.5.6, con ajustes de HMP</*>
+<*>Actualizado updater-script</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.0.1</#></b></u>
 <*>Añadidas librerias GPU y permisos completos</*>

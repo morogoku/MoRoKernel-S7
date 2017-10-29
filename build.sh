@@ -177,7 +177,7 @@ FUNC_BUILD_RAMDISK()
 
 	if [ $PORT == "1" ]; then
 		echo "Ramdisk PortS8 NoteFE"
-		cp -rf $RDIR/build/ramdisk_port/. ramdisk
+		cp -rf $RDIR/build/ramdisk_ports8/. ramdisk
 	fi
 
 		echo "Done"

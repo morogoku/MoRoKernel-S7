@@ -2,7 +2,7 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# MoRoKernel Build Script v1.5
+# MoRoKernel Build Script v1.6
 #
 
 # SETUP
@@ -39,6 +39,7 @@ export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 S7DEVICE="S7_Stock"
 S8DEVICE="S8_N7_Port"
+N8DEVICE="N8_Port"
 EDGE_LOG=Edge_build.log
 FLAT_LOG=Flat_build.log
 PORT=0
@@ -146,6 +147,14 @@ FUNC_BUILD_RAMDISK()
 	mv $RDIR/arch/$ARCH/boot/boot.img-dtb temp/split_img/boot.img-dtb
 	cd temp
 
+	if [ $PORT == "1" ]; then
+		echo "Ramdisk PortS8 NoteFE"
+		cp -rf $RDIR/build/ramdisk_ports8/. ramdisk
+	elif [ $PORT == "2" ]; then
+		echo "Ramdisk PortN8"
+		cp -rf $RDIR/build/ramdisk_portn8/. ramdisk
+	fi
+
 	case $MODEL in
 	G935)
 		echo "Ramdisk for G935"
@@ -166,7 +175,7 @@ FUNC_BUILD_RAMDISK()
 			sed -i 's/hero2/dream2/g' ramdisk/default.prop
 			sed -i 's/hero2/dream2/g' ramdisk/property_contexts
 			sed -i 's/hero2/dream2/g' ramdisk/service_contexts
-		else
+		elif [ $PORT == "0" ]; then
 			sed -i 's/G935/G930/g' ramdisk/default.prop
 			sed -i 's/hero2/hero/g' ramdisk/default.prop
 			sed -i 's/hero2/hero/g' ramdisk/property_contexts
@@ -174,11 +183,6 @@ FUNC_BUILD_RAMDISK()
 		fi
 		;;
 	esac
-
-	if [ $PORT == "1" ]; then
-		echo "Ramdisk PortS8 NoteFE"
-		cp -rf $RDIR/build/ramdisk_ports8/. ramdisk
-	fi
 
 		echo "Done"
 
@@ -211,6 +215,8 @@ FUNC_BUILD_FLASHABLES()
 	if [ $prompt == "3" ]; then
 	    zip -9 -r ../MoRoKernel-$DEVICE-N-$K_VERSION.zip *
 	elif [ $prompt == "6" ]; then
+	    zip -9 -r ../MoRoKernel-$DEVICE-N-$K_VERSION.zip *
+	elif [ $prompt == "9" ]; then
 	    zip -9 -r ../MoRoKernel-$DEVICE-N-$K_VERSION.zip *
 	else
 	    zip -9 -r ../MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION.zip *
@@ -284,6 +290,11 @@ echo "(4) S7 Flat SM-G930F"
 echo "(5) S7 Edge SM-G935F"
 echo "(6) S7 Edge + Flat"
 echo ""
+echo "Port N8"
+echo "(7) S7 Flat SM-G930F"
+echo "(8) S7 Edge SM-G935F"
+echo "(9) S7 Edge + Flat"
+echo ""
 read -p "Select an option to compile the kernel " prompt
 
 
@@ -344,6 +355,40 @@ elif [ $prompt == "6" ]; then
     LOG=$EDGE_LOG
     export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 EDGE + FLAT Port S8-NoteFE"
+    echo "Compiling EDGE ..."
+    MAIN2
+    MODEL=G930
+    KERNEL_DEFCONFIG=$DEFCONFIG_S8FLAT
+    LOG=$FLAT_LOG
+    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    echo "Compiling FLAT ..."
+    MAIN
+elif [ $prompt == "7" ]; then
+    MODEL=G930
+    PORT=2
+    DEVICE=$N8DEVICE
+    KERNEL_DEFCONFIG=$DEFCONFIG_S8FLAT
+    LOG=$FLAT_LOG
+    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    echo "S7 Flat G930F Port N8 Selected"
+    MAIN
+elif [ $prompt == "8" ]; then
+    MODEL=G935
+    PORT=2
+    DEVICE=$N8DEVICE
+    KERNEL_DEFCONFIG=$DEFCONFIG_S8EDGE
+    LOG=$EDGE_LOG
+    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    echo "S7 Edge G935F Port N8 Selected"
+    MAIN
+elif [ $prompt == "9" ]; then
+    MODEL=G935
+    PORT=2
+    DEVICE=$N8DEVICE
+    KERNEL_DEFCONFIG=$DEFCONFIG_S8EDGE
+    LOG=$EDGE_LOG
+    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    echo "S7 EDGE + FLAT Port N8"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930

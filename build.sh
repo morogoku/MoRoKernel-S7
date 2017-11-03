@@ -34,7 +34,7 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 DEFCONFIG_S8EDGE=moro-edge-s8_defconfig
 DEFCONFIG_S8FLAT=moro-flat-s8_defconfig
 
-export K_VERSION="v2.2b1"
+export K_VERSION="v2.2"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 S7DEVICE="S7_Stock"

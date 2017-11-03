@@ -2,14 +2,23 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSION	: <b><#selectbg_g>v2.1</#></b>
-	DATE	: <b><#selectbg_g>14/10/2017</#></b>
+	VERSION	: <b><#selectbg_g>v2.2</#></b>
+	DATE	: <b><#selectbg_g>03/11/2017</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.2</#></b></u>
+<*>Boeffla Wakelock Blocker v1.10</*>
+<*>Sources G935FXXU1DQJ1</*>
+<*>Ramdisk G935FXXU1DQJ1</*>
+<*>Balanced Profile, Big FreqMax up to 2496MHz</*>
+<*>Allow 4 big cores to 2800MHz (disabling Samsung Hotplug)</*>
+<*>Magisk b14.3 & apk 5.4.0</*>
+<*>MTweaks 2.6</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.1</#></b></u>
 <*>SuperSU 2.82-SR5</*>

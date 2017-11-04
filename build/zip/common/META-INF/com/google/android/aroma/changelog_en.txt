@@ -2,14 +2,17 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSION	: <b><#selectbg_g>v2.2</#></b>
-	DATE	: <b><#selectbg_g>03/11/2017</#></b>
+	VERSION	: <b><#selectbg_g>v2.2.1</#></b>
+	DATE	: <b><#selectbg_g>05/11/2017</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.2.1</#></b></u>
+<*>Aumentado limite de Boeffla Wakelock Blocker</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.2</#></b></u>
 <*>Boeffla Wakelock Blocker v1.10</*>

@@ -19,7 +19,7 @@ on property:persist.spectrum.profile=0
    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 130000
+   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 234000
    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1586000
    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
@@ -51,9 +51,9 @@ on property:persist.spectrum.profile=0
    chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
    chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 208000
+   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 312000
    chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 2496000
+   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 2280000
    chmod 0444 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
    chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load
    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 89
@@ -198,7 +198,7 @@ on property:persist.spectrum.profile=1
    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 1000000
 
    # CPU HOTPLUG
-   write /sys/power/cpuhotplug/enabled 0
+   write /sys/power/cpuhotplug/enabled 1
 
    # HMP
    chmod 0644 /sys/kernel/hmp/up_threshold

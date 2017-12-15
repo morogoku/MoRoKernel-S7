@@ -2,14 +2,22 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v2.2.1</#></b>
-	FECHA	: <b><#selectbg_g>05/11/2017</#></b>
+	VERSIÓN	: <b><#selectbg_g>v2.3</#></b>
+	FECHA	: <b><#selectbg_g>15/12/2017</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.3</#></b></u>
+<*>Borrados wakelocks por defecto de boeffla wakelock blocker</*>
+<*>Magisk 14.5 (b1456)</*>
+<*>Corregido problemas de apagado repentino</*>
+<*>Overclock depende del nivel de ASV</*>
+<*>Actualizados perfiles Spectrum</*>
+<*>MTweaks 2.7</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.2.1</#></b></u>
 <*>Aumentado limite de Boeffla Wakelock Blocker</*>

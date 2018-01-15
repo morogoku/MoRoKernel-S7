@@ -218,7 +218,7 @@ static ssize_t power_suspend_state_store(struct kobject *kobj,
 }
 
 static struct kobj_attribute power_suspend_state_attribute =
-	__ATTR(power_suspend_state, 0666,
+	__ATTR(power_suspend_state, 0660,
 		power_suspend_state_show,
 		power_suspend_state_store);
 
@@ -247,7 +247,7 @@ static ssize_t power_suspend_mode_store(struct kobject *kobj,
 }
 
 static struct kobj_attribute power_suspend_mode_attribute =
-	__ATTR(power_suspend_mode, 0666,
+	__ATTR(power_suspend_mode, 0660,
 		power_suspend_mode_show,
 		power_suspend_mode_store);
 

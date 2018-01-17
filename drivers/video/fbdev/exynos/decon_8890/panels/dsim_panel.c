@@ -12,6 +12,7 @@
 */
 
 #include <linux/lcd.h>
+#include <linux/display_state.h>
 #include "../dsim.h"
 
 #include "dsim_panel.h"
@@ -32,6 +33,12 @@
 #ifdef CONFIG_FB_DSU
 #include <linux/sec_debug.h>
 #endif
+
+bool display_on = true;
+bool is_display_on()
+{
+	return display_on;
+}
 
 #if defined(CONFIG_EXYNOS_DECON_MDNIE_LITE)
 static int mdnie_lite_write_set(struct dsim_device *dsim, struct lcd_seq_info *seq, u32 num)
@@ -259,6 +266,8 @@ static int dsim_panel_displayon(struct dsim_device *dsim)
 		return ret;
 	}
 
+	display_on = true;
+
 #ifdef CONFIG_LCD_ALPM
 	mutex_lock(&panel->alpm_lock);
 #endif
@@ -326,6 +335,8 @@ static int dsim_panel_suspend(struct dsim_device *dsim)
 		}
 	}
 	panel->state = PANEL_STATE_SUSPENED;
+
+	display_on = false;
 
 suspend_err:
 	return ret;

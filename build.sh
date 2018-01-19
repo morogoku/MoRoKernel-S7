@@ -2,7 +2,7 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# MoRoKernel Build Script v1.6
+# MoRoKernel Build Script v1.8
 #
 
 # SETUP
@@ -33,6 +33,8 @@ DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 DEFCONFIG_S8EDGE=moro-edge-s8_defconfig
 DEFCONFIG_S8FLAT=moro-flat-s8_defconfig
+DEFCONFIG_N8EDGE=moro-edge-n8_defconfig
+DEFCONFIG_N8FLAT=moro-flat-n8_defconfig
 
 export K_VERSION="v2.3"
 export REVISION="RC"
@@ -367,7 +369,7 @@ elif [ $prompt == "7" ]; then
     MODEL=G930
     PORT=2
     DEVICE=$N8DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S8FLAT
+    KERNEL_DEFCONFIG=$DEFCONFIG_N8FLAT
     LOG=$FLAT_LOG
     export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Flat G930F Port N8 Selected"
@@ -376,7 +378,7 @@ elif [ $prompt == "8" ]; then
     MODEL=G935
     PORT=2
     DEVICE=$N8DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S8EDGE
+    KERNEL_DEFCONFIG=$DEFCONFIG_N8EDGE
     LOG=$EDGE_LOG
     export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Edge G935F Port N8 Selected"
@@ -385,14 +387,14 @@ elif [ $prompt == "9" ]; then
     MODEL=G935
     PORT=2
     DEVICE=$N8DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S8EDGE
+    KERNEL_DEFCONFIG=$DEFCONFIG_N8EDGE
     LOG=$EDGE_LOG
     export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 EDGE + FLAT Port N8"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
-    KERNEL_DEFCONFIG=$DEFCONFIG_S8FLAT
+    KERNEL_DEFCONFIG=$DEFCONFIG_N8FLAT
     LOG=$FLAT_LOG
     export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
     echo "Compiling FLAT ..."

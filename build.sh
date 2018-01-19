@@ -9,10 +9,10 @@
 # -----
 export ARCH=arm64
 export SUBARCH=arm64
-#export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linaro-6.3/bin/aarch64-
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-cortex_a53-linux-gnueabi-GNU-6.3.0/bin/aarch64-cortex_a53-linux-gnueabi-
-export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-ubertc-6.3.1-20170503/bin/aarch64-linux-android-
+#export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-ubertc-6.3.1-20170503/bin/aarch64-linux-android-
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-sabermod-7.0/bin/aarch64-
 #export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-sabermod-5.4/bin/aarch64-
 export CROSS_COMPILE=$BUILD_CROSS_COMPILE

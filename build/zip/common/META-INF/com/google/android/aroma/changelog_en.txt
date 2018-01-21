@@ -2,14 +2,24 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSION	: <b><#selectbg_g>v2.3</#></b>
-	DATE	: <b><#selectbg_g>15/12/2017</#></b>
+	VERSION	: <b><#selectbg_g>v2.4</#></b>
+	DATE	: <b><#selectbg_g>21/01/2018</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.4</#></b></u>
+<*>Magisk 15.3</*>
+<*>Toolchain stock 4.9</*>
+<*>Wireguard support</*>
+<*>Cultivation CPU Governor</*>
+<*>Updated impulse CPU Governor</*>
+<*>Fix wifi hotspot on N8 Port</*>
+<*>Update Powersuspend</*>
+<*>MTweaks 2.8.2</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.3</#></b></u>
 <*>Deleted defaults boeffla wakelocks</*>

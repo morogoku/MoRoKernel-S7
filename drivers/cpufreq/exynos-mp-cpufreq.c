@@ -2597,12 +2597,12 @@ static int exynos_mp_cpufreq_parse_dt(struct device_node *np, cluster_type cl)
 		if (of_property_read_u32(np, (cl ? "cl1_max_support_idx" : "low_cl0_max_support_idx"),
 						&ptr->max_support_idx))
 			return -ENODEV;
-	/* For Grade C, use mid OC for LITTLE freq_table */
-	} else if (asv_little < 11) {
+	/* For Grade C and B phones, use mid OC for BIG freq_table */
+	} else if (asv_little < 13) {
 		if (of_property_read_u32(np, (cl ? "cl1_max_support_idx" : "mid_cl0_max_support_idx"),
 						&ptr->max_support_idx))
 			return -ENODEV;
-	/* Grade A,B phones? That's amazing, let's unleash the Exynos */
+	/* Grade A phones? That's amazing, let's unleash the Exynos */
 	} else {
 		if (of_property_read_u32(np, (cl ? "cl1_max_support_idx" : "high_cl0_max_support_idx"),
 						&ptr->max_support_idx))

@@ -35,6 +35,7 @@ debug.atrace.tags.enableflags=0
 ro.securestorage.support=false
 ro.config.tima=0
 wlan.wfd.hdcp=disable
+ro.security.vaultkeeper.feature=0
 
 #
 # BOOTIMAGE_BUILD_PROPERTIES

@@ -2,14 +2,20 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v2.4</#></b>
-	FECHA	: <b><#selectbg_g>21/01/2018</#></b>
+	VERSIÓN	: <b><#selectbg_g>v2.5</#></b>
+	FECHA	: <b><#selectbg_g>29/01/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.5</#></b></u>
+<*>Permitir a las 4 big CPU Maxima freq. disponible</*>
+<*>z3fold: the 3-fold allocator for ZSWAP compressed pages </*>
+<*>Fix wifi hotspot N8Port en el instalador zip</*>
+<*>Vaultkeeper desactivado</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.4</#></b></u>
 <*>Magisk 15.3</*>

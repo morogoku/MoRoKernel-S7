@@ -2,7 +2,7 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# MoRoKernel Build Script v1.8
+# MoRoKernel Build Script v1.9
 #
 
 # SETUP
@@ -204,6 +204,8 @@ FUNC_BUILD_FLASHABLES()
 	cp -rf zip/common/. temp2
 	if [ $PORT == "1" ]; then
     	    cp -rf zip/s8/. temp2
+	elif [ $PORT == "2" ]; then
+	    cp -rf zip/n8/. temp2
 	else
 	    cp -rf zip/s7/. temp2
 	fi

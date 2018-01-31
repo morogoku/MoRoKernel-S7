@@ -3,13 +3,16 @@
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
 	VERSIÓN	: <b><#selectbg_g>v2.5</#></b>
-	FECHA	: <b><#selectbg_g>29/01/2018</#></b>
+	FECHA	: <b><#selectbg_g>01/02/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.5.1</#></b></u>
+<*>Corregido archivos sistema del Port Note8</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.5</#></b></u>
 <*>Permitir a las 4 big CPU Maxima freq. disponible</*>

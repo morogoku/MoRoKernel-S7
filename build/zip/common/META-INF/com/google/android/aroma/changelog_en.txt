@@ -11,6 +11,9 @@
 
 <b>CHANGELOG:</b>
 
+<u><b><#selectbg_g>MoRoKernel-N v2.5.1</#></b></u>
+<*>Fix system files of Note8Port</*>
+
 <u><b><#selectbg_g>MoRoKernel-N v2.5</#></b></u>
 <*>Allow 4 big cores to max freq. available</*>
 <*>z3fold: the 3-fold allocator for ZSWAP compressed pages </*>

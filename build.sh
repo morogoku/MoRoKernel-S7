@@ -2,7 +2,7 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# MoRoKernel Build Script v1.10
+# MoRoKernel Build Script v1.11
 #
 
 # SETUP
@@ -37,6 +37,7 @@ DEFCONFIG_N8EDGE=moro-edge-n8_defconfig
 DEFCONFIG_N8FLAT=moro-flat-n8_defconfig
 
 export K_VERSION="v2.5.1"
+export K_NAME="MoRoKernel"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 S7DEVICE="S7_Stock"
@@ -209,17 +210,18 @@ FUNC_BUILD_FLASHABLES()
 	tar cv *.img | xz -9 > kernel.tar.xz
 	mv kernel.tar.xz moro/
 	rm -f *.img
-	if [ $prompt == "3" ]; then
-	    zip -9 -r ../MoRoKernel-$DEVICE-N-$K_VERSION.zip *
-	elif [ $prompt == "6" ]; then
-	    zip -9 -r ../MoRoKernel-$DEVICE-N-$K_VERSION.zip *
-	elif [ $prompt == "9" ]; then
-	    zip -9 -r ../MoRoKernel-$DEVICE-N-$K_VERSION.zip *
-	else
-	    zip -9 -r ../MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION.zip *
-	fi
+
+	zip -9 -r ../$ZIP_NAME *
+
 	cd ..
     	rm -rf temp2
+
+	if [ -n `which java` ]; then
+		echo "- Java detected, signing zip ..."
+		mv $ZIP_NAME old$ZIP_NAME
+		java -Xmx1024m -jar $RDIR/build/signapk/signapk.jar -w $RDIR/build/signapk/testkey.x509.pem $RDIR/build/signapk/testkey.pk8 old$ZIP_NAME $ZIP_NAME
+		rm old$ZIP_NAME
+	fi
 }
 
 
@@ -300,31 +302,34 @@ if [ $prompt == "1" ]; then
     export DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Flat G930F Selected"
+    ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
 elif [ $prompt == "2" ]; then
     MODEL=G935
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Edge G935F Selected"
+    ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
 elif [ $prompt == "3" ]; then
     MODEL=G935
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 EDGE + FLAT Selected"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "Compiling FLAT ..."
+    ZIP_NAME=$K_NAME-$DEVICE-N-$K_VERSION.zip
     MAIN
 elif [ $prompt == "4" ]; then
     MODEL=G930
@@ -332,8 +337,9 @@ elif [ $prompt == "4" ]; then
     DEVICE=$S8DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S8FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Flat G930F Port S8-NoteFE Selected"
+    ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
 elif [ $prompt == "5" ]; then
     MODEL=G935
@@ -341,8 +347,9 @@ elif [ $prompt == "5" ]; then
     DEVICE=$S8DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S8EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Edge G935F Port S8-NoteFE Selected"
+    ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
 elif [ $prompt == "6" ]; then
     MODEL=G935
@@ -350,15 +357,16 @@ elif [ $prompt == "6" ]; then
     DEVICE=$S8DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S8EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 EDGE + FLAT Port S8-NoteFE"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_S8FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "Compiling FLAT ..."
+    ZIP_NAME=$K_NAME-$DEVICE-N-$K_VERSION.zip
     MAIN
 elif [ $prompt == "7" ]; then
     MODEL=G930
@@ -366,8 +374,9 @@ elif [ $prompt == "7" ]; then
     DEVICE=$N8DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_N8FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Flat G930F Port N8 Selected"
+    ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
 elif [ $prompt == "8" ]; then
     MODEL=G935
@@ -375,8 +384,9 @@ elif [ $prompt == "8" ]; then
     DEVICE=$N8DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_N8EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 Edge G935F Port N8 Selected"
+    ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
 elif [ $prompt == "9" ]; then
     MODEL=G935
@@ -384,15 +394,16 @@ elif [ $prompt == "9" ]; then
     DEVICE=$N8DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_N8EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "S7 EDGE + FLAT Port N8"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_N8FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="MoRoKernel-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
     echo "Compiling FLAT ..."
+    ZIP_NAME=$K_NAME-$DEVICE-N-$K_VERSION.zip
     MAIN
 fi
 

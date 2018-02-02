@@ -14,17 +14,17 @@ set_perm_recursive(0, 0, 0777, 0777, "/tmp/moro");
 
 # Prepare partitions
 if is_mounted("/system") == "/system" then
-    assert(run_program("/tmp/moro/busybox", "umount", "/system"));
+    assert(run_program("/sbin/busybox", "umount", "/system"));
 endif;
 
 if is_mounted("/data") == "/data" then
-    assert(run_program("/tmp/moro/busybox", "umount", "/data"));
+    assert(run_program("/sbin/busybox", "umount", "/data"));
 endif;
 	
 
 ui_print("@-> Mounting partitions");
-run_program("/tmp/moro/busybox", "mount", "/system");
-run_program("/tmp/moro/busybox", "mount", "/data");
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
 
 
 ui_print("@-> Flashing kernel");
@@ -109,8 +109,8 @@ show_progress(0.85, "-19000");
 	ui_print("@-> Rooting with Magisk Manager");
 	ui_print(" ");
 	package_extract_dir("magisk", "/tmp/moro/magisk");
-	run_program("/system/xbin/busybox", "unzip", "/tmp/moro/magisk/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/magisk");
-	run_program("/system/xbin/busybox", "sh", "/tmp/moro/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/magisk/magisk.zip");
+	run_program("/sbin/busybox", "unzip", "/tmp/moro/magisk/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/magisk");
+	run_program("/sbin/sh", "/tmp/moro/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/magisk/magisk.zip");
 endif;
 
 # SuperSU Root
@@ -131,8 +131,8 @@ show_progress(0.85, "-34000");
 	ui_print("@-> Rooting with SuperSU");
 	ui_print(" ");
 	package_extract_dir("supersu", "/tmp/moro/supersu");
-	run_program("/system/xbin/busybox", "unzip", "/tmp/moro/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/supersu");
-	run_program("/system/xbin/busybox", "sh", "/tmp/moro/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/supersu/supersu.zip");
+	run_program("/sbin/busybox", "unzip", "/tmp/moro/supersu/supersu.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp/moro/supersu");
+	run_program("/sbin/sh", "/tmp/moro/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/moro/supersu/supersu.zip");
 endif;
 
 #####################################################
@@ -140,7 +140,7 @@ endif;
 ui_print(" ");
 ui_print("@-> Unmounting Partition");
 ifelse(is_mounted("/system"), unmount("/system"));
-delete_recursive("/tmp/moro");
+
 set_progress(1.00);
 ui_print(" ");
 ui_print("** Done **");

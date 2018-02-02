@@ -2,14 +2,19 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Nougat</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v2.5</#></b>
-	FECHA	: <b><#selectbg_g>01/02/2018</#></b>
+	VERSIÓN	: <b><#selectbg_g>v2.5.2</#></b>
+	FECHA	: <b><#selectbg_g>02/02/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-N v2.5.2</#></b></u>
+<*>Fix archivos system</*>
+<*>Zip de instalacion firmado</*>
+<*>Fixes menores</*>
 
 <u><b><#selectbg_g>MoRoKernel-N v2.5.1</#></b></u>
 <*>Corregido archivos sistema del Port Note8</*>

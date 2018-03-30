@@ -702,7 +702,6 @@ static struct ion_handle* pass_to_user(struct ion_handle *handle)
 	mutex_lock(&client->lock);
 	ret = user_ion_handle_get_check_overflow(handle);
 	ion_handle_put_nolock(handle);
-	ret = ion_handle_put_nolock(handle);
 	mutex_unlock(&client->lock);
 	return ret;
 }

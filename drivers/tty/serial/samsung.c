@@ -1075,7 +1075,6 @@ static void s3c24xx_serial_set_termios(struct uart_port *port,
 
 	/* setting clock for baud rate */
 	if (ourport->baudclk != clk) {
-		clk_prepare_enable(clk);
 		ourport->baudclk = clk;
 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
 	}

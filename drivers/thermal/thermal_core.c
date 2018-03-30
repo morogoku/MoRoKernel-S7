@@ -38,7 +38,6 @@
 #include <linux/suspend.h>
 #include <net/netlink.h>
 #include <net/genetlink.h>
-#include <linux/suspend.h>
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/thermal.h>
@@ -60,8 +59,6 @@ static LIST_HEAD(thermal_governor_list);
 
 static DEFINE_MUTEX(thermal_list_lock);
 static DEFINE_MUTEX(thermal_governor_lock);
-
-/*revert*/ //static atomic_t in_suspend;
 
 #ifdef CONFIG_SCHED_HMP
 #define BOUNDED_CPU		1
@@ -519,9 +516,6 @@ void thermal_zone_device_update(struct thermal_zone_device *tz)
 #if defined(CONFIG_EXYNOS_BIG_FREQ_BOOST)
 	struct thermal_instance *instance;
 #endif
-
-	/*revert */ //if (atomic_read(&in_suspend))
-		//return;
 
 	if (!tz->ops->get_mode)
 		return;
@@ -1994,36 +1988,6 @@ static struct notifier_block thermal_pm_notifier = {
 	.notifier_call = exynos_thermal_pm_notifier,
 	.priority = (INT_MIN + 1),
 };
-/*revert */
-//static int thermal_pm_notify(struct notifier_block *nb,
-//				unsigned long mode, void *_unused)
-//{
-//	struct thermal_zone_device *tz;
-//
-//	switch (mode) {
-//	case PM_HIBERNATION_PREPARE:
-//	case PM_RESTORE_PREPARE:
-//	case PM_SUSPEND_PREPARE:
-//		atomic_set(&in_suspend, 1);
-//		break;
-//	case PM_POST_HIBERNATION:
-//	case PM_POST_RESTORE:
-//	case PM_POST_SUSPEND:
-//		atomic_set(&in_suspend, 0);
-//		list_for_each_entry(tz, &thermal_tz_list, node) {
-//			thermal_zone_device_reset(tz);
-//			thermal_zone_device_update(tz);
-//		}
-//		break;
-//	default:
-//		break;
-//	}
-//	return 0;
-//}
-//
-//static struct notifier_block thermal_pm_nb = {
-//	.notifier_call = thermal_pm_notify,
-//}; /*end revert */
 
 static int __init thermal_init(void)
 {
@@ -2049,11 +2013,6 @@ static int __init thermal_init(void)
 	register_hotcpu_notifier(&thermal_cpu_notifier);
 #endif
 	register_pm_notifier(&thermal_pm_notifier);
-/* revert */
-	//result = register_pm_notifier(&thermal_pm_nb);
-	//if (result)
-		//pr_warn("Thermal: Can not register suspend notifier, return %d\n",
-			//result);
 
 	return 0;
 
@@ -2078,7 +2037,6 @@ static void __exit thermal_exit(void)
 #ifdef CONFIG_SCHED_HMP
 	unregister_hotcpu_notifier(&thermal_cpu_notifier);
 #endif
-/* revert*/	//unregister_pm_notifier(&thermal_pm_nb);
 	of_thermal_destroy_zones();
 	genetlink_exit();
 	class_unregister(&thermal_class);

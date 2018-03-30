@@ -966,7 +966,11 @@ static int hub_port_disable(struct usb_hub *hub, int port1, int set_state)
  */
 static void hub_port_logical_disconnect(struct usb_hub *hub, int port1)
 {
+#ifdef CONFIG_USB_DEBUG_DETAILED_LOG
+	dev_info(&hub->ports[port1 - 1]->dev, "logical disconnect\n");
+#else
 	dev_dbg(&hub->ports[port1 - 1]->dev, "logical disconnect\n");
+#endif
 	hub_port_disable(hub, port1, 1);
 
 	/* FIXME let caller ask to power down the port:
@@ -1018,6 +1022,7 @@ enum hub_activation_type {
 
 static void hub_init_func2(struct work_struct *ws);
 static void hub_init_func3(struct work_struct *ws);
+static void hub_release(struct kref *kref);
 
 static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 {
@@ -1030,11 +1035,20 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 	unsigned delay;
 
 	/* Continue a partial initialization */
-	if (type == HUB_INIT2)
-		goto init2;
-	if (type == HUB_INIT3)
-		goto init3;
+	if (type == HUB_INIT2 || type == HUB_INIT3) {
+		device_lock(hub->intfdev);
 
+		/* Was the hub disconnected while we were waiting? */
+		if (hub->disconnected) {
+			device_unlock(hub->intfdev);
+			kref_put(&hub->kref, hub_release);
+			return;
+		}
+		if (type == HUB_INIT2)
+			goto init2;
+		goto init3;
+	}
+	kref_get(&hub->kref);
 	/* The superspeed hub except for root hub has to use Hub Depth
 	 * value as an offset into the route string to locate the bits
 	 * it uses to determine the downstream port number. So hub driver
@@ -1231,6 +1245,7 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 			queue_delayed_work(system_power_efficient_wq,
 					&hub->init_work,
 					msecs_to_jiffies(delay));
+			device_unlock(hub->intfdev);
 			return;		/* Continues at init3: below */
 		} else {
 			msleep(delay);
@@ -1252,6 +1267,11 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 	/* Allow autosuspend if it was suppressed */
 	if (type <= HUB_INIT3)
 		usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
+
+	if (type == HUB_INIT2 || type == HUB_INIT3)
+		device_unlock(hub->intfdev);
+
+	kref_put(&hub->kref, hub_release);
 }
 
 /* Implement the continuations for the delays above */
@@ -4421,7 +4441,11 @@ hub_port_init (struct usb_hub *hub, struct usb_device *udev, int port1,
 		if (udev->wusb == 0) {
 			for (j = 0; j < SET_ADDRESS_TRIES; ++j) {
 				retval = hub_set_address(udev, devnum);
+#if defined(CONFIG_SEC_FACTORY)
+				if (retval >= 0 || retval == -ETIME)
+#else
 				if (retval >= 0)
+#endif
 					break;
 				msleep(200);
 			}
@@ -4621,6 +4645,15 @@ static void hub_port_connect(struct usb_hub *hub, int port1, u16 portstatus,
 	struct usb_port *port_dev = hub->ports[port1 - 1];
 	struct usb_device *udev = port_dev->child;
 	static int unreliable_port = -1;
+#ifdef CONFIG_USB_DEBUG_DETAILED_LOG
+	dev_info (&port_dev->dev,
+		"port %d, status %04x, change %04x, %s\n",
+		port1, portstatus, portchange, portspeed(hub, portstatus));
+#else
+	dev_dbg (&port_dev->dev,
+		"port %d, status %04x, change %04x, %s\n",
+		port1, portstatus, portchange, portspeed(hub, portstatus));
+#endif
 
 	/* Disconnect any existing devices under this port */
 	if (udev) {
@@ -4802,7 +4835,11 @@ loop:
 		release_devnum(udev);
 		hub_free_dev(udev);
 		usb_put_dev(udev);
+#if defined(CONFIG_SEC_FACTORY)
+		if ((status == -ENOTCONN) || (status == -ENOTSUPP) || (status == -ETIME))
+#else
 		if ((status == -ENOTCONN) || (status == -ENOTSUPP))
+#endif
 			break;
 	}
 	if (hub->hdev->parent ||
@@ -5008,6 +5045,7 @@ static void hub_event(struct work_struct *work)
 	struct usb_interface *intf;
 	struct usb_hub *hub;
 	struct device *hub_dev;
+	struct usb_hcd *hcd;
 	u16 hubstatus;
 	u16 hubchange;
 	int i, ret;
@@ -5015,6 +5053,7 @@ static void hub_event(struct work_struct *work)
 	hub = container_of(work, struct usb_hub, events);
 	hdev = hub->hdev;
 	hub_dev = hub->intfdev;
+	hcd = bus_to_hcd(hdev->bus);
 	intf = to_usb_interface(hub_dev);
 
 	dev_dbg(hub_dev, "state %d ports %d chg %04x evt %04x\n",
@@ -5026,6 +5065,7 @@ static void hub_event(struct work_struct *work)
 	/* Lock the device, then check to see if we were
 	 * disconnected while waiting for the lock to succeed. */
 	usb_lock_device(hdev);
+	hcd->is_in_hub_event = true;
 	if (unlikely(hub->disconnected))
 		goto out_hdev_lock;
 
@@ -5118,6 +5158,7 @@ out_autopm:
 	/* Balance the usb_autopm_get_interface() above */
 	usb_autopm_put_interface_no_suspend(intf);
 out_hdev_lock:
+	hcd->is_in_hub_event = false;
 	usb_unlock_device(hdev);
 
 	/* Balance the stuff in kick_hub_wq() and allow autosuspend */

@@ -104,6 +104,9 @@
 #include <net/ip_fib.h>
 #include <net/inet_connection_sock.h>
 #include <net/tcp.h>
+#ifdef CONFIG_MPTCP
+#include <net/mptcp.h>
+#endif
 #include <net/udp.h>
 #include <net/udplite.h>
 #include <net/ping.h>
@@ -119,6 +122,19 @@
 #include <linux/mroute.h>
 #endif
 
+#ifdef CONFIG_ANDROID_PARANOID_NETWORK
+#include <linux/android_aid.h>
+
+static inline int current_has_network(void)
+{
+	return in_egroup_p(AID_INET) || capable(CAP_NET_RAW);
+}
+#else
+static inline int current_has_network(void)
+{
+	return 1;
+}
+#endif
 
 /* The inetsw table contains everything that inet_create needs to
  * build a new socket.
@@ -146,6 +162,11 @@ void inet_sock_destruct(struct sock *sk)
 		pr_err("Attempt to release alive inet socket %p\n", sk);
 		return;
 	}
+
+#ifdef CONFIG_MPTCP
+	if (sock_flag(sk, SOCK_MPTCP))
+		mptcp_disable_static_key();
+#endif
 
 	WARN_ON(atomic_read(&sk->sk_rmem_alloc));
 	WARN_ON(atomic_read(&sk->sk_wmem_alloc));
@@ -246,8 +267,12 @@ EXPORT_SYMBOL(inet_listen);
  *	Create an inet socket.
  */
 
+#ifdef CONFIG_MPTCP
+int inet_create(struct net *net, struct socket *sock, int protocol, int kern)
+#else
 static int inet_create(struct net *net, struct socket *sock, int protocol,
 		       int kern)
+#endif
 {
 	struct sock *sk;
 	struct inet_protosw *answer;
@@ -256,6 +281,12 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
 	unsigned char answer_flags;
 	int try_loading_module = 0;
 	int err;
+
+	if (protocol < 0 || protocol >= IPPROTO_MAX)
+		return -EINVAL;
+
+	if (!current_has_network())
+		return -EACCES;
 
 	sock->state = SS_UNCONNECTED;
 
@@ -305,8 +336,7 @@ lookup_protocol:
 	}
 
 	err = -EPERM;
-	if (sock->type == SOCK_RAW && !kern &&
-	    !ns_capable(net->user_ns, CAP_NET_RAW))
+	if (sock->type == SOCK_RAW && !kern && !capable(CAP_NET_RAW))
 		goto out_rcu_unlock;
 
 	sock->ops = answer->ops;
@@ -672,6 +702,25 @@ int inet_accept(struct socket *sock, struct socket *newsock, int flags)
 	lock_sock(sk2);
 
 	sock_rps_record_flow(sk2);
+
+#ifdef CONFIG_MPTCP
+	if (sk2->sk_protocol == IPPROTO_TCP && mptcp(tcp_sk(sk2))) {
+		struct sock *sk_it = sk2;
+
+		mptcp_for_each_sk(tcp_sk(sk2)->mpcb, sk_it)
+			sock_rps_record_flow(sk_it);
+
+		if (tcp_sk(sk2)->mpcb->master_sk) {
+			sk_it = tcp_sk(sk2)->mpcb->master_sk;
+
+			write_lock_bh(&sk_it->sk_callback_lock);
+			sk_it->sk_wq = newsock->wq;
+			sk_it->sk_socket = newsock;
+			write_unlock_bh(&sk_it->sk_callback_lock);
+		}
+	}
+#endif
+
 	WARN_ON(!((1 << sk2->sk_state) &
 		  (TCPF_ESTABLISHED | TCPF_SYN_RECV |
 		  TCPF_CLOSE_WAIT | TCPF_CLOSE)));
@@ -868,6 +917,7 @@ int inet_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 	case SIOCSIFPFLAGS:
 	case SIOCGIFPFLAGS:
 	case SIOCSIFFLAGS:
+	case SIOCKILLADDR:
 		err = devinet_ioctl(net, cmd, (void __user *)arg);
 		break;
 	default:
@@ -1386,6 +1436,19 @@ out:
 	return pp;
 }
 
+static struct sk_buff **ipip_gro_receive(struct sk_buff **head,
+					 struct sk_buff *skb)
+{
+	if (NAPI_GRO_CB(skb)->encap_mark) {
+		NAPI_GRO_CB(skb)->flush = 1;
+		return NULL;
+	}
+
+	NAPI_GRO_CB(skb)->encap_mark = 1;
+
+	return inet_gro_receive(head, skb);
+}
+
 int inet_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
 {
 	if (sk->sk_family == AF_INET)
@@ -1644,7 +1707,7 @@ static struct packet_offload ip_packet_offload __read_mostly = {
 static const struct net_offload ipip_offload = {
 	.callbacks = {
 		.gso_segment	= inet_gso_segment,
-		.gro_receive	= inet_gro_receive,
+		.gro_receive	= ipip_gro_receive,
 		.gro_complete	= inet_gro_complete,
 	},
 };
@@ -1738,6 +1801,11 @@ static int __init inet_init(void)
 	 */
 
 	ip_init();
+
+#ifdef CONFIG_MPTCP
+	/* We must initialize MPTCP before TCP. */
+	mptcp_init();
+#endif
 
 	tcp_v4_init();
 

@@ -487,6 +487,24 @@ void path_put(const struct path *path)
 }
 EXPORT_SYMBOL(path_put);
 
+/**
+ * path_connected - Verify that a path->dentry is below path->mnt.mnt_root
+ * @path: nameidate to verify
+ *
+ * Rename can sometimes move a file or directory outside of a bind
+ * mount, path_connected allows those cases to be detected.
+ */
+static bool path_connected(const struct path *path)
+{
+	struct vfsmount *mnt = path->mnt;
+
+	/* Only bind mounts can have disconnected paths */
+	if (mnt->mnt_root == mnt->mnt_sb->s_root)
+		return true;
+
+	return is_subdir(path->dentry, mnt->mnt_root);
+}
+
 /*
  * Path walking has 2 modes, rcu-walk and ref-walk (see
  * Documentation/filesystems/path-lookup.txt).  In situations when we can't
@@ -889,11 +907,19 @@ static int follow_up_rcu(struct path *path)
 	struct dentry *mountpoint;
 
 	parent = mnt->mnt_parent;
+#ifdef CONFIG_RKP_NS_PROT
+	if (parent->mnt == path->mnt)
+#else
 	if (&parent->mnt == path->mnt)
+#endif
 		return 0;
 	mountpoint = mnt->mnt_mountpoint;
 	path->dentry = mountpoint;
+#ifdef CONFIG_RKP_NS_PROT
+	path->mnt = parent->mnt;
+#else
 	path->mnt = &parent->mnt;
+#endif
 	return 1;
 }
 
@@ -919,13 +945,21 @@ int follow_up(struct path *path)
 		read_sequnlock_excl(&mount_lock);
 		return 0;
 	}
+#ifdef CONFIG_RKP_NS_PROT
+	mntget(parent->mnt);
+#else
 	mntget(&parent->mnt);
+#endif
 	mountpoint = dget(mnt->mnt_mountpoint);
 	read_sequnlock_excl(&mount_lock);
 	dput(path->dentry);
 	path->dentry = mountpoint;
 	mntput(path->mnt);
+#ifdef CONFIG_RKP_NS_PROT
+	path->mnt = parent->mnt;
+#else
 	path->mnt = &parent->mnt;
+#endif
 	return 1;
 }
 EXPORT_SYMBOL(follow_up);
@@ -1127,8 +1161,13 @@ static bool __follow_mount_rcu(struct nameidata *nd, struct path *path,
 		mounted = __lookup_mnt(path->mnt, path->dentry);
 		if (!mounted)
 			break;
+#ifdef CONFIG_RKP_NS_PROT
+		path->mnt = mounted->mnt;
+		path->dentry = mounted->mnt->mnt_root;
+#else
 		path->mnt = &mounted->mnt;
 		path->dentry = mounted->mnt.mnt_root;
+#endif
 		nd->flags |= LOOKUP_JUMPED;
 		nd->seq = read_seqcount_begin(&path->dentry->d_seq);
 		/*
@@ -1164,6 +1203,8 @@ static int follow_dotdot_rcu(struct nameidata *nd)
 				goto failed;
 			nd->path.dentry = parent;
 			nd->seq = seq;
+			if (unlikely(!path_connected(&nd->path)))
+				goto failed;
 			break;
 		}
 		if (!follow_up_rcu(&nd->path))
@@ -1176,8 +1217,13 @@ static int follow_dotdot_rcu(struct nameidata *nd)
 		mounted = __lookup_mnt(nd->path.mnt, nd->path.dentry);
 		if (!mounted)
 			break;
+#ifdef CONFIG_RKP_NS_PROT
+		nd->path.mnt = mounted->mnt;
+		nd->path.dentry = mounted->mnt->mnt_root;
+#else
 		nd->path.mnt = &mounted->mnt;
 		nd->path.dentry = mounted->mnt.mnt_root;
+#endif
 		inode = nd->path.dentry->d_inode;
 		nd->seq = read_seqcount_begin(&nd->path.dentry->d_seq);
 		if (read_seqretry(&mount_lock, nd->m_seq))
@@ -1260,7 +1306,7 @@ static void follow_mount(struct path *path)
 	}
 }
 
-static void follow_dotdot(struct nameidata *nd)
+static int follow_dotdot(struct nameidata *nd)
 {
 	if (!nd->root.mnt)
 		set_root(nd);
@@ -1276,6 +1322,10 @@ static void follow_dotdot(struct nameidata *nd)
 			/* rare case of legitimate dget_parent()... */
 			nd->path.dentry = dget_parent(nd->path.dentry);
 			dput(old);
+			if (unlikely(!path_connected(&nd->path))) {
+				path_put(&nd->path);
+				return -ENOENT;
+			}
 			break;
 		}
 		if (!follow_up(&nd->path))
@@ -1283,6 +1333,7 @@ static void follow_dotdot(struct nameidata *nd)
 	}
 	follow_mount(&nd->path);
 	nd->inode = nd->path.dentry->d_inode;
+	return 0;
 }
 
 /*
@@ -1503,7 +1554,7 @@ static inline int handle_dots(struct nameidata *nd, int type)
 			if (follow_dotdot_rcu(nd))
 				return -ECHILD;
 		} else
-			follow_dotdot(nd);
+			return follow_dotdot(nd);
 	}
 	return 0;
 }
@@ -3600,6 +3651,8 @@ static long do_rmdir(int dfd, const char __user *pathname)
 	struct dentry *dentry;
 	struct nameidata nd;
 	unsigned int lookup_flags = 0;
+	char *path_buf = NULL;
+	char *propagate_path = NULL;
 retry:
 	name = user_path_parent(dfd, pathname, &nd, lookup_flags);
 	if (IS_ERR(name))
@@ -3634,11 +3687,23 @@ retry:
 	error = security_path_rmdir(&nd.path, dentry);
 	if (error)
 		goto exit3;
+	if (nd.path.dentry->d_sb->s_op->unlink_callback) {
+		path_buf = kmalloc(PATH_MAX, GFP_KERNEL);
+		propagate_path = dentry_path_raw(dentry, path_buf, PATH_MAX);
+	}
 	error = vfs_rmdir(nd.path.dentry->d_inode, dentry);
 exit3:
 	dput(dentry);
 exit2:
 	mutex_unlock(&nd.path.dentry->d_inode->i_mutex);
+	if (path_buf && !error) {
+		nd.path.dentry->d_sb->s_op->unlink_callback(nd.path.dentry->d_sb,
+			propagate_path);
+	}
+	if (path_buf) {
+		kfree(path_buf);
+		path_buf = NULL;
+	}
 	mnt_drop_write(nd.path.mnt);
 exit1:
 	path_put(&nd.path);
@@ -3728,6 +3793,8 @@ static long do_unlinkat(int dfd, const char __user *pathname)
 	struct inode *inode = NULL;
 	struct inode *delegated_inode = NULL;
 	unsigned int lookup_flags = 0;
+	char *path_buf = NULL;
+	char *propagate_path = NULL;
 retry:
 	name = user_path_parent(dfd, pathname, &nd, lookup_flags);
 	if (IS_ERR(name))
@@ -3752,6 +3819,12 @@ retry_deleg:
 		inode = dentry->d_inode;
 		if (d_is_negative(dentry))
 			goto slashes;
+
+		if (inode->i_sb->s_op->unlink_callback) {
+			path_buf = kmalloc(PATH_MAX, GFP_KERNEL);
+			propagate_path = dentry_path_raw(dentry, path_buf, PATH_MAX);
+		}
+
 		ihold(inode);
 		error = security_path_unlink(&nd.path, dentry);
 		if (error)
@@ -3761,6 +3834,13 @@ exit2:
 		dput(dentry);
 	}
 	mutex_unlock(&nd.path.dentry->d_inode->i_mutex);
+	if (path_buf && !error) {
+		inode->i_sb->s_op->unlink_callback(inode->i_sb, propagate_path);
+	}
+	if (path_buf) {
+		kfree(path_buf);
+		path_buf = NULL;
+	}
 	if (inode)
 		iput(inode);	/* truncate the inode here */
 	inode = NULL;
@@ -4070,11 +4150,11 @@ int vfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 {
 	int error;
 	bool is_dir = d_is_dir(old_dentry);
-	const unsigned char *old_name;
 	struct inode *source = old_dentry->d_inode;
 	struct inode *target = new_dentry->d_inode;
 	bool new_is_dir = false;
 	unsigned max_links = new_dir->i_sb->s_max_links;
+	struct name_snapshot old_name;
 
 	if (source == target)
 		return 0;
@@ -4124,7 +4204,7 @@ int vfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 	if (error)
 		return error;
 
-	old_name = fsnotify_oldname_init(old_dentry->d_name.name);
+	take_dentry_name_snapshot(&old_name, old_dentry);
 	dget(new_dentry);
 	if (!is_dir || (flags & RENAME_EXCHANGE))
 		lock_two_nondirectories(source, target);
@@ -4185,14 +4265,14 @@ out:
 		mutex_unlock(&target->i_mutex);
 	dput(new_dentry);
 	if (!error) {
-		fsnotify_move(old_dir, new_dir, old_name, is_dir,
+		fsnotify_move(old_dir, new_dir, old_name.name, is_dir,
 			      !(flags & RENAME_EXCHANGE) ? target : NULL, old_dentry);
 		if (flags & RENAME_EXCHANGE) {
 			fsnotify_move(new_dir, old_dir, old_dentry->d_name.name,
 				      new_is_dir, NULL, new_dentry);
 		}
 	}
-	fsnotify_oldname_free(old_name);
+	release_dentry_name_snapshot(&old_name);
 
 	return error;
 }

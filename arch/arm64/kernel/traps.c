@@ -32,12 +32,20 @@
 #include <linux/syscalls.h>
 
 #include <asm/atomic.h>
+#include <asm/barrier.h>
 #include <asm/debug-monitors.h>
 #include <asm/traps.h>
+#include <asm/esr.h>
 #include <asm/stacktrace.h>
 #include <asm/exception.h>
 #include <asm/system_misc.h>
+#ifdef CONFIG_SEC_DEBUG
+#include <linux/sec_debug.h>
+#endif
 
+#ifdef CONFIG_RKP_CFP_ROPP
+#include <linux/rkp_cfp.h>
+#endif
 static const char *handler[]= {
 	"Synchronous Abort",
 	"IRQ",
@@ -129,9 +137,16 @@ static void dump_instr(const char *lvl, struct pt_regs *regs)
 	set_fs(fs);
 }
 
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk, bool auto_summary)
+#else
 static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
+#endif
 {
 	struct stackframe frame;
+#ifdef CONFIG_RKP_CFP_ROPP
+	unsigned long init_pc = 0x0, rrk = 0x0;
+#endif
 
 	pr_debug("%s(regs = %p tsk = %p)\n", __func__, regs, tsk);
 
@@ -155,7 +170,27 @@ static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
 		frame.pc = thread_saved_pc(tsk);
 	}
 
+#ifdef CONFIG_RKP_CFP_ROPP
+	init_pc = frame.pc;
+#ifdef CONFIG_RKP_CFP_ROPP_HYPKEY
+	rkp_call(CFP_ROPP_RET_KEY, (unsigned long) &(task_thread_info(tsk)->rrk), 0, 0, 0, 0);
+	asm("mov %0, x16" : "=r" (rrk));
+#else //CONFIG_RKP_CFP_ROPP_HYPKEY
+	rrk = task_thread_info(tsk)->rrk;
+#endif //CONFIG_RKP_CFP_ROPP_HYPKEY
+#endif //CONFIG_RKP_CFP_ROPP
+
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+	if (auto_summary) {
+		pr_auto_once(2);
+		pr_auto(ASL2, "Call trace:\n");
+	}
+	else
+		pr_emerg("Call trace:\n");
+#else
 	pr_emerg("Call trace:\n");
+#endif
+
 	while (1) {
 		unsigned long where = frame.pc;
 		int ret;
@@ -163,15 +198,41 @@ static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
 		ret = unwind_frame(&frame);
 		if (ret < 0)
 			break;
+#ifdef CONFIG_RKP_CFP_ROPP
+        if ((where != init_pc) && (0x1 == dump_stack_dec)){
+            where = where ^ rrk;
+        }
+#endif
+
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+		if (auto_summary)
+			pr_auto(ASL2, "[<%p>] %pS\n", (void *)where, (void *)where);
+		else
+			dump_backtrace_entry(where, frame.sp);
+#else
 		dump_backtrace_entry(where, frame.sp);
+#endif
 	}
+
 }
 
 void show_stack(struct task_struct *tsk, unsigned long *sp)
 {
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+	dump_backtrace(NULL, tsk, false);
+#else
 	dump_backtrace(NULL, tsk);
+#endif
 	barrier();
 }
+
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+void show_stack_auto_summary(struct task_struct *tsk, unsigned long *sp)
+{
+	dump_backtrace(NULL, tsk, true);
+	barrier();
+}
+#endif
 
 #ifdef CONFIG_PREEMPT
 #define S_PREEMPT " PREEMPT"
@@ -207,10 +268,15 @@ static int __die(const char *str, int err, struct thread_info *thread,
 	if (!user_mode(regs) || in_interrupt()) {
 		dump_mem(KERN_EMERG, "Stack: ", regs->sp,
 			 THREAD_SIZE + (unsigned long)task_stack_page(tsk));
-		dump_backtrace(regs, tsk);
+
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+		dump_backtrace(NULL, tsk, true);
+#else
+		dump_backtrace(NULL, tsk);
+#endif
+
 		dump_instr(KERN_EMERG, regs);
 	}
-
 	return ret;
 }
 
@@ -221,6 +287,7 @@ static DEFINE_RAW_SPINLOCK(die_lock);
  */
 void die(const char *str, struct pt_regs *regs, int err)
 {
+	enum bug_trap_type bug_type = BUG_TRAP_TYPE_NONE;
 	struct thread_info *thread = current_thread_info();
 	int ret;
 
@@ -229,6 +296,12 @@ void die(const char *str, struct pt_regs *regs, int err)
 	raw_spin_lock_irq(&die_lock);
 	console_verbose();
 	bust_spinlocks(1);
+
+	if (!user_mode(regs))
+		bug_type = report_bug(regs->pc, regs);
+	if (bug_type != BUG_TRAP_TYPE_NONE)
+		str = "Oops - BUG";
+
 	ret = __die(str, err, thread, regs);
 
 	if (regs && kexec_should_crash(thread->task))
@@ -239,10 +312,24 @@ void die(const char *str, struct pt_regs *regs, int err)
 	raw_spin_unlock_irq(&die_lock);
 	oops_exit();
 
+#if defined(CONFIG_SEC_DEBUG)
+	sec_debug_store_backtrace(regs);
+
+	if (in_interrupt())
+		panic("%s\nPC is at %pS\nLR is at %pS",
+				"Fatal exception in interrupt", (void *)regs->pc,
+				compat_user_mode(regs) ? (void *)regs->compat_lr : (void *)regs->regs[30]);
+	if (panic_on_oops)
+		panic("%s\nPC is at %pS\nLR is at %pS",
+				"Fatal exception", (void *)regs->pc,
+				compat_user_mode(regs) ? (void *)regs->compat_lr : (void *)regs->regs[30]);
+#else
 	if (in_interrupt())
 		panic("Fatal exception in interrupt");
 	if (panic_on_oops)
 		panic("Fatal exception");
+#endif
+
 	if (ret != NOTIFY_STOP)
 		do_exit(SIGSEGV);
 }
@@ -259,6 +346,76 @@ void arm64_notify_die(const char *str, struct pt_regs *regs,
 	}
 }
 
+static LIST_HEAD(undef_hook);
+static DEFINE_RAW_SPINLOCK(undef_lock);
+
+void register_undef_hook(struct undef_hook *hook)
+{
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&undef_lock, flags);
+	list_add(&hook->node, &undef_hook);
+	raw_spin_unlock_irqrestore(&undef_lock, flags);
+}
+
+void unregister_undef_hook(struct undef_hook *hook)
+{
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&undef_lock, flags);
+	list_del(&hook->node);
+	raw_spin_unlock_irqrestore(&undef_lock, flags);
+}
+
+static int call_undef_hook(struct pt_regs *regs)
+{
+	struct undef_hook *hook;
+	unsigned long flags;
+	u32 instr;
+	int (*fn)(struct pt_regs *regs, u32 instr) = NULL;
+	void __user *pc = (void __user *)instruction_pointer(regs);
+
+	if (!user_mode(regs))
+		return 1;
+
+	if (compat_thumb_mode(regs)) {
+		/* 16-bit Thumb instruction */
+		if (get_user(instr, (u16 __user *)pc))
+			goto exit;
+		instr = le16_to_cpu(instr);
+		if (aarch32_insn_is_wide(instr)) {
+			u32 instr2;
+
+			if (get_user(instr2, (u16 __user *)(pc + 2)))
+				goto exit;
+			instr2 = le16_to_cpu(instr2);
+			instr = (instr << 16) | instr2;
+		}
+	} else {
+		/* 32-bit ARM instruction */
+		if (get_user(instr, (u32 __user *)pc))
+			goto exit;
+		instr = le32_to_cpu(instr);
+	}
+
+	raw_spin_lock_irqsave(&undef_lock, flags);
+	list_for_each_entry(hook, &undef_hook, node)
+		if ((instr & hook->instr_mask) == hook->instr_val &&
+			(regs->pstate & hook->pstate_mask) == hook->pstate_val)
+			fn = hook->fn;
+
+	raw_spin_unlock_irqrestore(&undef_lock, flags);
+exit:
+	return fn ? fn(regs, instr) : 1;
+}
+
+#ifdef CONFIG_GENERIC_BUG
+int is_valid_bugaddr(unsigned long pc)
+{
+	return 1;
+}
+#endif
+
 asmlinkage void __exception do_undefinstr(struct pt_regs *regs)
 {
 	siginfo_t info;
@@ -266,6 +423,9 @@ asmlinkage void __exception do_undefinstr(struct pt_regs *regs)
 
 	/* check for AArch32 breakpoint instructions */
 	if (!aarch32_break_handler(regs))
+		return;
+
+	if (call_undef_hook(regs) == 0)
 		return;
 
 	if (show_unhandled_signals && unhandled_signal(current, SIGILL) &&
@@ -280,7 +440,44 @@ asmlinkage void __exception do_undefinstr(struct pt_regs *regs)
 	info.si_code  = ILL_ILLOPC;
 	info.si_addr  = pc;
 
+#ifdef CONFIG_SEC_DEBUG
+	if (!user_mode(regs))
+		sec_debug_store_fault_addr(-1, regs);
+#endif
+
 	arm64_notify_die("Oops - undefined instruction", regs, &info, 0);
+}
+
+static void cntvct_read_handler(unsigned int esr, struct pt_regs *regs)
+{
+	int rt = (esr & ESR_ELx_SYS64_ISS_RT_MASK) >> ESR_ELx_SYS64_ISS_RT_SHIFT;
+
+	isb();
+	if (rt != 31)
+		regs->regs[rt] = arch_counter_get_cntvct();
+	regs->pc += 4;
+}
+
+static void cntfrq_read_handler(unsigned int esr, struct pt_regs *regs)
+{
+	int rt = (esr & ESR_ELx_SYS64_ISS_RT_MASK) >> ESR_ELx_SYS64_ISS_RT_SHIFT;
+
+	if (rt != 31)
+		asm volatile("mrs %0, cntfrq_el0" : "=r" (regs->regs[rt]));
+	regs->pc += 4;
+}
+
+asmlinkage void __exception do_sysinstr(unsigned int esr, struct pt_regs *regs)
+{
+	if ((esr & ESR_ELx_SYS64_ISS_SYS_OP_MASK) == ESR_ELx_SYS64_ISS_SYS_CNTVCT) {
+		cntvct_read_handler(esr, regs);
+		return;
+	} else if ((esr & ESR_ELx_SYS64_ISS_SYS_OP_MASK) == ESR_ELx_SYS64_ISS_SYS_CNTFRQ) {
+		cntfrq_read_handler(esr, regs);
+		return;
+	}
+
+	do_undefinstr(regs);
 }
 
 long compat_arm_syscall(struct pt_regs *regs);
@@ -316,8 +513,9 @@ asmlinkage void bad_mode(struct pt_regs *regs, int reason, unsigned int esr)
 	void __user *pc = (void __user *)instruction_pointer(regs);
 	console_verbose();
 
-	pr_crit("Bad mode in %s handler detected, code 0x%08x\n",
+	pr_auto(ASL1, "Bad mode in %s handler detected, code 0x%08x\n",
 		handler[reason], esr);
+
 	__show_regs(regs);
 
 	info.si_signo = SIGILL;

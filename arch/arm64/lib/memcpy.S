@@ -175,6 +175,37 @@ ENTRY(memcpy)
 	ldp	B_l, B_h, [src],#16
 	ldp	C_l, C_h, [src],#16
 	ldp	D_l, D_h, [src],#16
+#ifdef CONFIG_SOC_EXYNOS8890
+	ldr	tmp1, =exynos_soc_info
+	ldr	tmp2w, [tmp1, #4]
+	and	tmp2w, tmp2w, #(3 << 4)
+	cmp	tmp2w, #(1 << 5)
+	b.eq	1f			// skip sw prefetch if rev is 0x20
+	mrs	tmp1, midr_el1
+	ubfx	tmp1, tmp1, #24, #8
+	cmp	tmp1, #0x53
+	b.ne	1f			// jump to original copy if not mngs
+.Lmngs_copy:
+	prfm	pldl1strm, [x1, #(64*4)]
+	stp	A_l, A_h, [dst],#16
+	ldp	A_l, A_h, [src],#16
+	stp	B_l, B_h, [dst],#16
+	ldp	B_l, B_h, [src],#16
+	stp	C_l, C_h, [dst],#16
+	ldp	C_l, C_h, [src],#16
+	stp	D_l, D_h, [dst],#16
+	ldp	D_l, D_h, [src],#16
+	subs	count, count, #64
+	b.ge	.Lmngs_copy
+	stp	A_l, A_h, [dst],#16
+	stp	B_l, B_h, [dst],#16
+	stp	C_l, C_h, [dst],#16
+	stp	D_l, D_h, [dst],#16
+
+	tst	count, #0x3f
+	b.ne	.Ltail63
+	ret
+#endif
 1:
 	/*
 	* interlace the load of next 64 bytes data block with store of the last

@@ -23,9 +23,18 @@
 #include <linux/sysrq.h>
 #include <linux/init.h>
 #include <linux/nmi.h>
+#include <linux/exynos-ss.h>
+#include <asm/core_regs.h>
+#include "sched/sched.h"
+#ifdef CONFIG_SEC_DUMP_SUMMARY
+#include <linux/sec_debug.h>
+#endif
 
 #define PANIC_TIMER_STEP 100
 #define PANIC_BLINK_SPD 18
+
+/* Machine specific panic information string */
+char *mach_panic_string;
 
 int panic_on_oops = CONFIG_PANIC_ON_OOPS_VALUE;
 static unsigned long tainted_mask;
@@ -75,6 +84,8 @@ void panic(const char *fmt, ...)
 	long i, i_next = 0;
 	int state = 0;
 
+	 exynos_trace_stop();
+
 	/*
 	 * Disable local interrupts. This will prevent panic_smp_self_stop
 	 * from deadlocking the first cpu that invokes the panic, since
@@ -101,7 +112,24 @@ void panic(const char *fmt, ...)
 	va_start(args, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, args);
 	va_end(args);
-	pr_emerg("Kernel panic - not syncing: %s\n", buf);
+
+#ifdef CONFIG_KFAULT_AUTO_SUMMARY
+	if(buf[strlen(buf)-1] == '\n')
+		buf[strlen(buf)-1] = '\0';
+#endif
+
+	pr_auto(ASL5, "Kernel panic - not syncing: %s\n", buf);
+
+#ifdef CONFIG_RELOCATABLE_KERNEL 
+	{	
+		extern u64 *__boot_kernel_offset; 
+		u64 *kernel_addr = (u64 *) &__boot_kernel_offset;
+		pr_emerg("Kernel loaded at: 0x%llx, offset from compile-time address %llx\n", kernel_addr[1]+kernel_addr[0], kernel_addr[1]- kernel_addr[2] );
+	}
+#endif 
+
+	exynos_ss_prepare_panic();
+	exynos_ss_dump_panic(buf, (size_t)strnlen(buf, sizeof(buf)));
 #ifdef CONFIG_DEBUG_BUGVERBOSE
 	/*
 	 * Avoid nested stack-dumping if a panic occurs during oops processing
@@ -109,7 +137,11 @@ void panic(const char *fmt, ...)
 	if (!test_taint(TAINT_DIE) && oops_in_progress <= 1)
 		dump_stack();
 #endif
-
+#ifdef CONFIG_SEC_DUMP_SUMMARY
+	sec_debug_save_panic_info(buf,
+		(unsigned long)__builtin_return_address(0));
+#endif
+	sysrq_sched_debug_show();
 	/*
 	 * If we have crashed and we have a crash kernel loaded let it handle
 	 * everything else.
@@ -133,6 +165,10 @@ void panic(const char *fmt, ...)
 	atomic_notifier_call_chain(&panic_notifier_list, 0, buf);
 
 	kmsg_dump(KMSG_DUMP_PANIC);
+
+	exynos_cs_show_pcval();
+
+	exynos_ss_post_panic();
 
 	/*
 	 * If you doubt kdump always works fine in any situation,
@@ -396,6 +432,11 @@ late_initcall(init_oops_id);
 void print_oops_end_marker(void)
 {
 	init_oops_id();
+
+	if (mach_panic_string)
+		printk(KERN_WARNING "Board Information: %s\n",
+		       mach_panic_string);
+
 	pr_warn("---[ end trace %016llx ]---\n", (unsigned long long)oops_id);
 }
 

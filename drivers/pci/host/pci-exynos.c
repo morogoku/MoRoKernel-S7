@@ -683,8 +683,10 @@ static int __init add_pcie_port(struct pcie_port *pp,
 		dev_err(&pdev->dev, "failed to get irq\n");
 		return -ENODEV;
 	}
-	ret = devm_request_irq(&pdev->dev, pp->irq, exynos_pcie_irq_handler,
-				IRQF_SHARED, "exynos-pcie", pp);
+	ret = devm_request_irq(&pdev->dev, pp->irq,
+					exynos_pcie_irq_handler,
+					IRQF_SHARED | IRQF_NO_THREAD,
+					"exynos-pcie", pp);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to request irq\n");
 		return ret;

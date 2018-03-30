@@ -131,12 +131,11 @@ static void drm_update_vblank_count(struct drm_device *dev, int crtc)
 
 	/* Reinitialize corresponding vblank timestamp if high-precision query
 	 * available. Skip this step if query unsupported or failed. Will
-	 * reinitialize delayed at next vblank interrupt in that case.
+	 * reinitialize delayed at next vblank interrupt in that case and
+	 * assign 0 for now, to mark the vblanktimestamp as invalid.
 	 */
-	if (rc) {
-		tslot = atomic_read(&vblank->count) + diff;
-		vblanktimestamp(dev, crtc, tslot) = t_vblank;
-	}
+	tslot = atomic_read(&vblank->count) + diff;
+	vblanktimestamp(dev, crtc, tslot) = rc ? t_vblank : (struct timeval) {0, 0};
 
 	smp_mb__before_atomic();
 	atomic_add(diff, &vblank->count);
@@ -1039,9 +1038,9 @@ void drm_vblank_put(struct drm_device *dev, int crtc)
 	if (atomic_dec_and_test(&vblank->refcount)) {
 		if (drm_vblank_offdelay == 0)
 			return;
-		else if (dev->vblank_disable_immediate || drm_vblank_offdelay < 0)
+		else if (drm_vblank_offdelay < 0)
 			vblank_disable_fn((unsigned long)vblank);
-		else
+		else if (!dev->vblank_disable_immediate)
 			mod_timer(&vblank->disable_timer,
 				  jiffies + ((drm_vblank_offdelay * HZ)/1000));
 	}
@@ -1664,6 +1663,16 @@ bool drm_handle_vblank(struct drm_device *dev, int crtc)
 
 	wake_up(&vblank->queue);
 	drm_handle_vblank_events(dev, crtc);
+
+	/* With instant-off, we defer disabling the interrupt until after
+	 * we finish processing the following vblank. The disable has to
+	 * be last (after drm_handle_vblank_events) so that the timestamp
+	 * is always accurate.
+	 */
+	if (dev->vblank_disable_immediate &&
+	    drm_vblank_offdelay > 0 &&
+	    !atomic_read(&vblank->refcount))
+		vblank_disable_fn((unsigned long)vblank);
 
 	spin_unlock_irqrestore(&dev->event_lock, irqflags);
 

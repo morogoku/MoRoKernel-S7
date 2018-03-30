@@ -675,7 +675,7 @@ static int wm_adsp_fw_get(struct snd_kcontrol *kcontrol,
 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
 	struct wm_adsp *dsp = snd_soc_codec_get_drvdata(codec);
 
-	ucontrol->value.integer.value[0] = dsp[e->shift_l].fw;
+	ucontrol->value.enumerated.item[0] = dsp[e->shift_l].fw;
 
 	return 0;
 }
@@ -694,10 +694,10 @@ static int wm_adsp_fw_put(struct snd_kcontrol *kcontrol,
 	struct wm_adsp *dsp = &dsps[e->shift_l];
 	int ret;
 
-	if (ucontrol->value.integer.value[0] == dsp->fw)
+	if (ucontrol->value.enumerated.item[0] == dsp->fw)
 		return 0;
 
-	if (ucontrol->value.integer.value[0] >= dsp->num_firmwares)
+	if (ucontrol->value.enumerated.item[0] >= dsp->num_firmwares)
 		return -EINVAL;
 
 	switch (dsp->type) {
@@ -708,7 +708,7 @@ static int wm_adsp_fw_put(struct snd_kcontrol *kcontrol,
 	case WMFW_ADSP1:
 		if (dsp->running)
 			return -EBUSY;
-		dsp->fw = ucontrol->value.integer.value[0];
+		dsp->fw = ucontrol->value.enumerated.item[0];
 		return 0;
 	default:
 		return -EINVAL;
@@ -720,7 +720,7 @@ static int wm_adsp_fw_put(struct snd_kcontrol *kcontrol,
 		SND_SOC_DAPM_CLASS_RUNTIME);
 
 	wm_adsp2_shutdown_dsp(dsp);
-	dsp->fw = ucontrol->value.integer.value[0];
+	dsp->fw = ucontrol->value.enumerated.item[0];
 	wm_adsp2_set_dspclk(dsp, dsp->freq_cache);
 	queue_work(system_unbound_wq, &dsp->boot_work);
 	ret = wm_adsp2_start_dsp(dsp);
@@ -951,7 +951,7 @@ static int wm_coeff_put_acked(struct snd_kcontrol *kcontrol,
 {
 	struct wm_coeff_ctl *ctl =
 				(struct wm_coeff_ctl *)kcontrol->private_value;
-	unsigned int val = ucontrol->value.integer.value[0];
+	unsigned int val = ucontrol->value.enumerated.item[0];
 
 	if (!ctl->enabled)
 		return -EPERM;
@@ -1081,7 +1081,7 @@ static int wm_coeff_get_acked(struct snd_kcontrol *kcontrol,
 	 * the same event number again to the firmware). We therefore return 0,
 	 * meaning "no event" so valid event numbers will always be a change
 	 */
-	ucontrol->value.integer.value[0] = 0;
+	ucontrol->value.enumerated.item[0] = 0;
 
 	return 0;
 }
@@ -1687,7 +1687,7 @@ static int wm_adsp_load(struct wm_adsp *dsp)
 	const struct wmfw_region *region;
 	const struct wm_adsp_region *mem;
 	const char *region_name;
-	char *file, *text;
+	char *file, *text = NULL;
 	unsigned int reg;
 	int regions = 0;
 	int ret, offset, type, sizes;
@@ -1845,10 +1845,21 @@ static int wm_adsp_load(struct wm_adsp *dsp)
 			 regions, le32_to_cpu(region->len), offset,
 			 region_name);
 
+		if ((pos + le32_to_cpu(region->len) + sizeof(*region)) >
+		    firmware->size) {
+			adsp_err(dsp,
+				 "%s.%d: %s region len %d bytes exceeds file length %zu\n",
+				 file, regions, region_name,
+				 le32_to_cpu(region->len), firmware->size);
+			ret = -EINVAL;
+			goto out_fw;
+		}
+
 		if (text) {
 			memcpy(text, region->data, le32_to_cpu(region->len));
 			adsp_info(dsp, "%s: %s\n", file, text);
 			kfree(text);
+			text = NULL;
 		}
 
 		if (reg) {
@@ -1884,6 +1895,7 @@ out_buf:
 	wm_adsp_buf_free(&buf_list);
 out_fw:
 	release_firmware(firmware);
+	kfree(text);
 out:
 	kfree(file);
 
@@ -2395,6 +2407,17 @@ static int wm_adsp_load_coeff(struct wm_adsp *dsp)
 		}
 
 		if (reg) {
+			if ((pos + le32_to_cpu(blk->len) + sizeof(*blk)) >
+			    firmware->size) {
+				adsp_err(dsp,
+					 "%s.%d: %s region len %d bytes exceeds file length %zu\n",
+					 file, blocks, region_name,
+					 le32_to_cpu(blk->len),
+					 firmware->size);
+				ret = -EINVAL;
+				goto out_fw;
+			}
+
 			ret = wm_adsp_write_blocks(dsp, blk->data,
 						   le32_to_cpu(blk->len),
 						   reg, &buf_list);

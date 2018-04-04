@@ -3591,8 +3591,13 @@ static bool fs_fully_visible(struct file_system_type *type, int *new_mnt_flags)
 		/* This mount is not fully visible if it's root directory
 		 * is not the root directory of the filesystem.
 		 */
+#ifdef CONFIG_RKP_NS_PROT
+		if (mnt->mnt->mnt_root != mnt->mnt->mnt_sb->s_root)
+			continue;
+#else
 		if (mnt->mnt.mnt_root != mnt->mnt.mnt_sb->s_root)
 			continue;
+#endif
 
 		/* Verify the mount flags are equal to or more permissive
 		 * than the proposed new mount.

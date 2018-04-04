@@ -9,13 +9,13 @@
 #include <linux/rmap.h>
 #include <linux/swap.h>
 #include <linux/swapops.h>
+#include <linux/migrate.h>
 
 #include <linux/sched.h>
 #include <linux/rwsem.h>
 #include <asm/pgtable.h>
 
 #ifdef CONFIG_CMA_PINPAGE_MIGRATION
-#include <linux/migrate.h>
 #include <linux/mm_inline.h>
 #include <linux/mmu_notifier.h>
 #include <asm/tlbflush.h>
@@ -47,10 +47,13 @@ static bool __need_migrate_cma_page(struct page *page,
 	if (!(flags & FOLL_CMA))
 		return false;
 
-	migrate_prep_local();
-
-	if (!PageLRU(page))
-		return false;
+	if (!PageLRU(page)) {
+		migrate_prep_local();
+		if (WARN_ON(!PageLRU(page))) {
+			dump_page(page, "non-lru cma page");
+			return false;
+		}
+	}
 
 	return true;
 }
@@ -554,6 +557,9 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 	 */
 	if (!(gup_flags & FOLL_FORCE))
 		gup_flags |= FOLL_NUMA;
+
+	if ((gup_flags & FOLL_CMA) != 0)
+		migrate_prep();
 
 	do {
 		struct page *page;
@@ -1077,6 +1083,9 @@ int __get_user_pages_fast(unsigned long start, int nr_pages, int write,
 	 * We do not adopt an rcu_read_lock(.) here as we also want to
 	 * block IPIs that come from THPs splitting.
 	 */
+
+	if ((flags & FOLL_CMA) != 0)
+		migrate_prep();
 
 	local_irq_save(flags);
 	pgdp = pgd_offset(mm, addr);

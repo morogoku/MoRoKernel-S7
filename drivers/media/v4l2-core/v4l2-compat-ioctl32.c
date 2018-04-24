@@ -486,8 +486,6 @@ static int get_v4l2_buffer32(struct v4l2_buffer __user *kp,
 	    assign_in_user(&kp->flags, &up->flags) ||
 	    get_user(memory, &up->memory) ||
 	    put_user(memory, &kp->memory) ||
-			get_user(reserved, &up->reserved) || /* SAMSUNG addition */
-			put_user(reserved, &kp->reserved) || /* SAMSUNG addition */
 	    get_user(length, &up->length) ||
 	    put_user(length, &kp->length))
 		return -EFAULT;
@@ -498,12 +496,7 @@ static int get_v4l2_buffer32(struct v4l2_buffer __user *kp,
 		    assign_in_user(&kp->timestamp.tv_sec,
 				   &up->timestamp.tv_sec) ||
 		    assign_in_user(&kp->timestamp.tv_usec,
-				   &up->timestamp.tv_usec) ||
-		    copy_from_user(&kp->timecode, &up->timecode, sizeof(kp->timecode)) || /* SAMSUNG addition */
-		    assign_in_user(&kp->sequence,
-				   &up->sequence) || /* SAMSUNG addition */
-		    assign_in_user(&kp->reserved2,
-				   &up->reserved2)) /* SAMSUNG addition */
+				   &up->timestamp.tv_usec))
 			return -EFAULT;
 
 	if (V4L2_TYPE_IS_MULTIPLANAR(type)) {

@@ -34,8 +34,13 @@
 #define ESR_EL1_EC_CP14_64	(0x0C)
 #define ESR_EL1_EC_ILL_ISS	(0x0E)
 #define ESR_EL1_EC_SVC32	(0x11)
+#define ESR_EL1_EC_HVC32	(0x12)
+#define ESR_EL1_EC_SMC32	(0x13)
 #define ESR_EL1_EC_SVC64	(0x15)
+#define ESR_EL1_EC_HVC64	(0x16)
+#define ESR_EL1_EC_SMC64	(0x17)
 #define ESR_EL1_EC_SYS64	(0x18)
+#define ESR_EL1_EC_IMP_DEF	(0x1f)
 #define ESR_EL1_EC_IABT_EL0	(0x20)
 #define ESR_EL1_EC_IABT_EL1	(0x21)
 #define ESR_EL1_EC_PC_ALIGN	(0x22)
@@ -52,9 +57,14 @@
 #define ESR_EL1_EC_WATCHPT_EL0	(0x34)
 #define ESR_EL1_EC_WATCHPT_EL1	(0x35)
 #define ESR_EL1_EC_BKPT32	(0x38)
+#define ESR_EL1_EC_VECTOR32	(0x3A)
 #define ESR_EL1_EC_BRK64	(0x3C)
 #define ESR_EL1_ISS_DFSC_MASK	(0x3F)
 #define ESR_EL1_ISS_DFSC_TLB_CONFLICT	(0x30)
+
+/* The following definitions are ported back from kernel 4.4 for esr_get_class_string */
+
+#define ESR_EL1_EC_MAX		(0x3F)
 
 /* ISS field definitions for System instruction traps */
 #define ESR_ELx_SYS64_ISS_RES0_SHIFT	22
@@ -95,5 +105,11 @@
 
 #define ESR_ELx_SYS64_ISS_SYS_CNTFRQ	(ESR_ELx_SYS64_ISS_SYS_VAL(3, 3, 0, 14, 0) | \
 					 ESR_ELx_SYS64_ISS_DIR_READ)
+
+#ifndef __ASSEMBLY__
+#include <asm/types.h>
+
+const char *esr_get_class_string(u32 esr);
+#endif /* __ASSEMBLY */
 
 #endif /* __ASM_ESR_H */

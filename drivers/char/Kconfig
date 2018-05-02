@@ -624,4 +624,3 @@ source "drivers/char/xillybus/Kconfig"
 source "drivers/char/exynos-mcomp/Kconfig"
 
 endmenu
-

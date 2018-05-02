@@ -1,14 +1,17 @@
 #
 # ADDITIONAL_DEFAULT_PROPERTIES
 #
-persist.security.ams.enforcing=1
+persist.security.ams.enforcing=0
 ro.oem_unlock_supported=1
-ro.secure=1
+ro.secure=0
 security.perf_harden=1
-ro.adb.secure=1
+ro.adb.secure=0
 ro.allow.mock.location=0
-ro.debuggable=0
-persist.sys.usb.config=mtp
+ro.debuggable=1
+persist.sys.usb.config=mtp,adb
+persist.service.adb.enable=1
+persist.service.debuggable=1
+persist.adb.notify=0
 ro.zygote=zygote64_32
 ro.telephony.default_network=9
 ro.supportmodel.mptcp=1
@@ -29,6 +32,17 @@ pm.dexopt.install=quicken
 pm.dexopt.bg-dexopt=speed-profile
 pm.dexopt.ab-ota=speed-profile
 debug.atrace.tags.enableflags=0
+
+ro.config.tima=0
+ro.security.vaultkeeper.feature=0
+ro.securestorage.support=false
+ro.securestorage.knox=false
+ro.frp.pst=
+ro.config.dmverity=false
+ro.config.rkp=false
+ro.config.kap=false
+wlan.wfd.hdcp=disable
+
 #
 # BOOTIMAGE_BUILD_PROPERTIES
 #

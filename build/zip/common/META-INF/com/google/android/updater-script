@@ -1,0 +1,65 @@
+ui_print(" ");
+ui_print("***************************************");
+ui_print("*           MoRoKernel OREO           *");
+ui_print("*       SM-G93XF S7 Edge 8.0.0        *");
+ui_print("*                                     *");
+ui_print("*                                     *");
+ui_print("*        http://espdroids.com         *");
+ui_print("***************************************");
+ui_print(" ");
+
+
+# Copy scripts
+package_extract_dir("moro", "/tmp/moro");
+set_perm_recursive(0, 0, 0777, 0777, "/tmp/moro");
+
+
+# Prepare partitions
+if is_mounted("/system") == "/system" then
+    assert(run_program("/sbin/busybox", "umount", "/system"));
+endif;
+
+
+ui_print(" ");
+ui_print("-- Mounting partitions");
+run_program("/sbin/mount", "/system");
+
+
+ui_print(" ");
+ui_print("-- Flashing kernel");
+ifelse
+(
+is_substring("G935", getprop("ro.boot.bootloader"))
+,
+ui_print(" - G935 S7 Edge");
+,
+ui_print(" - G930 S7 Flat");
+);
+run_program("/tmp/moro/flash_kernel.sh");
+ui_print(" - Done.");
+
+
+ui_print(" ");
+ui_print("-- Patching system");
+package_extract_dir("moro/system", "/system");
+
+
+ui_print(" ");
+ui_print("-- Setting Permissions");
+set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_file:s0");
+set_metadata("/system/vendor/lib/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib64/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+
+
+ui_print(" ");
+ui_print("-- Magisk Root ");
+package_extract_dir("magisk", "/tmp");
+run_program("/sbin/busybox", "unzip", "/tmp/magisk.zip", "META-INF/com/google/android/update-binary", "-d", "/tmp");
+run_program("/sbin/busybox", "sh", "/tmp/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk.zip");
+
+ui_print(" ");
+ui_print(" ** Done, please reboot **");
+ui_print(" ");
+
+

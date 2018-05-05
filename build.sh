@@ -28,8 +28,8 @@ DEFCONFIG=moro_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
-export K_VERSION="v3.0"
-export K_NAME="MoRoKernel"
+export K_VERSION="v3.1"
+export K_NAME="MoRoStock"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 S7DEVICE="OREO"
@@ -263,7 +263,7 @@ if [ $prompt == "1" ]; then
     export DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "S7 Flat G930F Selected"
     ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
@@ -272,7 +272,7 @@ elif [ $prompt == "2" ]; then
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "S7 Edge G935F Selected"
     ZIP_NAME=$KERNEL_VERSION.zip
     MAIN
@@ -281,14 +281,14 @@ elif [ $prompt == "3" ]; then
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "S7 EDGE + FLAT Selected"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-$MODEL-$DEVICE-N-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "Compiling FLAT ..."
     ZIP_NAME=$K_NAME-$DEVICE-N-$K_VERSION.zip
     MAIN

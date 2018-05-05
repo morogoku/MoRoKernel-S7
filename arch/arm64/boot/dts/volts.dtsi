@@ -1,0 +1,29 @@
+
+/*
+ * volts.dtsi
+ *
+ * by morogoku
+ *
+ */
+
+
+	BUCK2 {
+		regulator-name = "vdd_mngs";
+		regulator-min-microvolt = <500000>;
+		regulator-max-microvolt = <1300000>;
+		regulator-always-on;
+		regulator-ramp-delay = <12000>;
+		regulator-initial-mode = <1>;
+	};
+
+	BUCK3 {
+		regulator-name = "vdd_apollo";
+		regulator-min-microvolt = <500000>;
+		regulator-max-microvolt = <1200000>;
+		regulator-always-on;
+		regulator-ramp-delay = <12000>;
+		regulator-initial-mode = <1>;
+	};
+
+				
+

@@ -9,9 +9,18 @@ on boot
     exec u:r:magisk:s0 root root -- /sbin/moro-init.sh
 
 on property:sys.boot_completed=1
+    start dalvik
     start kernelinit2
+    
 
 service kernelinit2 /sbin/moro-init2.sh
+    class late_start
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
+
+service dalvik /sbin/init.dalvik.sh
     class late_start
     user root
     seclabel u:r:init:s0

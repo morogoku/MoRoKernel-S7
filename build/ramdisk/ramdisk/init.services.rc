@@ -8,7 +8,9 @@ on boot
     start kernelinit
 
 on property:sys.boot_completed=1
+    start dalvik
     start kernelinit2
+    
 
 service kernelinit /sbin/moro-init.sh
     user root
@@ -17,6 +19,13 @@ service kernelinit /sbin/moro-init.sh
     disabled
     
 service kernelinit2 /sbin/moro-init2.sh
+    class late_start
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
+
+service dalvik /sbin/init.dalvik.sh
     class late_start
     user root
     seclabel u:r:init:s0

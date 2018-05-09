@@ -28,7 +28,7 @@ DEFCONFIG=moro_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
-export K_VERSION="v3.1"
+export K_VERSION="v3.2"
 export K_NAME="MoRoStock"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
@@ -265,7 +265,7 @@ if [ $prompt == "1" ]; then
     LOG=$FLAT_LOG
     export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "S7 Flat G930F Selected"
-    ZIP_NAME=$KERNEL_VERSION.zip
+    ZIP_NAME=$K_NAME-$MODEL-O-$K_VERSION.zip
     MAIN
 elif [ $prompt == "2" ]; then
     MODEL=G935
@@ -274,7 +274,7 @@ elif [ $prompt == "2" ]; then
     LOG=$EDGE_LOG
     export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "S7 Edge G935F Selected"
-    ZIP_NAME=$KERNEL_VERSION.zip
+    ZIP_NAME=$K_NAME-$MODEL-O-$K_VERSION.zip
     MAIN
 elif [ $prompt == "3" ]; then
     MODEL=G935
@@ -290,7 +290,7 @@ elif [ $prompt == "3" ]; then
     LOG=$FLAT_LOG
     export KERNEL_VERSION="$K_NAME-O-$K_VERSION"
     echo "Compiling FLAT ..."
-    ZIP_NAME=$K_NAME-$DEVICE-N-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-O-$K_VERSION.zip
     MAIN
 fi
 

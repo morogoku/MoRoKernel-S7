@@ -164,8 +164,8 @@ FUNC_BUILD_RAMDISK()
 	cd ..
 	rm -rf temp
 	echo SEANDROIDENFORCE >> image-new.img
-	#mv image-new.img $MODEL-boot.img
-	mv image-new.img boot.img
+	mv image-new.img $MODEL-boot.img
+	#mv image-new.img boot.img
 }
 
 FUNC_BUILD_FLASHABLES()
@@ -175,11 +175,11 @@ FUNC_BUILD_FLASHABLES()
 	cp -rf zip/common/. temp2
     	mv *.img temp2/
 	cd temp2
-	#echo ""
-	#echo "Compressing kernels..."
-	#tar cv *.img | xz -9 > kernel.tar.xz
-	#mv kernel.tar.xz moro/
-	#rm -f *.img
+	echo ""
+	echo "Compressing kernels..."
+	tar cv *.img | xz -9 > kernel.tar.xz
+	mv kernel.tar.xz moro/
+	rm -f *.img
 
 	zip -9 -r ../$ZIP_NAME *
 

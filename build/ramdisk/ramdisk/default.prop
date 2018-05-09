@@ -35,6 +35,7 @@ debug.atrace.tags.enableflags=0
 
 ro.config.tima=0
 ro.security.vaultkeeper.feature=0
+ro.securestorage.knox=false
 ro.securestorage.support=false
 ro.frp.pst=
 ro.config.dmverity=false

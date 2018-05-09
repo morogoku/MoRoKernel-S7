@@ -41,7 +41,7 @@
 #include "objsec.h"
 #include "conditional.h"
 
-static int fake_enforce = 1;
+static int fake_enforce = 0;
 /* Policy capability filenames */
 static char *policycap_names[] = {
 	"network_peer_controls",

@@ -414,7 +414,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -Werror \
+		   #-mtune=cortex-a72.cortex-a53 \
 		   -std=gnu89
 
 KBUILD_AFLAGS_KERNEL :=
@@ -497,9 +497,8 @@ SELINUX_DIR=$(shell $(CONFIG_SHELL) $(srctree)/scripts/find_matching_major.sh "$
 else
 export ANDROID_VERSION=80000
 KBUILD_CFLAGS += -DANDROID_VERSION=80000
-export ANDROID_MAJOR_VERSION=8
-KBUILD_CFLAGS += -DANDROID_MAJOR_VERSION=8
 export ANDROID_MAJOR_VERSION=o
+KBUILD_CFLAGS += -DANDROID_MAJOR_VERSION=o
 endif
 PHONY += replace_dirs
 replace_dirs:

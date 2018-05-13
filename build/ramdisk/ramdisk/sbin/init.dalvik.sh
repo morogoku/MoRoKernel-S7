@@ -1,8 +1,8 @@
 #!/system/bin/sh
 # mwilky
 
-LOGFILE=/data/dalvik.log
-REBOOTLOGFILE=/data/reboot.log
+LOGFILE=/data/.morokernel/dalvik.log
+REBOOTLOGFILE=/data/.morokernel/reboot.log
 
 rm $LOGFILE
 
@@ -16,7 +16,7 @@ rebootlog_print() {
   echo "$1" >> $REBOOTLOGFILE
 }
 
-log_print "**RENOVATE dalvik script $( date +"%m-%d-%Y %H:%M:%S" )**"
+log_print "**dalvik script $( date +"%m-%d-%Y %H:%M:%S" )**"
 
 if [ -f /data/magisk.apk ]; then
 	pm install /data/magisk.apk

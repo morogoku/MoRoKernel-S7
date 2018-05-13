@@ -3,11 +3,16 @@
 # Init MoRoKernel
 #
 
-LOG="/data/morokernel.log";
-rm -f $LOG
+OLD_LOG="/data/morokernel.log"
+MORO_DIR="/data/.morokernel"
+LOG="$MORO_DIR/morokernel.log"
 
-BB="/sbin/busybox";
+rm -f $LOG
+rm -f $OLD_LOG
+
+BB="/sbin/busybox"
 RESETPROP="/sbin/resetprop -v -n"
+
 
 # Mount
 $BB mount -t rootfs -o remount,rw rootfs
@@ -15,10 +20,16 @@ $BB mount -o remount,rw /system
 $BB mount -o remount,rw /data
 $BB mount -o remount,rw /
 
-(
+# Create morokernel folder
+if [ ! -d $MORO_DIR ]; then
+	$BB mkdir -p $MORO_DIR;
+fi
 
+
+(
 	$BB echo $(date) "MoRo-Kernel LOG" >> $LOG
 	$BB echo " " >> $LOG
+
 
 	# Fix safetynet flags
 	$BB echo "## -- SafetyNet Flags" >> $LOG

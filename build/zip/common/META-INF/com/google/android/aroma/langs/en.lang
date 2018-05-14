@@ -87,7 +87,7 @@ menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09
 menu.5desc=Famous Root of Chainfire.
 menu.group2=Other options
-menu.3=MTweaks v2.8.5
+menu.3=MTweaks v2.8.2
 menu.3desc=Application for kernel management\
 Kernel Adiutor Mod for Exynos.
 menu.4=Busybox
@@ -97,6 +97,11 @@ menu.6=Spectrum
 menu.6desc=Simple app for the management of 4 predefined profiles, Balanced, Battery, Performance and Gaming.
 menu.7=Delete root data
 menu.7desc=Data and app will be deleted from the previous root. Recommended for clean installation.
+menu.group3=GPU Driver
+menu.8=GPU r15 driver
+menu.8desc=Fixes graphic failures
+menu.9=GPU r22 driver
+menu.9desc=Oreo ERD5 stock diver, but in some games it has graphic failures.
 
 # Sin Root
 stock.title=Without root

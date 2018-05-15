@@ -19,6 +19,7 @@ rm -f $PWD/build/*.zip
 rm -rf $PWD/build/temp
 rm -rf $PWD/build/temp2
 rm -f $PWD/arch/arm64/configs/tmp_defconfig
+rm -f $PWD/firmware/apm_8890_evt1.h
 
 
 # Removed Created dtb Folder

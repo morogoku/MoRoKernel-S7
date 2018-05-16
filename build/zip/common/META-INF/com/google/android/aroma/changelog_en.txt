@@ -12,7 +12,27 @@
 <b>CHANGELOG:</b>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.0</#></b></u>
-<*></*>
-<*></*>
-<*></*>
+<*>Sources & ramdisk XXU2ERD5</*>
+<*>Knox 0x0 & SafetyNet with SuperSU and Magisk</*>
+<*>SuperSU 2.82SR5 + SuHide v1.09</*>
+<*>Magisk 16.4</*>
+<*>A lot of CPU governors </*>
+<*>A lot of IO Shedulers</*>
+<*>GPU Driver r22, driver stock</*>
+<*>GPU Driver r15, fix graphics issues</*>
+<*>GPU Freq: 112-806MHz</*>
+<*>Spectrum Support</*>
+<*>Battery Store mode</*>
+<*>UKSM - Ultra Kernel Samepage Merging 1.2.3</*>
+<*>CPU & GPU Voltage settings</*>
+<*>Battery settings</*>
+<*>USB charge to 900MHz</*>
+<*>PWMfree brightness control</*>
+<*>Powersuspend 4 modes, Autosleep, Userspace, LCD panel, Hybrid</*>
+<*>Wakelocks settings</*>
+<*>Boeffla Wakelock Settings</*>
+<*>SELinux Permissive</*>
+<*>Swap with LZ4 compression</*>
+<*>Led Settings</*>
+<*>Wireguard VPN compatible</*>
 

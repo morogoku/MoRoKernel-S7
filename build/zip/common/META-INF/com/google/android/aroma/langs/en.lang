@@ -82,12 +82,12 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
-menu.2=Magisk 16.4
+menu.2=Magisk 16.3
 menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09
 menu.5desc=Famous Root of Chainfire.
 menu.group2=Other options
-menu.3=MTweaks v2.8.2
+menu.3=MTweaks v2.8.5
 menu.3desc=Application for kernel management\
 Kernel Adiutor Mod for Exynos.
 menu.4=Busybox

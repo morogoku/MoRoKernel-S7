@@ -6,7 +6,7 @@
 cd /tmp/moro
 
 # Extract system
-#tar -Jxf system.tar.xz
+tar -Jxf system.tar.xz
 
 # Copy system
 cp -rf system/. /system

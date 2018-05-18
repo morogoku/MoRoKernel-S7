@@ -97,11 +97,6 @@ menu.6=Spectrum
 menu.6desc=Simple app for the management of 4 predefined profiles, Balanced, Battery, Performance and Gaming.
 menu.7=Delete root data
 menu.7desc=Data and app will be deleted from the previous root. Recommended for clean installation.
-menu.group3=GPU Driver
-menu.8=GPU r15 driver
-menu.8desc=Fixes graphic failures
-menu.9=GPU r22 driver
-menu.9desc=Oreo ERD5 stock diver, but in some games it has graphic failures.
 
 # Sin Root
 stock.title=Without root

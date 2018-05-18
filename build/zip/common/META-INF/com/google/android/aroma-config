@@ -102,15 +102,12 @@ form(
 	"@personalize",
 	"menu.prop",
 
-	"group3",     "<b><~menu.group3></b>",  "",                     	"group",
-	  "opt4",     "<b><~menu.8></b>",       "<~menu.8desc>",		"select.selected",
-	  "opt5",     "<b><~menu.9></b>",       "<~menu.9desc>",		"select",
 	"group1",     "<b><~menu.group1></b>",  "",                     	"group",
 	  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
 	  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
 	  "opt3",     "<b><~menu.5></b>",       "<~menu.5desc>",         	"select",
 	"group2",     "<b><~menu.group2></b>",  "",                     	"group",
-	  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check",
+	  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
 	  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
 );
 

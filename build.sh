@@ -30,10 +30,8 @@ PAGE_SIZE=2048
 DTB_PADDING=0
 
 DEFCONFIG=moro_defconfig
-DEFCONFIG_S7EDGE_R15=moro-edge-r15_defconfig
-DEFCONFIG_S7EDGE_R22=moro-edge-r22_defconfig
-DEFCONFIG_S7FLAT_R15=moro-flat-r15_defconfig
-DEFCONFIG_S7FLAT_R22=moro-flat-r22_defconfig
+DEFCONFIG_S7EDGE=moro-edge_defconfig
+DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 export K_VERSION="v4.0"
 export K_NAME="MoRoKernel"
@@ -165,7 +163,7 @@ FUNC_BUILD_RAMDISK()
 	cd ..
 	rm -rf temp
 	echo SEANDROIDENFORCE >> image-new.img
-	mv image-new.img $MODEL-$GPU-boot.img
+	mv image-new.img $MODEL-boot.img
 }
 
 FUNC_BUILD_FLASHABLES()
@@ -260,77 +258,36 @@ read -p "Select an option to compile the kernel " prompt
 
 if [ $prompt == "1" ]; then
     MODEL=G930
-    GPU=r15
     DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT_R15
+    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-Oreo-$K_VERSION"
     echo "S7 Flat G930F Selected"
-    echo "Compiling with $GPU gpu driver..."
-    MAIN2
-    MODEL=G930
-    GPU=r22
-    DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT_R22
-    LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
-    echo "Compiling with $GPU gpu driver..."
     ZIP_NAME=$K_NAME-$MODEL-O-$K_VERSION.zip
     MAIN
 elif [ $prompt == "2" ]; then
     MODEL=G935
-    GPU=r15
     DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE_R15
+    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-Oreo-$K_VERSION"
     echo "S7 Edge G935F Selected"
-    echo "Compiling with $GPU gpu driver..."
-    MAIN2
-    MODEL=G935
-    GPU=r22
-    DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE_R22
-    LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
-    echo "Compiling with $GPU gpu driver..."
     ZIP_NAME=$K_NAME-$MODEL-O-$K_VERSION.zip
     MAIN
 elif [ $prompt == "3" ]; then
     MODEL=G935
-    GPU=r15
     DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE_R15
+    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
-    echo "S7 Edge G935F Selected"
-    echo "Compiling with $GPU gpu driver..."
-    MAIN2
-    MODEL=G935
-    GPU=r22
-    DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE_R22
-    LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
-    echo "Compiling with $GPU gpu driver..."
-    MAIN2
-
-    MODEL=G930
-    GPU=r15
-    DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT_R15
-    LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
-    echo "S7 Flat G930F Selected"
-    echo "Compiling with $GPU gpu driver..."
+    export KERNEL_VERSION="$K_NAME-Oreo-$K_VERSION"
+    echo "S7 EDGE + FLAT Selected"
+    echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
-    GPU=r22
-    DEVICE=$S7DEVICE
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT_R22
+    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-Oreo-$GPU-$K_VERSION"
-    echo "Compiling with $GPU gpu driver..."
+    export KERNEL_VERSION="$K_NAME-Oreo-$K_VERSION"
+    echo "Compiling FLAT ..."
     ZIP_NAME=$K_NAME-G93X-O-$K_VERSION.zip
     MAIN
 fi

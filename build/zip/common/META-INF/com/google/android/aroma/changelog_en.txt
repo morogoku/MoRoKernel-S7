@@ -3,7 +3,7 @@
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
 	VERSION	: <b><#selectbg_g>v4.0</#></b>
-	DATE	: <b><#selectbg_g>13/05/2018</#></b>
+	DATE	: <b><#selectbg_g>18/05/2018</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
@@ -11,7 +11,16 @@
 
 <b>CHANGELOG:</b>
 
+<u><b><#selectbg_g>MoRoKernel-O v4.1</#></b></u>
+<*>Fixed r22 graphics issues</*>
+<*>GPU libs ERE8</*>
+<*>Ramdisk ERE8</*>
+<*>Linux 3.18.109 de ELS</*>
+<*>Magisk 16.3</*>
+<*>MTweaks 2.8.6</*>
+
 <u><b><#selectbg_g>MoRoKernel-O v4.0</#></b></u>
+<*>Base exynos-linux-stable/herolte</*>
 <*>Sources & ramdisk XXU2ERD5</*>
 <*>Knox 0x0 & SafetyNet with SuperSU and Magisk</*>
 <*>SuperSU 2.82SR5 + SuHide v1.09</*>

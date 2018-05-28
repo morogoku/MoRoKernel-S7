@@ -38,7 +38,7 @@ fi
 
 	# Fix safetynet
 	$BB echo "## -- SafetyNet" >> $LOG
-	$RESETPROP "ro.build.fingerprint" "samsung/hero2ltexx/hero2lte:8.0.0/R16NW/G935FXXU2ERD5:user/release-keys"
+	$RESETPROP "ro.build.fingerprint" "samsung/hero2ltexx/hero2lte:8.0.0/R16NW/G935FXXU2ERE8:user/release-keys"
 	$RESETPROP "ro.boot.veritymode" "enforcing"
 	$RESETPROP "ro.boot.verifiedbootstate" "green"
 	$RESETPROP "ro.boot.flash.locked" "1"

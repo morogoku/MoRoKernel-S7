@@ -2,14 +2,20 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSION	: <b><#selectbg_g>v4.0</#></b>
-	DATE	: <b><#selectbg_g>18/05/2018</#></b>
+	VERSION	: <b><#selectbg_g>v4.2</#></b>
+	DATE	: <b><#selectbg_g>29/05/2018</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v4.2</#></b></u>
+<*>Sources XXU2ERE8</*>
+<*>Linux 3.18.110 ELS</*>
+<*>ADB with Debug and y log on boot</*>
+<*>Ramdisk fixed for deodex rom</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.1</#></b></u>
 <*>Fixed r22 graphics issues</*>

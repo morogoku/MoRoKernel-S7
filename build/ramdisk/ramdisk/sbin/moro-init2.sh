@@ -44,6 +44,10 @@ fi
 	su -c "pm enable com.google.android.gms/.update.SystemUpdateService$Receiver"
 	su -c "pm enable com.google.android.gms/.update.SystemUpdateService$SecretCodeReceiver"
 	echo " " >> $LOG
+
+	# SafetyNet
+	chmod 640 /sys/fs/selinux/enforce
+	chmod 440 /sys/fs/selinux/policy
 	
 
 	# Init.d support

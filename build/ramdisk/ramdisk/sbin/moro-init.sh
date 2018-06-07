@@ -39,12 +39,6 @@ fi
 	# Fix safetynet
 	$BB echo "## -- SafetyNet" >> $LOG
 	$RESETPROP "ro.build.fingerprint" "samsung/hero2ltexx/hero2lte:8.0.0/R16NW/G935FXXU2ERE8:user/release-keys"
-	$RESETPROP "ro.boot.veritymode" "enforcing"
-	$RESETPROP "ro.boot.verifiedbootstate" "green"
-	$RESETPROP "ro.boot.flash.locked" "1"
-	$RESETPROP "ro.boot.ddrinfo" "00000001"
-	$BB chmod 640 /sys/fs/selinux/enforce
-	$BB chmod 440 /sys/fs/selinux/policy
 	$BB echo " " >> $LOG
 
 

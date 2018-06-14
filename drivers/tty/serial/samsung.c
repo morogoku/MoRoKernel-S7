@@ -235,9 +235,9 @@ uart_error_cnt_show(struct device *dev, struct device_attribute *attr, char *buf
 	struct s3c24xx_uart_port *ourport;
 	sprintf(buf, "000 000 000 000\n");//init buf : overrun parity frame break count
 
-	list_for_each_entry(ourport, &drvdata_list, node){ 
+	list_for_each_entry(ourport, &drvdata_list, node){
 	struct uart_port *port = &ourport->port;
-	
+
 	if (&ourport->pdev->dev != dev)
 		continue;
 
@@ -1824,6 +1824,11 @@ static int s3c24xx_serial_probe(struct platform_device *pdev)
 	int port_index = probe_index;
 
 	dbg("s3c24xx_serial_probe(%p) %d\n", pdev, index);
+
+	if (index >= ARRAY_SIZE(s3c24xx_serial_ports)) {
+		dev_err(&pdev->dev, "serial%d out of range\n", index);
+		return -EINVAL;
+	}
 
 	if (pdev->dev.of_node) {
 		ret = of_alias_get_id(pdev->dev.of_node, "uart");

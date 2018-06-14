@@ -6,10 +6,10 @@
 
 # Remove
 # Magisk
-rm -rf /cache/magisk.log /cache/last_magisk.log /cache/magiskhide.log \
-       /cache/magisk /cache/magisk_merge /cache/magisk_mount /cache/unblock \
-       /data/Magisk.apk /data/magisk.img /data/magisk_merge.img /data/stock_boot.img \
-       /data/busybox /data/magisk /data/custom_ramdisk_patch.sh 2>/dev/null
+rm -rf /cache/*magisk* /cache/unblock /data/*magisk* /data/cache/*magisk* /data/property/*magisk* \
+        /data/Magisk.apk /data/busybox /data/custom_ramdisk_patch.sh /data/app/com.topjohnwu.magisk* \
+        /data/user*/*/magisk.db /data/user*/*/com.topjohnwu.magisk /data/user*/*/.tmp.magisk.config \
+        /data/adb/*magisk* 2>/dev/null
 	   
 # SU
 rm -rf /data/su.img /data/stock_boot*.gz /data/supersu /supersu

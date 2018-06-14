@@ -38,7 +38,13 @@ fi
 
 	# Fix safetynet
 	$BB echo "## -- SafetyNet" >> $LOG
-	$RESETPROP "ro.build.fingerprint" "samsung/hero2ltexx/hero2lte:8.0.0/R16NW/G935FXXU2EREM:user/release-keys"
+	$RESETPROP ro.build.fingerprint "samsung/hero2ltexx/hero2lte:8.0.0/R16NW/G935FXXU2EREM:user/release-keys"
+	$BB echo " " >> $LOG
+
+	# Samsung related flags
+	$BB echo "## -- Samsung Flags" >> $LOG
+	$RESETPROP ro.fmp_config "1"
+	$RESETPROP ro.boot.fmp_config "1"
 	$BB echo " " >> $LOG
 
 

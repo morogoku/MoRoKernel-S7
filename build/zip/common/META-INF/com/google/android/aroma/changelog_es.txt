@@ -2,14 +2,22 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v4.2</#></b>
-	FECHA	: <b><#selectbg_g>29/05/2018</#></b>
+	VERSIÓN	: <b><#selectbg_g>v4.3</#></b>
+	FECHA	: <b><#selectbg_g>15/06/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v4.3</#></b></u>
+<*>Fix SafetyNet on Sac PortS9</*>
+<*>Magisk 16.4</*>
+<*>Ramdisk XXU2EREM</*>
+<*>Linux 3.18.113 ELS</*>
+<*>Fix VPN on portS9</*>
+<*>Fingerprint XXU2EREM</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.2</#></b></u>
 <*>Sources XXU2ERE8</*>

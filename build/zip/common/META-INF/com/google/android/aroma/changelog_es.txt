@@ -2,14 +2,17 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v4.3.1</#></b>
-	FECHA	: <b><#selectbg_g>15/06/2018</#></b>
+	VERSIÓN	: <b><#selectbg_g>v4.3.2</#></b>
+	FECHA	: <b><#selectbg_g>16/06/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v4.3.2</#></b></u>
+<*>Stop secure_storage</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.3.1</#></b></u>
 <*>Eliminado PWM de los perfiles Spectrum</*>

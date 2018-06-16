@@ -23,6 +23,10 @@ fi
 
 
 (
+	# Stop secure_Storage
+	stop secure_storage
+
+
 	# tweaks
 	echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
 	

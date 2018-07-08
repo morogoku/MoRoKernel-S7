@@ -11,22 +11,22 @@
 
 /dts-v1/;
 #include "exynos8890-herolte_common.dtsi"
-#include "exynos8890-herolte_gpio_07.dtsi"
-#include "exynos8890-herolte_battery_eur_04.dtsi"
+#include "exynos8890-hero2lte_gpio_03.dtsi"
+#include "exynos8890-hero2lte_battery_eur_03.dtsi"
 #include "exynos8890-sound-cs47l91.dtsi"
 #include "exynos8890-luckylte_mst.dtsi"
-#include "exynos8890-herolte_fingerprint-sensor_03.dtsi"
-#include "exynos8890-herolte_display_03.dtsi"
-#include "exynos8890-herolte_motor.dtsi"
-#include "exynos8890-herolte_svcled.dtsi"
+#include "exynos8890-hero2lte_fingerprint-sensor_03.dtsi"
+#include "exynos8890-hero2lte_display_00.dtsi"
+#include "exynos8890-hero2lte_motor.dtsi"
+#include "exynos8890-hero2lte_svcled.dtsi"
 
 / {
 	model = "Samsung UNIVERSAL8890 board based on EXYNOS8890";
 	model_info-chip = <8890>;
 	model_info-platform = "android";
 	model_info-subtype = "samsung";
-	model_info-hw_rev = <9>;
-	model_info-hw_rev_end = <9>;
+	model_info-hw_rev = <3>;
+	model_info-hw_rev_end = <3>;
 	compatible = "samsung,exynos8890", "samsung,UNIVERSAL8890";
 
 	audio_pdata {
@@ -70,45 +70,6 @@
 		};
 	};
 
-	hsi2c@10550000{
-		status = "okay";
-
-		s2mps16_pmic@66 {
-			regulators {
-				ldo32_reg: LDO32 {
-					regulator-name = "tsp_io";
-					regulator-min-microvolt = <1850000>;
-					regulator-max-microvolt = <1850000>;
-				};
-
-				ldo33_reg: LDO33 {
-					regulator-name = "tsp_avdd";
-					regulator-min-microvolt = <3300000>;
-					regulator-max-microvolt = <3300000>;
-				};
-			};
-		};
-	};
-
-	hsi2c@13690000 {
-		status = "okay";
-
-		max77838@60 {
-			regulators {
-				ldo2: LDO2 {
-					regulator-name = "HRM_1.8V_AP";
-					regulator-min-microvolt = <1800000>;
-					regulator-max-microvolt = <1800000>;
-				};
-				ldo4: LDO4 {
-					regulator-name = "HRM_3.3V_AP";
-					regulator-min-microvolt = <3300000>;
-					regulator-max-microvolt = <3300000>;
-				};
-			};
-		};
-	};
-
 	pinctrl@14CC0000 {
 		codec_reset: codec-reset {
 			samsung,pins ="gpe6-5";
@@ -125,6 +86,14 @@
 
 		max77854@66 {
 			status = "okay";
+		};
+	};
+
+	hsi2c@14E10000 {
+		touchscreen@48{
+			sec,ds_det = <&gpi2 2 0>;
+			sec,firmware_name = "tsp_sec/hero_ub.bin";
+			sec,project_name = "HERO2", "G935";
 		};
 	};
 
@@ -155,18 +124,6 @@
 				<0x1F 0x00>,
 				<0x21 0xC0>,
 				<0x2F 0x00>;
-		};
-	};
-
-	hsi2c@14E10000 {
-		touchscreen@49{
-			status = "disabled";
-		};
-	};
-
-	i2c@20 {
-		touchkey@20 {
-			abov,sub-det = <&gpa3 0 0>;
 		};
 	};
 
@@ -201,8 +158,8 @@
 			ssp,prox-hi_thresh = <2000>;
 			ssp,prox-low_thresh = <1400>;
 			ssp-ap-rev = <1>;
-			ssp-mag-array = <9787 662 79 290 9460 27 200 (-33) 10632>;
-			ssp-glass-type = <0>;
+			ssp-mag-array = <10020 179 181 230 9097 (-150) (-179) 189 10850>;
+			ssp-glass-type = <1>;
 
 			controller-data {
 				cs-gpio = <&gpe2 5 0>;
@@ -224,33 +181,42 @@
 		status = "okay";
 	};
 
-	pinctrl@10580000 {
+	pinctrl@14CC0000 {
 		tflash_en: tfalsh-en {
-			samsung,pins = "gpa3-7";
+			samsung,pins = "gpe0-5";
 			samsung,pin-pud = <0>;
 		};
 	};
 
-	pinctrl@15690000 {
-		sd2_clk: sd2-clk {
-			samsung,pins = "gpj0-0";
+	pinctrl@136D0000 {
+		fimc_is_mclk0_fn: fimc_is_mclk0_fn {
+			samsung,pins = "gpk0-0";
 			samsung,pin-function = <2>;
 			samsung,pin-pud = <0>;
-			samsung,pin-drv = <2>;
+			samsung,pin-drv = <1>;
 		};
 
+		fimc_is_mclk2_fn: fimc_is_mclk2_fn {
+			samsung,pins = "gpk0-2";
+			samsung,pin-function = <2>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
+	};
+
+	pinctrl@15690000 {
 		sd2_bus1: sd2-bus-width1 {
 			samsung,pins = "gpj0-3";
 			samsung,pin-function = <2>;
 			samsung,pin-pud = <0>;
-			samsung,pin-drv = <2>;
+			samsung,pin-drv = <1>;
 		};
 
 		sd2_bus4: sd2-bus-width4 {
 			samsung,pins = "gpj0-4", "gpj0-5", "gpj0-6";
 			samsung,pin-function = <2>;
 			samsung,pin-pud = <0>;
-			samsung,pin-drv = <2>;
+			samsung,pin-drv = <1>;
 		};
 	};
 };

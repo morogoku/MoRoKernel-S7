@@ -2,14 +2,22 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSION	: <b><#selectbg_g>v4.3.2</#></b>
-	DATE	: <b><#selectbg_g>16/06/2018</#></b>
+	VERSION	: <b><#selectbg_g>v4.4</#></b>
+	DATE	: <b><#selectbg_g>11/07/2018</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v4.4</#></b></u>
+<*>New driver Fade Led</*>
+<*>Magisk 16.6</*>
+<*>MTweaks 2.9.2</*>
+<*>Linux 3.18.114 ELS</*>
+<*>Disabled some wakelocks from Noxxxious kernel</*>
+<*>Allow 4 cores to 2600MHz</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.3.2</#></b></u>
 <*>Stop secure_storage</*>

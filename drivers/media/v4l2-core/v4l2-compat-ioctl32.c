@@ -828,7 +828,7 @@ static int put_v4l2_ext_controls32(struct v4l2_ext_controls __user *kp, struct v
 		convert_in_user(&kp->error_idx, &up->error_idx) ||
 		copy_in_user(up->reserved, kp->reserved, sizeof(up->reserved)))
 			return -EFAULT;
-	if (!count)
+	if (!count || count > (U32_MAX/sizeof(*ucontrols)))
 		return 0;
 
 	if (get_user(p, &up->controls))

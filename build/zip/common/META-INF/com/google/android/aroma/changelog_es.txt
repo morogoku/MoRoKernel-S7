@@ -2,14 +2,18 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v4.4</#></b>
-	FECHA	: <b><#selectbg_g>11/07/2018</#></b>
+	VERSIÓN	: <b><#selectbg_g>v4.4.1</#></b>
+	FECHA	: <b><#selectbg_g>13/07/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v4.4.1</#></b></u>
+<*>Corregidos algunos bugs</*>
+<*>Linux 3.18.115 ELS</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.4</#></b></u>
 <*>Nuevo driver Fade Led</*>

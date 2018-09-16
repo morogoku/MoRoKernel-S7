@@ -189,12 +189,6 @@ FUNC_BUILD_FLASHABLES()
 	cd ..
     	rm -rf temp2
 
-	if [ -n `which java` ]; then
-		echo "- Java detected, signing zip ..."
-		mv $ZIP_NAME old$ZIP_NAME
-		java -Xmx1024m -jar $RDIR/build/signapk/signapk.jar -w $RDIR/build/signapk/testkey.x509.pem $RDIR/build/signapk/testkey.pk8 old$ZIP_NAME $ZIP_NAME
-		rm old$ZIP_NAME
-	fi
 }
 
 

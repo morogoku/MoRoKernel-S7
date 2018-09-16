@@ -843,6 +843,15 @@ static int zswap_writebackd(void *arg)
 					jiffies + zswap_writeback_interval * HZ;
 			}
 		}
+
+		/* A second zswap_is_full() check after
+		 * zswap_shrink() to make sure it's now
+		 * under the max_pool_percent
+		 */
+		if (zswap_is_full()) {
+			ret = -ENOMEM;
+			goto reject;
+		}
 	}
 
 	return 0;

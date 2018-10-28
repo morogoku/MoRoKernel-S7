@@ -165,6 +165,7 @@ ENTRY(cpu_do_resume)
 	ubfx	x11, x11, #1, #1
 	msr	oslar_el1, x11
 	mov	x0, x12
+	tlbi	vmalle1
 	dsb	nsh		// Make sure local tlb invalidation completed
 	isb
 	ret
@@ -181,8 +182,16 @@ ENDPROC(cpu_do_resume)
 ENTRY(cpu_do_switch_mm)
 	mmid	w1, x1				// get mm->context.id
 	bfi	x0, x1, #48, #16		// set the ASID
+	tlbi	vaae1, xzr
+	dsb	nsh
+	tlbi	vaae1, xzr
 	msr	ttbr0_el1, x0			// set TTBR0
+	tlbi	vaae1, xzr
 	isb
+	tlbi	vaae1, xzr
+	dsb	nsh
+	mrs	x1, ttbr0_el1
+	sub	x0, x0, x1
 	ret
 ENDPROC(cpu_do_switch_mm)
 
@@ -251,9 +260,9 @@ ENDPROC(__cpu_setup)
 	 *       CE0      XWHW CZ     ME TEEA S
 	 * .... .IEE .... NEAI TE.I ..AD DEN0 ACAM
 	 * 0011 0... 1101 ..0. ..0. 10.. .... .... < hardware reserved
-	 * .... .1.. .... 01.1 11.1 ..01 0001 1101 < software settings
+	 * .... .1.. .... 01.1 01.1 ..01 0001 1101 < software settings
 	 */
 	.type	crval, #object
 crval:
 	.word	0x000802e2			// clear
-	.word	0x0405d11d			// set
+	.word	0x0405511d			// set

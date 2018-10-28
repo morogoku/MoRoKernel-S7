@@ -59,8 +59,13 @@ static int uas_use_uas_driver(struct usb_interface *intf,
 	struct usb_device *udev = interface_to_usbdev(intf);
 	struct usb_hcd *hcd = bus_to_hcd(udev->bus);
 	unsigned long flags = id->driver_info;
+<<<<<<< HEAD
+	struct usb_host_interface *alt; 
+	int r; 
+=======
 	struct usb_host_interface *alt;
 	int r;
+>>>>>>> efa9ad82d... LINUX: 3.18.75 Kernel Update
 
 	alt = uas_find_uas_alt_setting(intf);
 	if (!alt)

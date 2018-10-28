@@ -35,6 +35,10 @@
 #define COMPAT_PTRACE_GETHBPREGS	29
 #define COMPAT_PTRACE_SETHBPREGS	30
 
+/* AArch64 CPSR bits */
+#define CPSR_MODE_MASK		0x0000000f
+#define CPSR_MODE_USR		0x00000000
+
 /* AArch32 CPSR bits */
 #define COMPAT_PSR_MODE_MASK	0x0000001f
 #define COMPAT_PSR_MODE_USR	0x00000010
@@ -58,6 +62,13 @@
 #define COMPAT_PSR_Z_BIT	0x40000000
 #define COMPAT_PSR_N_BIT	0x80000000
 #define COMPAT_PSR_IT_MASK	0x0600fc00	/* If-Then execution state mask */
+
+#ifdef CONFIG_CPU_BIG_ENDIAN
+#define COMPAT_PSR_ENDSTATE	COMPAT_PSR_E_BIT
+#else
+#define COMPAT_PSR_ENDSTATE	0
+#endif
+
 /*
  * These are 'magic' values for PTRACE_PEEKUSR that return info about where a
  * process is located in memory.

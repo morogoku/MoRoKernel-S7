@@ -564,6 +564,9 @@ static struct sock *dccp_v6_request_recv_sock(struct sock *sk,
 
 	/* Clone RX bits */
 	newnp->rxopt.all = np->rxopt.all;
+	newnp->ipv6_mc_list = NULL;
+	newnp->ipv6_ac_list = NULL;
+	newnp->ipv6_fl_list = NULL;
 
 	newnp->ipv6_mc_list = NULL;
 	newnp->ipv6_ac_list = NULL;

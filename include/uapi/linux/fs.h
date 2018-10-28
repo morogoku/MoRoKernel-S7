@@ -58,6 +58,9 @@ struct inodes_stat_t {
 	long dummy[5];		/* padding for sysctl ABI compatibility */
 };
 
+struct ci_lookup_data {
+	char d[PATH_MAX];
+};
 
 #define NR_FILE  8192	/* this can well be larger on a larger system */
 
@@ -158,6 +161,8 @@ struct inodes_stat_t {
 #define FITHAW		_IOWR('X', 120, int)	/* Thaw */
 #define FITRIM		_IOWR('X', 121, struct fstrim_range)	/* Trim */
 
+#define FIDTRIM	_IOWR('f', 128, struct fstrim_range)	/* Deep discard trim */
+
 #define	FS_IOC_GETFLAGS			_IOR('f', 1, long)
 #define	FS_IOC_SETFLAGS			_IOW('f', 2, long)
 #define	FS_IOC_GETVERSION		_IOR('v', 1, long)
@@ -167,6 +172,9 @@ struct inodes_stat_t {
 #define FS_IOC32_SETFLAGS		_IOW('f', 2, int)
 #define FS_IOC32_GETVERSION		_IOR('v', 1, int)
 #define FS_IOC32_SETVERSION		_IOW('v', 2, int)
+
+#define FS_IOC_INVAL_MAPPING		_IO('f', 13)
+#define FS_IOC_CI_LOOKUP		_IOWR('f', 15, struct ci_lookup_data)
 
 /*
  * Inode flags (FS_IOC_GETFLAGS / FS_IOC_SETFLAGS)

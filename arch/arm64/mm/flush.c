@@ -34,19 +34,24 @@ void flush_cache_range(struct vm_area_struct *vma, unsigned long start,
 		__flush_icache_all();
 }
 
+static void sync_icache_aliases(void *kaddr, unsigned long len)
+{
+	unsigned long addr = (unsigned long)kaddr;
+
+	if (icache_is_aliasing()) {
+		__clean_dcache_area_pou(kaddr, len);
+		__flush_icache_all();
+	} else {
+		flush_icache_range(addr, addr + len);
+	}
+}
+
 static void flush_ptrace_access(struct vm_area_struct *vma, struct page *page,
 				unsigned long uaddr, void *kaddr,
 				unsigned long len)
 {
-	if (vma->vm_flags & VM_EXEC) {
-		unsigned long addr = (unsigned long)kaddr;
-		if (icache_is_aliasing()) {
-			__flush_dcache_area(kaddr, len);
-			__flush_icache_all();
-		} else {
-			flush_icache_range(addr, addr + len);
-		}
-	}
+	if (vma->vm_flags & VM_EXEC)
+		sync_icache_aliases(kaddr, len);
 }
 
 /*

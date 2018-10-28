@@ -429,7 +429,8 @@ try_again:
 		err = skb_copy_datagram_iovec(skb, sizeof(struct udphdr),
 					      msg->msg_iov, copied);
 	else {
-		err = skb_copy_and_csum_datagram_iovec(skb, sizeof(struct udphdr), msg->msg_iov);
+		err = skb_copy_and_csum_datagram_iovec(skb, sizeof(struct udphdr),
+						       msg->msg_iov, copied);
 		if (err == -EINVAL)
 			goto csum_copy_err;
 	}
@@ -1218,6 +1219,7 @@ do_udp_sendmsg:
 		fl6.flowi6_oif = np->sticky_pktinfo.ipi6_ifindex;
 
 	fl6.flowi6_mark = sk->sk_mark;
+	fl6.flowi6_uid = sk->sk_uid;
 
 	if (msg->msg_controllen) {
 		opt = &opt_space;

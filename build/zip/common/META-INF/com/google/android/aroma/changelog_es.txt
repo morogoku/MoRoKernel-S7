@@ -1,0 +1,17 @@
+	
+<b>INFORMACIÓN DEL KERNEL:</b>
+
+	NOMBRE	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
+	VERSIÓN	: <b><#selectbg_g>v6.0</#></b>
+	FECHA	: <b><#selectbg_g>16/02/2019</#></b>
+	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
+
+	<#f00><b>SOLO PARA Galaxy S7</b></#>
+
+
+<b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v0</#></b></u>
+0
+
+

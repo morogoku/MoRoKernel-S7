@@ -21,12 +21,13 @@ if is_mounted("/data") == "/data" then
     assert(run_program("/sbin/busybox", "umount", "/data"));
 endif;
 	
-
-ui_print("@-> Mounting partitions");
+ui_print(" ");
+ui_print("@Mounting partitions");
 run_program("/sbin/mount", "/system");
 run_program("/sbin/mount", "/data");
 
 
+ui_print(" ");
 ui_print("@Flashing kernel");
 if is_substring("G935", getprop("ro.boot.bootloader")) then
 	ui_print("-- G935 S7 Edge");
@@ -42,6 +43,7 @@ endif;
 
 
 if file_getprop("/tmp/aroma/menu.prop", "chk8") == "1" then
+	ui_print(" ");
 	ui_print("@Flashing patched recovery TWRP 3.2.3-0 by Tkkg1994");
 	if is_substring("G935", getprop("ro.boot.bootloader")) then
 		ui_print("-- G935 S7 Edge");
@@ -57,6 +59,7 @@ if file_getprop("/tmp/aroma/menu.prop", "chk8") == "1" then
 endif;
 
 
+ui_print(" ");
 ui_print("@Patching /system");
 package_extract_dir("moro/system", "/system");
 #run_program("/tmp/moro/system.sh");
@@ -64,7 +67,8 @@ package_extract_dir("moro/system", "/system");
 run_program("/tmp/moro/del_wakelock.sh");
 
 
-ui_print("@-> Setting Permissions");
+ui_print(" ");
+ui_print("@Setting Permissions");
 set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/vendor/lib/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
@@ -79,7 +83,8 @@ set_metadata("/system/bin/logd", "uid", 1036, "gid", 1036, "mode", 0550, "capabi
 
 # MTweaks
 if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
-	ui_print("@-> MTWeaks App");
+	ui_print(" ");
+	ui_print("@MTWeaks App");
 	run_program("/tmp/moro/moro_clean.sh", "com.moro.mtweaks", "-as");
 	package_extract_dir("mtweaks", "/data/.morokernel/apk");
 endif;
@@ -90,18 +95,21 @@ endif;
 ####################################################
 set_progress(0.10);
 
-# Stock
+
+ui_print(" ");
+ui_print("@Root");
+
+# Without Root
 if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt1" then
-	
+
+	ui_print("-- Without Root");
 	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
-		ui_print("@-> Clearing root data");
+		ui_print("-- Clear root data");
 		run_program("/tmp/moro/clean_su.sh");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.supersu", "-asd");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.suhide", "-asd");
 		run_program("/tmp/moro/moro_clean.sh", "com.topjohnwu.magisk", "-asd");
 	endif;
-
-	ui_print("@-> Without Root");
 endif;
 
 # Magisk Root
@@ -113,12 +121,12 @@ show_progress(0.85, "-19000");
 	run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.suhide", "-asd");
 
 	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
-		ui_print("@-> Clearing root data");
+		ui_print("-- Clearing root data");
 		run_program("/tmp/moro/clean_su.sh");
 		run_program("/tmp/moro/moro_clean.sh", "com.topjohnwu.magisk", "-asd");
 	endif;
 		
-	ui_print("@-> Rooting with Magisk Manager");
+	ui_print("-- Rooting with Magisk Manager");
 	ui_print(" ");
 	package_extract_dir("magisk", "/tmp/magisk");
 	run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");
@@ -134,7 +142,7 @@ show_progress(0.85, "-34000");
 	run_program("/tmp/moro/moro_clean.sh", "com.topjohnwu.magisk", "-asd");
 
 	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
-		ui_print("@-> Clearing root data");
+		ui_print("-- Clearing root data");
 		run_program("/tmp/moro/clean_su.sh");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.supersu", "-asd");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.suhide", "-asd");
@@ -142,14 +150,14 @@ show_progress(0.85, "-34000");
 
 	run_program("/tmp/moro/supersu.sh");
 	
-	ui_print("@-> Rooting with SuperSU");
+	ui_print("-- Rooting with SuperSU");
 	package_extract_dir("supersu", "/tmp/supersu");
 	run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/*", "-d", "/tmp/supersu");
 	run_program("/sbin/sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
 	delete_recursive("/tmp/supersu");
 
 	#ui_print(" ");
-	#ui_print("@-> Suhide");
+	#ui_print("-- Suhide");
 	#package_extract_dir("suhide", "/tmp/suhide");
 	#run_program("/sbin/busybox", "unzip", "/tmp/suhide/suhide.zip", "META-INF/com/google/android/*", "-d", "/tmp/suhide");
 	#run_program("/sbin/sh", "/tmp/suhide/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/suhide/suhide.zip");
@@ -160,7 +168,7 @@ endif;
 #####################################################
 
 ui_print(" ");
-ui_print("@-> Unmounting Partition");
+ui_print("-- Unmounting Partition");
 ifelse(is_mounted("/system"), unmount("/system"));
 
 set_progress(1.00);

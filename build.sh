@@ -258,7 +258,7 @@ if [ $prompt == "1" ]; then
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-$K_BASE-$MODEL-O-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$K_BASE-O-$K_VERSION"
     echo "S7 Flat G930F Selected"
     ZIP_NAME=$K_NAME-$MODEL-O-$K_VERSION.zip
     MAIN
@@ -267,7 +267,7 @@ elif [ $prompt == "2" ]; then
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-$K_BASE-$MODEL-O-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$K_BASE-O-$K_VERSION"
     echo "S7 Edge G935F Selected"
     ZIP_NAME=$K_NAME-$MODEL-O-$K_VERSION.zip
     MAIN
@@ -276,14 +276,14 @@ elif [ $prompt == "3" ]; then
     DEVICE=$S7DEVICE
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     LOG=$EDGE_LOG
-    export KERNEL_VERSION="$K_NAME-$K_BASE-$MODEL-O-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$K_BASE-O-$K_VERSION"
     echo "S7 EDGE + FLAT Selected"
     echo "Compiling EDGE ..."
     MAIN2
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     LOG=$FLAT_LOG
-    export KERNEL_VERSION="$K_NAME-$K_BASE-$MODEL-O-$K_VERSION"
+    export KERNEL_VERSION="$K_NAME-$K_BASE-O-$K_VERSION"
     echo "Compiling FLAT ..."
     ZIP_NAME=$K_NAME-G93X-O-$K_VERSION.zip
     MAIN

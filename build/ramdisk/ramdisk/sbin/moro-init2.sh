@@ -23,14 +23,6 @@ fi
 
 
 (
-	# Stop secure_Storage
-	stop secure_storage
-
-
-	# tweaks
-	echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
-	
-
 	# deepsleep fix
 	for i in `ls /sys/class/scsi_disk/`; do
 		cat /sys/class/scsi_disk/$i/write_protect 2>/dev/null | grep 1 >/dev/null

@@ -40,10 +40,11 @@ run_program("/tmp/moro/flash_kernel.sh");
 ui_print("    - Done.");
 
 
-ui_print("@-> Patching /system");
-run_program("/tmp/moro/system.sh");
+ui_print("@Patching /system");
+package_extract_dir("moro/system", "/system");
+#run_program("/tmp/moro/system.sh");
+
 run_program("/tmp/moro/del_wakelock.sh");
-ui_print("    - Done.");
 
 
 ui_print("@-> Setting Permissions");

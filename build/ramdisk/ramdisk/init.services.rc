@@ -5,11 +5,16 @@
 #
 
 on boot
-    exec u:r:su:s0 root root -- /sbin/moro-init.sh
-    exec u:r:magisk:s0 root root -- /sbin/moro-init.sh
+    start kernelinit
 
 on property:sys.boot_completed=1
     start kernelinit2
+
+service kernelinit /sbin/moro-init.sh
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
 
 service kernelinit2 /sbin/moro-init2.sh
     class late_start

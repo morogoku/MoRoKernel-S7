@@ -27,17 +27,34 @@ run_program("/sbin/mount", "/system");
 run_program("/sbin/mount", "/data");
 
 
-ui_print("@-> Flashing kernel");
-ifelse
-(
-is_substring("G935", getprop("ro.boot.bootloader"))
-,
-ui_print("    - G935 S7 Edge");
-,
-ui_print("    - G930 S7 Flat");
-);
-run_program("/tmp/moro/flash_kernel.sh");
-ui_print("    - Done.");
+ui_print("@Flashing kernel");
+if is_substring("G935", getprop("ro.boot.bootloader")) then
+	ui_print("-- G935 S7 Edge");
+	run_program("/tmp/moro/flash_kernel.sh", "G935");
+	ui_print("-- Done");
+endif;
+	
+if is_substring("G930", getprop("ro.boot.bootloader")) then
+	ui_print("-- G930 S7 Flat");
+	run_program("/tmp/moro/flash_kernel.sh", "G930");
+	ui_print("-- Done");
+endif;
+
+
+if file_getprop("/tmp/aroma/menu.prop", "chk8") == "1" then
+	ui_print("@Flashing patched recovery TWRP 3.2.3-0 by Tkkg1994");
+	if is_substring("G935", getprop("ro.boot.bootloader")) then
+		ui_print("-- G935 S7 Edge");
+		run_program("/tmp/moro/flash_recovery.sh", "G935");
+		ui_print("-- Done");
+	endif;
+		
+	if is_substring("G930", getprop("ro.boot.bootloader")) then
+		ui_print("-- G930 S7 Flat");
+		run_program("/tmp/moro/flash_recovery.sh", "G930");
+		ui_print("-- Done");
+	endif;
+endif;
 
 
 ui_print("@Patching /system");

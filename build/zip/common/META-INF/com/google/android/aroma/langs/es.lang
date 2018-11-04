@@ -80,6 +80,8 @@ menu.6=Spectrum
 menu.6desc=Sencilla app para la gestion de 4 perfiles ya predefinidos, Balanced, Battery, Performance y Gaming.
 menu.7=Borrar datos root
 menu.7desc=Se borrarán datos y app del root anterior. Recomendable para instalacion limpia.
+menu.8=Recovery TWRP 3.2.3-0 Fixed
+menu.8desc=TWRP 3.2.3-0 Actualizado por Tkkg1994. Necesario para este kernel.
 
 # Sin Root
 stock.title=Sin Root

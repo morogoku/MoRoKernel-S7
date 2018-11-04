@@ -1,12 +1,11 @@
 #!/sbin/sh
 #
-# MoRoKernel Flash script 1.0
+# MoRoKernel Flash script 1.1
 #
 # Thanks to dwander for original script
 # 
 
-bootloader=`getprop ro.bootloader`
-variant=${bootloader:0:4}
+variant=$1
 
 cd /tmp/moro
 

@@ -97,6 +97,8 @@ menu.6=Spectrum
 menu.6desc=Simple app for the management of 4 predefined profiles, Balanced, Battery, Performance and Gaming.
 menu.7=Delete root data
 menu.7desc=Data and app will be deleted from the previous root. Recommended for clean installation.
+menu.8=Recovery TWRP 3.2.3-0 Fixed
+menu.8desc=TWRP 3.2.3-0 Updated by Tkkg1994. Necessary for this kernel.
 
 # Sin Root
 stock.title=Without root

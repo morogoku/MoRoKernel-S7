@@ -34,7 +34,7 @@ DEFCONFIG=moro_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
-export K_VERSION="v5b8"
+export K_VERSION="v5.0"
 export K_BASE="ERI1"
 export K_NAME="MoRoKernel"
 export REVISION="RC"

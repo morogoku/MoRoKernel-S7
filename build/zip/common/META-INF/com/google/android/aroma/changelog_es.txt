@@ -3,7 +3,7 @@
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
 	VERSIÓN	: <b><#selectbg_g>v5.0</#></b>
-	FECHA	: <b><#selectbg_g>29/10/2018</#></b>
+	FECHA	: <b><#selectbg_g>09/11/2018</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
@@ -12,6 +12,29 @@
 <b>CHANGELOG:</b>
 
 <u><b><#selectbg_g>MoRoKernel-O v5.0</#></b></u>
-
+<*>Hybrid Sources 3.18.14 updated to XXS3ERI1</*>
+<*>100% stable, NO RANDOM REBOOTS</*>
+<*>Linux 3.18.124</*>
+<*>Fix Private Mode (Stock ROMS)</*>
+<*>MTweaks 2.10.0</*>
+<*>Voltage control for Mif, Int, Disp, Cam</*>
+<*>Knox 0x0 & SafetyNet with SuperSU and Magisk</*>
+<*>SuperSU 2.82SR5 + SuHide v1.09</*>
+<*>Magisk 17.3</*>
+<*>A lot of CPU governors </*>
+<*>A lot of IO Shedulers</*>
+<*>GPU Freq: 112-806MHz</*>
+<*>Battery Store mode</*>
+<*>CPU & GPU Voltage settings</*>
+<*>Battery settings</*>
+<*>USB charge to 900MHz</*>
+<*>PWMfree brightness control</*>
+<*>Powersuspend 4 modes, Autosleep, Userspace, LCD panel, Hybrid</*>
+<*>Wakelocks settings</*>
+<*>Boeffla Wakelock Settings</*>
+<*>SELinux Permissive</*>
+<*>Swap with LZ4 compression</*>
+<*>Led Settings</*>
+<*>Wireguard VPN compatible</*>
 
 

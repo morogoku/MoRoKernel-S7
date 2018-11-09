@@ -62,9 +62,15 @@ endif;
 ui_print(" ");
 ui_print("@Patching /system");
 package_extract_dir("moro/system", "/system");
-#run_program("/tmp/moro/system.sh");
-
 run_program("/tmp/moro/del_wakelock.sh");
+
+
+if file_getprop("/tmp/aroma/menu.prop", "chk9") == "1" then
+	ui_print(" ");
+	ui_print("@Fix Private Mode");
+	run_program("/tmp/moro/privatemode.sh");
+	package_extract_dir("moro/private_mode", "/system");
+endif;
 
 
 ui_print(" ");
@@ -73,6 +79,7 @@ set_metadata("/system/vendor/lib/libsecure_storage.so", "uid", 0, "gid", 2000, "
 set_metadata("/system/vendor/lib64/libsecure_storage.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/vendor/lib/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/vendor/lib64/egl/libGLES_mali.so", "uid", 0, "gid", 2000, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/system/priv-app/PersonalPageService", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 
 set_metadata("/system/bin/logd", "uid", 1036, "gid", 1036, "mode", 0550, "capabilities", 0x440000040, "selabel", "u:object_r:logd_exec:s0");
 

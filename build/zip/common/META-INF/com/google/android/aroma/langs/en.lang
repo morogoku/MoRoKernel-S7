@@ -99,6 +99,8 @@ menu.7=Delete root data
 menu.7desc=Data and app will be deleted from the previous root. Recommended for clean installation.
 menu.8=Recovery TWRP 3.2.3-0 Fixed
 menu.8desc=TWRP 3.2.3-0 Updated by Tkkg1994. Necessary for this kernel.
+menu.9=Fix Private Mode (Stock Roms)
+menu.9desc=Fix the Private Mode only with S7 Flat/Edge Stock based Roms
 
 # Sin Root
 stock.title=Without root

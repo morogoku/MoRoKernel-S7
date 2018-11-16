@@ -3,13 +3,19 @@
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
 	VERSION	: <b><#selectbg_g>v5.0</#></b>
-	DATE	: <b><#selectbg_g>09/11/2018</#></b>
+	DATE	: <b><#selectbg_g>16/11/2018</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v5.1</#></b></u>
+<*>Gesture mods, DT2W, S2W, S2S. Thanks to Flar2</*>
+<*>MTweaks 2.11.0</*>
+<*>Spectrum Support</*>
+<*>Linux 3.18.125</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v5.0</#></b></u>
 <*>Hybrid Sources 3.18.14 updated to XXS3ERI1</*>

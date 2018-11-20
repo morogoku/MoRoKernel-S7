@@ -10,5 +10,3 @@ echo "BINDSBIN=true">>/data/.supersu
 
 
 
-
-

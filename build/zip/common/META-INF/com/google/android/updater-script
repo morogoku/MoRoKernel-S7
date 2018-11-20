@@ -1,5 +1,5 @@
 ui_print("***********************************************");
-ui_print("* MoRoKernel Nougat Kernel");
+ui_print("* MoRoKernel Oreo Kernel");
 ui_print("* For Samsung Galaxy S7");
 ui_print("* Developed by MoroGoku");
 ui_print("* https://www.espdroids.com");
@@ -42,6 +42,35 @@ if is_substring("G930", getprop("ro.boot.bootloader")) then
 endif;
 
 
+ui_print(" ");
+ui_print("@Patching /system");
+package_extract_dir("moro/system", "/system");
+run_program("/tmp/moro/del_wakelock.sh");
+
+
+####################################################
+# OTHER OPTIONS
+####################################################
+
+# Private mode
+if file_getprop("/tmp/aroma/menu.prop", "chk9") == "1" then
+	ui_print(" ");
+	ui_print("@Fix Private Mode");
+	run_program("/tmp/moro/privatemode.sh");
+	package_extract_dir("moro/private_mode", "/system");
+endif;
+
+
+# MTweaks
+if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
+	ui_print(" ");
+	ui_print("@MTWeaks App");
+	run_program("/tmp/moro/moro_clean.sh", "com.moro.mtweaks", "-as");
+	package_extract_dir("mtweaks", "/data/.morokernel/apk");
+endif;
+
+
+# Recovery
 if file_getprop("/tmp/aroma/menu.prop", "chk8") == "1" then
 	ui_print(" ");
 	ui_print("@Flashing patched recovery TWRP 3.2.3-0 by Tkkg1994");
@@ -59,17 +88,11 @@ if file_getprop("/tmp/aroma/menu.prop", "chk8") == "1" then
 endif;
 
 
-ui_print(" ");
-ui_print("@Patching /system");
-package_extract_dir("moro/system", "/system");
-run_program("/tmp/moro/del_wakelock.sh");
-
-
-if file_getprop("/tmp/aroma/menu.prop", "chk9") == "1" then
+# Spectrum Profiles
+if file_getprop("/tmp/aroma/menu.prop", "chk10") == "1" then
 	ui_print(" ");
-	ui_print("@Fix Private Mode");
-	run_program("/tmp/moro/privatemode.sh");
-	package_extract_dir("moro/private_mode", "/system");
+	ui_print("@Install Spectrum Profiles");
+	package_extract_dir("moro/spec_profiles", "/data/media/0/Spectrum/profiles/");
 endif;
 
 
@@ -82,19 +105,6 @@ set_metadata("/system/vendor/lib64/egl/libGLES_mali.so", "uid", 0, "gid", 2000, 
 set_metadata_recursive("/system/priv-app/PersonalPageService", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 
 set_metadata("/system/bin/logd", "uid", 1036, "gid", 1036, "mode", 0550, "capabilities", 0x440000040, "selabel", "u:object_r:logd_exec:s0");
-
-
-####################################################
-# OTHER OPTIONS
-####################################################
-
-# MTweaks
-if file_getprop("/tmp/aroma/menu.prop", "chk2") == "1" then
-	ui_print(" ");
-	ui_print("@MTWeaks App");
-	run_program("/tmp/moro/moro_clean.sh", "com.moro.mtweaks", "-as");
-	package_extract_dir("mtweaks", "/data/.morokernel/apk");
-endif;
 
 
 ####################################################
@@ -112,7 +122,8 @@ if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt1" then
 	ui_print("-- Without Root");
 	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
 		ui_print("-- Clear root data");
-		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_supersu.sh");
+		run_program("/tmp/moro/clean_magisk.sh");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.supersu", "-asd");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.suhide", "-asd");
 		run_program("/tmp/moro/moro_clean.sh", "com.topjohnwu.magisk", "-asd");
@@ -124,12 +135,13 @@ if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt2" then
 show_progress(0.85, "-19000");
 	
 	# Clean opposite kernel
+	run_program("/tmp/moro/clean_supersu.sh");
 	run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.supersu", "-asd");
 	run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.suhide", "-asd");
 
 	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
 		ui_print("-- Clearing root data");
-		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_magisk.sh");
 		run_program("/tmp/moro/moro_clean.sh", "com.topjohnwu.magisk", "-asd");
 	endif;
 		
@@ -146,11 +158,12 @@ if file_getprop("/tmp/aroma/menu.prop", "group1") == "opt3" then
 show_progress(0.85, "-34000");
 	
 	# Clean opposite kernel
+	run_program("/tmp/moro/clean_magisk.sh");
 	run_program("/tmp/moro/moro_clean.sh", "com.topjohnwu.magisk", "-asd");
 
 	if file_getprop("/tmp/aroma/menu.prop", "chk7") == "1" then
 		ui_print("-- Clearing root data");
-		run_program("/tmp/moro/clean_su.sh");
+		run_program("/tmp/moro/clean_supersu.sh");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.supersu", "-asd");
 		run_program("/tmp/moro/moro_clean.sh", "eu.chainfire.suhide", "-asd");
 	endif;	
@@ -163,12 +176,11 @@ show_progress(0.85, "-34000");
 	run_program("/sbin/sh", "/tmp/supersu/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/supersu/supersu.zip");
 	delete_recursive("/tmp/supersu");
 
-	#ui_print(" ");
-	#ui_print("-- Suhide");
-	#package_extract_dir("suhide", "/tmp/suhide");
-	#run_program("/sbin/busybox", "unzip", "/tmp/suhide/suhide.zip", "META-INF/com/google/android/*", "-d", "/tmp/suhide");
-	#run_program("/sbin/sh", "/tmp/suhide/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/suhide/suhide.zip");
-	package_extract_dir("suhide", "/data/media/0/Download");
+	ui_print(" ");
+	ui_print("-- Suhide");
+	package_extract_dir("suhide", "/tmp/suhide");
+	run_program("/sbin/busybox", "unzip", "/tmp/suhide/suhide.zip", "META-INF/com/google/android/*", "-d", "/tmp/suhide");
+	run_program("/sbin/sh", "/tmp/suhide/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/suhide/suhide.zip");
 	delete_recursive("/tmp/suhide");
 endif;
 

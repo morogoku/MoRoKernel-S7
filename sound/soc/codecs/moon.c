@@ -1021,12 +1021,14 @@ SOC_DOUBLE_R("HPOUT3 Digital Switch", ARIZONA_DAC_DIGITAL_VOLUME_3L,
 SOC_DOUBLE_R("SPKDAT1 Digital Switch", ARIZONA_DAC_DIGITAL_VOLUME_5L,
 	     ARIZONA_DAC_DIGITAL_VOLUME_5R, ARIZONA_OUT5L_MUTE_SHIFT, 1, 1),
 
+#ifndef CONFIG_MORO_SOUND_CONTROL
 SOC_DOUBLE_R_TLV("HPOUT1 Digital Volume", ARIZONA_DAC_DIGITAL_VOLUME_1L,
 		 ARIZONA_DAC_DIGITAL_VOLUME_1R, ARIZONA_OUT1L_VOL_SHIFT,
 		 0xbf, 0, digital_tlv),
 SOC_DOUBLE_R_TLV("HPOUT2 Digital Volume", ARIZONA_DAC_DIGITAL_VOLUME_2L,
 		 ARIZONA_DAC_DIGITAL_VOLUME_2R, ARIZONA_OUT2L_VOL_SHIFT,
 		 0xbf, 0, digital_tlv),
+#endif
 SOC_DOUBLE_R_TLV("HPOUT3 Digital Volume", ARIZONA_DAC_DIGITAL_VOLUME_3L,
 		 ARIZONA_DAC_DIGITAL_VOLUME_3R, ARIZONA_OUT3L_VOL_SHIFT,
 		 0xbf, 0, digital_tlv),
@@ -2919,11 +2921,106 @@ static int moon_compr_trigger(struct snd_compr_stream *stream, int cmd)
 	return ret;
 }
 
+#ifdef CONFIG_MORO_SOUND_CONTROL
+
+static struct snd_soc_codec *moro_sound_control_codec_ptr;
+int set_speaker_gain(int gain);
+int get_speaker_gain(void);
+
+static ssize_t headphone_gain_show(struct kobject *kobj,
+		struct kobj_attribute *attr, char *buf)
+{
+	return snprintf(buf, PAGE_SIZE, "%d %d\n",
+		snd_soc_read(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_1L),
+		snd_soc_read(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_1R)
+	);
+}
+
+static ssize_t headphone_gain_store(struct kobject *kobj,
+		struct kobj_attribute *attr, const char *buf, size_t count)
+{
+	int input_l, input_r;
+	sscanf(buf, "%d %d", &input_l, &input_r);
+
+	snd_soc_write(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_1L, input_l);
+	snd_soc_write(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_1R, input_r);
+	return count;
+}
+
+static struct kobj_attribute headphone_gain_attribute =
+	__ATTR(headphone_gain, 0664,
+		headphone_gain_show,
+		headphone_gain_store);
+
+static ssize_t earpiece_gain_show(struct kobject *kobj,
+		struct kobj_attribute *attr, char *buf)
+{
+	return snprintf(buf, PAGE_SIZE, "%d %d\n",
+		snd_soc_read(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_3L),
+		snd_soc_read(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_3R)
+	);
+}
+
+static ssize_t earpiece_gain_store(struct kobject *kobj,
+		struct kobj_attribute *attr, const char *buf, size_t count)
+{
+	int input_l, input_r;
+	sscanf(buf, "%d %d", &input_l, &input_r);
+
+	snd_soc_write(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_3L, input_l);
+	snd_soc_write(moro_sound_control_codec_ptr, ARIZONA_DAC_DIGITAL_VOLUME_3R, input_r);
+	return count;
+}
+
+static struct kobj_attribute earpiece_gain_attribute =
+	__ATTR(earpiece_gain, 0664,
+		earpiece_gain_show,
+		earpiece_gain_store);
+
+static ssize_t speaker_gain_show(struct kobject *kobj,
+		struct kobj_attribute *attr, char *buf)
+{
+	return snprintf(buf, PAGE_SIZE, "%d\n",	get_speaker_gain());
+}
+static ssize_t speaker_gain_store(struct kobject *kobj,
+		struct kobj_attribute *attr, const char *buf, size_t count)
+{
+	int input;
+	sscanf(buf, "%d", &input);
+
+	set_speaker_gain(input);
+
+	return count;
+}
+static struct kobj_attribute speaker_gain_attribute =
+	__ATTR(speaker_gain,
+		0664,
+		speaker_gain_show,
+		speaker_gain_store);
+
+static struct attribute *moro_sound_control_attrs[] = {
+		&headphone_gain_attribute.attr,
+		&earpiece_gain_attribute.attr,
+		&speaker_gain_attribute.attr,
+		NULL,
+};
+
+static struct attribute_group moro_sound_control_attr_group = {
+		.attrs = moro_sound_control_attrs,
+};
+
+static struct kobject *moro_sound_control_kobj;
+#endif
+
 static int moon_codec_probe(struct snd_soc_codec *codec)
 {
 	struct moon_priv *priv = snd_soc_codec_get_drvdata(codec);
 	struct arizona *arizona = priv->core.arizona;
 	int ret, i, j;
+
+#ifdef CONFIG_MORO_SOUND_CONTROL
+	moro_sound_control_codec_ptr = codec;
+#endif
 
 	priv->core.arizona->dapm = &codec->dapm;
 
@@ -3222,6 +3319,17 @@ static int moon_probe(struct platform_device *pdev)
 		snd_soc_unregister_platform(&pdev->dev);
 		goto error;
 	}
+
+#ifdef CONFIG_MORO_SOUND_CONTROL
+	moro_sound_control_kobj = kobject_create_and_add("moro_sound_control", kernel_kobj);
+	if (moro_sound_control_kobj == NULL) {
+		pr_warn("%s kobject create failed!\n", __func__);
+        }
+	ret = sysfs_create_group(moro_sound_control_kobj, &moro_sound_control_attr_group);
+        if (ret) {
+		pr_warn("%s sysfs file create failed!\n", __func__);
+	}
+#endif
 
 	return ret;
 

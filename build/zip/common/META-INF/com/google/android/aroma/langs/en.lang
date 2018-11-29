@@ -82,14 +82,13 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
-menu.2=Magisk 17.3
+menu.2=Magisk 17.1
 menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09
 menu.5desc=Famous Root of Chainfire.
 menu.group2=Other options
-menu.3=MTweaks v2.11.0
-menu.3desc=Application for kernel management\
-Kernel Adiutor Mod for Exynos.
+menu.3=MTweaks v2.12.0
+menu.3desc=Application for kernel management
 menu.4=Busybox
 menu.4desc=Busybox 1.27.2\
 Necessary. Uncheck only if you have a higher version.
@@ -98,9 +97,11 @@ menu.6desc=Simple app for the management of 4 predefined profiles, Balanced, Bat
 menu.7=Delete root data
 menu.7desc=Data and app will be deleted from the previous root. Recommended for clean installation.
 menu.8=Recovery TWRP 3.2.3-0 Fixed
-menu.8desc=TWRP 3.2.3-0 Updated by Tkkg1994. Necessary for this kernel.
+menu.8desc=Updated by Tkkg1994. Necessary for the kernel.
 menu.9=Fix Private Mode (Stock Roms)
-menu.9desc=Fix the Private Mode only with S7 Flat/Edge Stock based Roms
+menu.9desc=Only with S7 Stock based Roms
+menu.10=Spectrum Profiles
+menu.10desc=Copy in sdcard/Spectrum/profiles
 
 # Sin Root
 stock.title=Without root

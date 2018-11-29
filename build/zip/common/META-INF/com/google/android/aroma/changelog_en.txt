@@ -2,14 +2,23 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSION	: <b><#selectbg_g>v5.0</#></b>
-	DATE	: <b><#selectbg_g>16/11/2018</#></b>
+	VERSION	: <b><#selectbg_g>v5.2</#></b>
+	DATE	: <b><#selectbg_g>30/11/2018</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v5.2</#></b></u>
+<*>Samsung sources G935FXXU3ERJE</*>
+<*>Linux 3.18.127</*>
+<*>MoRo Sound Control, Headphone and Speaker</*>
+<*>MTweaks 2.12.0</*>
+<*>Change Spectrum Profiles to sdcard/Spectrum/profiles</*>
+<*>Downgrade Magisk to 17.1</*>
+<*>Fix drain battery</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v5.1</#></b></u>
 <*>Gesture mods, DT2W, S2W, S2S. Thanks to Flar2</*>

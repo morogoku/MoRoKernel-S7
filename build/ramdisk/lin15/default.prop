@@ -1,7 +1,7 @@
 #
 # ADDITIONAL_DEFAULT_PROPERTIES
 #
-ro.secure=1
+ro.secure=0
 security.perf_harden=1
 ro.allow.mock.location=0
 ro.debuggable=1
@@ -27,7 +27,7 @@ ro.build.selinux=1
 ro.config.notification_sound=Argon.ogg
 ro.config.alarm_alert=Hassium.ogg
 persist.sys.dun.override=0
-ro.adb.secure=1
+ro.adb.secure=0
 ro.storage_manager.enabled=true
 media.recorder.show_manufacturer_and_model=true
 ro.config.ringtone=Orion.ogg

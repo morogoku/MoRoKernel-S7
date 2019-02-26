@@ -1,0 +1,45 @@
+#
+# ADDITIONAL_DEFAULT_PROPERTIES
+#
+ro.secure=1
+security.perf_harden=1
+ro.allow.mock.location=0
+ro.debuggable=1
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+ro.dalvik.vm.native.bridge=0
+dalvik.vm.usejit=true
+dalvik.vm.usejitprofiles=true
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.appimageformat=lz4
+pm.dexopt.first-boot=quicken
+pm.dexopt.boot=verify
+pm.dexopt.install=quicken
+pm.dexopt.bg-dexopt=speed-profile
+pm.dexopt.ab-ota=speed-profile
+pm.dexopt.inactive=verify
+pm.dexopt.shared=speed
+ro.com.google.clientidbase=android-samsung
+keyguard.no_require_sim=true
+ro.build.selinux=1
+ro.config.notification_sound=Argon.ogg
+ro.config.alarm_alert=Hassium.ogg
+persist.sys.dun.override=0
+ro.adb.secure=1
+ro.storage_manager.enabled=true
+media.recorder.show_manufacturer_and_model=true
+ro.config.ringtone=Orion.ogg
+net.tethering.noprovisioning=true
+ro.zygote=zygote64_32
+tombstoned.max_tombstone_count=50
+debug.atrace.tags.enableflags=0
+ro.device.cache_dir=/data/cache
+#
+# BOOTIMAGE_BUILD_PROPERTIES
+#
+ro.bootimage.build.date=Wed Feb 13 16:00:39 UTC 2019
+ro.bootimage.build.date.utc=1550073639
+ro.bootimage.build.fingerprint=samsung/hero2ltexx/hero2lte:8.0.0/R16NW/G935FXXU2ERD5:user/release-keys
+persist.sys.usb.config=none

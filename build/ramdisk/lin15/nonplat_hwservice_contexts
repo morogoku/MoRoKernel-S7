@@ -1,0 +1,2 @@
+vendor.lineage.livedisplay::IColor       u:object_r:hal_lineage_livedisplay_hwservice:s0
+vendor.lineage.power::ILineagePower      u:object_r:hal_lineage_power_hwservice:s0

@@ -1,0 +1,17 @@
+# Android fstab file.
+#<src>                  <mnt_point>         <type>    <mnt_flags and options>                               <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+# data partition must be located at the bottom for supporting device encryption
+
+/dev/block/platform/155a0000.ufs/by-name/BOOT		/boot		emmc	defaults												defaults
+/dev/block/platform/155a0000.ufs/by-name/RECOVERY	/recovery	emmc	defaults												defaults
+/dev/block/platform/155a0000.ufs/by-name/SYSTEM		/system		ext4	ro,errors=panic,noload											wait,recoveryonly
+/dev/block/platform/155a0000.ufs/by-name/EFS		/efs		ext4	noatime,nosuid,nodev,noauto_da_alloc,discard,journal_async_commit,data=ordered,errors=panic	wait,check
+#/dev/block/platform/155a0000.ufs/by-name/CACHE		/cache		ext4	noatime,nosuid,nodev,noauto_da_alloc,discard,journal_async_commit,data=ordered,errors=panic	wait,check
+/dev/block/platform/155a0000.ufs/by-name/USERDATA	/data		ext4	noatime,nosuid,nodev,noauto_da_alloc,discard,journal_async_commit,data=ordered,errors=panic	wait,check,encryptable=footer
+
+# VOLD
+/dev/block/platform/155a0000.ufs/by-name/HIDDEN          /preload    ext4    defaults    voldmanaged=preload:auto
+/devices/15740000.dwmmc2/mmc_host/mmc*                       auto    auto    defaults    voldmanaged=sdcard1:auto,encryptable=userdata
+/devices/15400000.usb/15400000.dwc3/xhci-hcd.2.auto/usb*     auto    auto    defaults    voldmanaged=usb:auto

@@ -127,7 +127,7 @@ snd-soc-wm5102-objs := wm5102.o
 snd-soc-florida-objs := florida.o
 snd-soc-clearwater-objs := clearwater.o
 snd-soc-marley-objs := marley.o
-snd-soc-moon-objs := moon.o
+snd-soc-moon-objs := moon.o 
 snd-soc-wm8350-objs := wm8350.o
 snd-soc-wm8400-objs := wm8400.o
 snd-soc-wm8510-objs := wm8510.o
@@ -364,6 +364,7 @@ obj-$(CONFIG_SND_SOC_WM9713)	+= snd-soc-wm9713.o
 obj-$(CONFIG_SND_SOC_WM_ADSP)	+= snd-soc-wm-adsp.o
 obj-$(CONFIG_SND_SOC_WM_HUBS)	+= snd-soc-wm-hubs.o
 obj-$(CONFIG_SND_SOC_DUMMY_CODEC)	+= snd-soc-dummy.o
+obj-$(CONFIG_MORO_SOUND)	+= moro_sound.o
 
 # Amp
 obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o

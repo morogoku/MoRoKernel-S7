@@ -20,6 +20,7 @@ rm -rf $PWD/build/kernel-temp
 rm -f $PWD/arch/arm64/configs/tmp_defconfig
 rm -f $PWD/build/zip/common/moro/kernel.tar.xz
 rm -f $PWD/.wireguard-fetch-lock
+rm -rf $PWD/net/wireguard
 
 
 # Removed Created dtb Folder
@@ -59,6 +60,7 @@ echo "" > build/ramdisk/lin16/oem/.placeholder
 echo "" > build/ramdisk/lin16/proc/.placeholder
 echo "" > build/ramdisk/lin16/storage/.placeholder
 echo "" > build/ramdisk/lin16/sys/.placeholder
+
 echo "" > build/ramdisk/lin16/system/.placeholder
 
 

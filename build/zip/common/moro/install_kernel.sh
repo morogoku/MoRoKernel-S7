@@ -111,6 +111,14 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk2)" == 1 ]; then
 	cp -rf /tmp/moro/mtweaks/*.apk /data/.morokernel/apk
 fi
 
+## SPECTRUM PROFILES
+if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ]; then
+	ui_print " "
+	ui_print "@Install Spectrum Profiles"
+	mkdir -p /data/media/0/Spectrum/profiles 2>/dev/null;
+	cp -rf /tmp/moro/spec_profiles/. /data/media/0/Spectrum/profiles/
+fi
+
 
 set_progress 0.45
 show_progress 0.25 -5000

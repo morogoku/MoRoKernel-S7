@@ -110,6 +110,7 @@ form(
 	  "chk9",     "<b><~menu.9></b>",       "<~menu.9desc>",		"check",
 	  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
 	  "chk8",     "<b><~menu.8></b>",       "<~menu.8desc>",		"check",
+	  "chk10",    "<b><~menu.10></b>",      "<~menu.10desc>",		"check.checked",
 	  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
 );
 

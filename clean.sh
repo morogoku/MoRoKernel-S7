@@ -20,6 +20,7 @@ rm -f $PWD/arch/arm64/configs/tmp_defconfig 2>/dev/null
 rm -f $PWD/build/zip/common/moro/kernel.tar.xz 2>/dev/null
 rm -rf $PWD/net/wireguard 2>/dev/null
 rm -r $PWD/arch/arm64/boot/dts/*.dtb 2>/dev/null
+rm -f $PWD/.wireguard-fetch-lock 2>/dev/null
 
 
 # Removed Created dtb Folder

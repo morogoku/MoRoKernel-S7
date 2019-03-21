@@ -29,7 +29,7 @@ DEFCONFIG=moro_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
-export K_VERSION="v0"
+export K_VERSION="v6.0"
 export K_BASE="ERL3"
 export K_NAME="MoRoKernel"
 export REVISION="RC"
@@ -247,6 +247,10 @@ FUNC_BUILD_FLASHABLES()
 MAIN()
 {
 
+if [ $OS == "aosp" ]; then
+    export KERNEL_VERSION="$K_NAME-$K_BASE-Lineage-$K_VERSION"
+fi
+
 (
 	START_TIME=`date +%s`
 	FUNC_DELETE_PLACEHOLDERS
@@ -355,7 +359,7 @@ elif [ $prompt == "4" ]; then
     OS=aosp
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     ZIP=yes
-    ZIP_NAME=$K_NAME-G93X-O-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-G93X-$K_VERSION.zip
     MAIN
 
 elif [ $prompt == "5" ]; then
@@ -363,7 +367,7 @@ elif [ $prompt == "5" ]; then
     OS=aosp
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     ZIP=yes
-    ZIP_NAME=$K_NAME-G935-O-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-G935-$K_VERSION.zip
     MAIN
 fi
 

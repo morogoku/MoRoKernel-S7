@@ -3,7 +3,7 @@
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
 	VERSIÓN	: <b><#selectbg_g>v6.0</#></b>
-	FECHA	: <b><#selectbg_g>16/02/2019</#></b>
+	FECHA	: <b><#selectbg_g>21/03/2019</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
@@ -11,7 +11,34 @@
 
 <b>CHANGELOG:</b>
 
-<u><b><#selectbg_g>MoRoKernel-O v0</#></b></u>
-0
+<u><b><#selectbg_g>MoRoKernel v6.0</#></b></u>
+<*>COMPATIBLE LINEAGE 15.1 & 16</*>
+<*>Base ELS 3.18.136</*>
+<*>Sources & ramdisk XXU3ERL3</*>
+<*>Corregido Reinicios Aleatorios</*>
+<*>4 Cores a MAX FREQ, seleccionable</*>
+<*>OC by ASV level</*>
+<*>MoRoSOund v2.0, con Ecualizador de 5 bandas</*>
+<*>Wake gestures: sweep2wake, doubletap2wake and sweep2sleep</*>
+<*>MTweaks 2.13.4</*>
+<*>A lot of CPU governors </*>
+<*>A lot of IO Shedulers</*>
+<*>GPU Freq: 112-806MHz</*>
+<*>Spectrum Support with profiles in sdcard/Spectrum/profiles</*>
+<*>Battery Store mode</*>
+<*>Voltage settings for CPU, GPU, Int, Mif, Dsip, Cam</*>
+<*>Battery settings</*>
+<*>USB charge to 900MHz</*>
+<*>PWMfree brightness control</*>
+<*>Knox 0x0 & SafetyNet with SuperSU and Magisk</*>
+<*>SuperSU 2.82SR5 + SuHide v1.09</*>
+<*>Magisk 18.1</*>
+<*>Powersuspend 4 modes, Autosleep, Userspace, LCD panel, Hybrid</*>
+<*>Wakelocks settings</*>
+<*>Boeffla Wakelock Settings</*>
+<*>SELinux Selectable Permissive</*>
+<*>Swap with LZ4 compression</*>
+<*>Led Settings</*>
+<*>Wireguard VPN compatible</*>
 
 

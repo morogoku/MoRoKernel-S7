@@ -1731,6 +1731,26 @@ static int ip_route_input_slow(struct sk_buff *skb, __be32 daddr, __be32 saddr,
 	if (res.type == RTN_BROADCAST)
 		goto brd_input;
 
+	/* RFC 1122 3.3.6:
+	 *
+	 *   When a host sends a datagram to a link-layer broadcast address,
+	 *   the IP destination address MUST be a legal IP broadcast or IP
+	 *   multicast address.
+	 *
+	 *   A host SHOULD silently discard a datagram that is received via
+	 *   a link-layer broadcast (see Section 2.4) but does not specify
+	 *   an IP multicast or broadcast destination address.
+	 *
+	 * This doesn't explicitly say L2 *broadcast*, but broadcast is in a
+	 * way a form of multicast and the most common use case for this is
+	 * 802.11 protecting against cross-station spoofing (the so-called
+	 * "hole-196" attack) so do it for both.
+	 */
+	if (IN_DEV_CONF_GET(in_dev, DROP_UNICAST_IN_L2_MULTICAST) &&
+	    (skb->pkt_type == PACKET_BROADCAST ||
+	     skb->pkt_type == PACKET_MULTICAST))
+		goto e_inval;
+
 	if (res.type == RTN_LOCAL) {
 		err = fib_validate_source(skb, saddr, daddr, tos,
 					  0, dev, in_dev, &itag);

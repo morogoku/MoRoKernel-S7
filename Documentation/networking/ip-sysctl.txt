@@ -1145,6 +1145,12 @@ delon.nicolas@wanadoo.fr
 
 
 
+drop_gratuitous_arp - BOOLEAN
+	Drop all gratuitous ARP frames, for example if there's a known
+	good ARP proxy on the network and such frames need not be used
+	(or in the case of 802.11, must not be used to prevent attacks.)
+	Default: off (0)
+
 
 /proc/sys/net/ipv6/* Variables:
 

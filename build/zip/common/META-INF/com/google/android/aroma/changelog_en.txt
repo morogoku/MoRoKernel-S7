@@ -2,14 +2,18 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSION	: <b><#selectbg_g>v6.0.1</#></b>
-	DATE	: <b><#selectbg_g>22/03/2019</#></b>
+	VERSION	: <b><#selectbg_g>v6.0.2</#></b>
+	DATE	: <b><#selectbg_g>23/03/2019</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel v6.0.2</#></b></u>
+<*>MTweaks 2.13.5</*>
+<*>Fix drop_unicast_in_l2_multicast</*>
 
 <u><b><#selectbg_g>MoRoKernel v6.0.1</#></b></u>
 <*>Remove OC by ASV Level</*>

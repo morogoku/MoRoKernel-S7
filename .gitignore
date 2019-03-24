@@ -9,7 +9,7 @@
 #
 # Normal rules
 #
-.*
+
 *.o
 *.o.*
 *.a
@@ -24,12 +24,6 @@
 *.order
 *.elf
 *.bin
-*.gz
-*.bz2
-*.lzma
-*.xz
-*.lz4
-*.lzo
 *.patch
 *.gcno
 modules.builtin

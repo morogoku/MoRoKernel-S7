@@ -1,0 +1,149 @@
+﻿### LICENSE:
+#
+# Copyright (C) 2011 Ahmad Amarullah ( http://amarullz.com/ )
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+### LANGUAGE STRING RESOURCE FILE
+#
+#   Language  : English
+#   By        : amarullz
+#
+
+#
+#--- COMMON SYSTEM STRING RESOURCE
+#
+text_ok=OK
+text_next=Next >
+text_back=< Back
+text_yes=Yes
+text_no=No
+text_about=About 
+text_calibrating=Calibrating Tools
+text_quit=Quit Installation
+text_quit_msg=Are you sure to quit the installer?
+text_finish=Finish
+
+#
+#-- CUSTOM STRING RESOURCE
+#
+common.for=for
+
+langtest.title=Language Test
+langtest.multiline=This text is located in langs/en.lang\
+Use backslash before enter to add new line\
+\
+You can also do <b>Formatting</b> inside the language string resource.\
+\
+Thanks for choosing 
+
+#-- End of string without any backslash for multiline text
+
+
+themes.title=Select Theme
+themes.desc=Please select installer theme that you want to use in this installation test:
+
+# Welcome
+welcome.title=Welcome
+welcome.text1=You are about to Installing
+welcome.text2= KERNEL INFORMATION
+welcome.text3=ONLY FOR
+welcome.text4=Installation of the <b>MoRokernel</b> for <b>Galaxy S8</b>.
+welcome.version=VERSION
+welcome.codename=CODENAME
+welcome.updated=UPDATED
+welcome.date=DATE
+welcome.author=AUTHOR
+welcome.next=Press Next...
+
+terms.title=Terms and Conditions
+terms.desc=Please read carefully The Terms and Conditions Below.
+terms.check=I Agree with this Terms and Conditions...
+terms.confirm=Please check the agreement...
+
+# Changelog
+changelog.title=CHANGELOG
+changelog.desc=Instalation of <b>MoRoKernel</b> for <b>Galaxy S9.</b>
+
+# Instalacion
+menu.title=MoRoKernel Instalation
+menu.desc=Along with the installation of the kernel choose the desired options, type of root, app, etc.\
+The marked options are recommended.
+menu.group1=Root Options
+menu.1=Without root
+menu.1desc=Recommended if you are installing another type of root on your own.
+menu.2=Magisk 19.3 (19200)3
+menu.2desc=Magisk Manager with Root integrated.
+menu.5=SuperSU 2.82-SR5 + SuHide 1.09
+menu.5desc=Famous Root of Chainfire.
+menu.group2=Other options
+menu.3=MTweaks v2.14.0
+menu.3desc=Application for kernel management
+menu.4=Busybox
+menu.4desc=Busybox 1.27.2\
+Necessary. Uncheck only if you have a higher version.
+menu.6=Spectrum
+menu.6desc=Simple app for the management of 4 predefined profiles, Balanced, Battery, Performance and Gaming.
+menu.7=Delete root data
+menu.7desc=Data and app will be deleted from the previous root. Recommended for clean installation.
+menu.8=Recovery TWRP 3.2.3-0 Fixed
+menu.8desc=Updated by Tkkg1994. Necessary for the kernel.
+menu.9=Fix Private Mode (Stock Roms)
+menu.9desc=Only with S7 Stock based Roms
+menu.10=Spectrum Profiles
+menu.10desc=Copy in sdcard/Spectrum/profiles
+
+# Sin Root
+stock.title=Without root
+stock.desc=Do you want to clean the remains of the previous root?
+stock.group=Clean Root
+stock.1=No
+stock.1desc=Apps and root data will not be deleted.
+stock.2=Yess
+stock.2desc=The apps of Magisk and Supersu, and any Root rest will be deleted.
+
+# Magisk App
+magisk.title=Magisk
+magisk.desc=Do you want to delete data from Magisk?
+magisk.group=Magisk
+magisk.1=No
+magisk.1desc=Leave the current configuration of Magisk.
+magisk.2=Yes
+magisk.2desc=Erase data from Magisk and do clean installation.
+
+# Confirmar
+confirm.1=CONFIRM
+confirm.2=PRESS <b>Back</b> IF YOU WANT TO MAKE SOME CHANGE
+confirm.3=PRESS <b>Next</b> TO CONTINUE AND START THE INSTALATION
+
+# Instalación
+inst.1=INSTALACION
+inst.2=Please wait while the installation is complete 
+inst.3=INSTALLATION COMPLETED
+inst.4=PRESS <b>Next</b> TO CONTINUE
+
+# Final
+final.1=INSTALATION COMPLETED
+final.2=<b>MoRoKERNEL</b> IS INSTALLED IN YOUR PHONE
+final.3=REBOOT DEVICE
+final.4=TAP FINISH, AND REBOOT YOUR DEVICE.\
+\
+THANKS!
+
+# Abort
+abort.1=INSTALATION ABORTED
+abort.2=SORRY, <b>MoRoKernel</b> HAS NOT BEEN INSTALLED BECAUSE OF AN INCOMPATIBILITY.
+abort.4=TAP FINISH, AND CHANGE THE KERNEL FOR ONE COMPATIBLE.\
+\
+THANKS!
+

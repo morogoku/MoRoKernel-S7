@@ -1,0 +1,16 @@
+	
+<b>INFORMACIÓN DEL KERNEL:</b>
+
+	NOMBRE	: <b><#selectbg_g>MoRoKernel S7</#></b>	
+	VERSIÓN	: <b><#selectbg_g>v0</#></b>
+	FECHA	: <b><#selectbg_g>21/03/2019</#></b>
+	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
+
+	<#f00><b>SOLO PARA Galaxy S7</b></#>
+
+
+<b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel v0</#></b></u>
+
+

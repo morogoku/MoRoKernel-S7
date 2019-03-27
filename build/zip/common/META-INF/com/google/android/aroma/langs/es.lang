@@ -1,0 +1,133 @@
+﻿### LICENSE:
+#
+# Copyright (C) 2011 Ahmad Amarullah ( http://amarullz.com/ )
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+### LANGUAGE STRING RESOURCE FILE
+#
+#   Language  : Espanol
+#   By        : morogoku
+#
+
+#
+#--- COMMON SYSTEM STRING RESOURCE
+#
+text_ok=Aceptar
+text_next=Siguiente
+text_back=Atrás
+text_yes=Sí
+text_no=No
+text_about=Acerca de
+text_calibrating=Calibrar pantalla
+text_quit=Salir de la instalación
+text_quit_msg=¿Seguro que quieres salir?
+text_finish=Finalizar
+
+#
+#-- CUSTOM STRING RESOURCE
+#
+common.for=para
+
+langtest.title=Prueba de Lenguaje
+langtest.multiline=Este texto está en langs/es.lang\
+Usa la barra invertida al final del texto para marcar el salto de línea\
+\
+También puedes aplicar <b>Formato</b> al texto.\
+\
+Gracias por usar AROMA Installer
+
+#-- End of string without any backslash for multiline text
+
+
+themes.title=Selecciona un Tema
+themes.desc=Por favor, selecciona el tema gráfico que quieres usar en esta prueba de instalación:
+
+
+# Changelog
+changelog.title=Bienvenido
+changelog.desc=Instalación del <b>MoRoKernel</b> para <b>Galaxy S9.</b>
+
+# Instalacion
+menu.title=Instalación MoRoKernel
+menu.desc=Junto con la instalación del kernel elija las opciones deseadas, tipo de root, app, etc.\
+Las opciones marcadas son las recomendadas.
+menu.group1=Opciones de Root
+menu.1=Sin Root
+menu.1desc=Recomendado si va a instalar otro tipo de root por su cuenta.
+menu.2=Magisk 19.3 (19300)
+menu.2desc=Magisk Manager con Root integrado
+menu.5=SuperSU 2.82-SR5 + SuHide 1.09
+menu.5desc=Famoso root de Chainfire.
+menu.group2=Otras opciones
+menu.3=MTweaks v2.14.0
+menu.3desc=Aplicación para la gestión del kernel
+menu.4=Busybox
+menu.4desc=Busybox 1.27.2\
+Imprescindible. Desmárquela solo si tiene una versión superior.
+menu.6=Spectrum
+menu.6desc=Sencilla app para la gestion de 4 perfiles ya predefinidos, Balanced, Battery, Performance y Gaming.
+menu.7=Borrar datos root
+menu.7desc=Se borrarán datos y app del root anterior. Recomendable para instalacion limpia.
+menu.8=Recovery TWRP 3.2.3-0 Fixed
+menu.8desc=Actualizado por Tkkg1994. Necesario para el kernel.
+menu.9=Fix Modo Privado (Stock Roms)
+menu.9desc=Solo con Roms basadas en S7 Stock.
+menu.10=Perfiles Spectrum
+menu.10desc=Copiar en sdcard/Spectrum/profiles
+
+# Sin Root
+stock.title=Sin Root
+stock.desc=Desea limpiar los restos del root anterior?
+stock.group=Limpiar Root
+stock.1=No
+stock.1desc=No se borrarán apps Magisk o Supersu
+stock.2=Si
+stock.2desc=Se borraran las apps de Magisk y Supersu, y cualquier resto Root
+
+# Magisk App
+magisk.title=APPs Magisk
+magisk.desc=Quiere borrar datos de Magisk?
+magisk.group=Magisk
+magisk.1=No
+magisk.1desc=Dejar la configuracion actual de Magisk.
+magisk.2=Si
+magisk.2desc=Borrar datos de Magisk y hacer instalacion limpia.
+
+# Confirmar
+confirm.1=CONFIRMAR
+confirm.2=PULSE <b>Atras</b> SI DESEA REALIZAR ALGUN CAMBIO
+confirm.3=PULSE <b>Siguiente</b> PARA CONTINUAR Y EMPEZAR LA INSTALACION
+
+# Instalación
+inst.1=INSTALACION
+inst.2=Espere mientras finaliza la instalación 
+inst.3=INSTALACION FINALIZADA
+inst.4=PULSE <b>Siguiente</b> PARA CONTINUAR
+
+# Final
+final.1=INSTALACION COMPLETADA
+final.2=<b>MoRoKERNEL</b> ESTA AHORA INSTALADA EN SU TELEFONO
+final.3=REINICIAR DISPOSITIVO
+final.4=PULSE FINALIZAR Y REINICIE EL DISPOSITIVO\
+\
+GRACIAS!
+
+# Abort
+abort.1=INSTALACION ABORTADA
+abort.2=LO SIENTO, <b>MoRoKernel</b> NO SE HA INSTALADO DEBIDO A UNA INCOMPATIBILIDAD.
+abort.4=PULSE FINALIZAR, Y CAMBIE EL KERNEL POR UNO COMPATIBLE.\
+\
+GRACIAS!
+
+

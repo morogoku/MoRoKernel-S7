@@ -1,0 +1,174 @@
+#########
+#
+# LICENSE:
+# Copyright (C) 2011 Ahmad Amarullah ( http://amarullz.com/ )
+# Initializing Rom Information
+#
+
+#########################################################################################
+# Inicio
+#
+# Configuracion pantalla
+ini_set("dp",				"8");
+ini_set("force_colorspace", "rgba");
+
+# Splash
+# splash(4000,"splash/splash");
+
+# Options
+writetmpfile("abort.prop","abort =0");
+
+##
+# Show Animated Splash
+#
+anisplash(
+  #-- Number of Loop
+    2,
+  
+  #-- Frame 1 [ Image, duration in millisecond ]. <AROMA Resource Dir>/splash/a[1..6].png
+    "splash/1", 500,
+    "splash/2", 50,
+    "splash/1", 50,
+    "splash/2", 50,
+    "splash/1", 50,
+    "splash/3", 500,
+    "splash/1", 100,
+    "splash/3", 50,
+    "splash/1", 50,
+    "splash/4", 50,
+    "splash/2", 50,
+    "splash/3", 500,
+    "splash/4", 50,
+    "splash/3", 50,
+    "splash/4", 50,
+    "splash/3", 50
+);
+
+# Fuentes
+fontresload( "0", "ttf/Prototype.ttf;", "12" );
+fontresload( "1", "ttf/Prototype.ttf;", "14" );
+
+# Tema
+theme("miui4");
+#theme("Nikhil");
+
+
+#########################################################################################
+# INICIO OPCIONES
+#########################################################################################
+
+###
+# Seleccion de idioma
+# 
+selectbox(
+    "IDIOMA / LANGUAGE",
+    "Seleccione el idioma  que desea para el instalador
+Select the language you want for the installer",
+    "@default",
+    "lang.prop",
+  
+    "Español",	"Bienvenido al instalador",	1,	#-- selected.0 = 1
+    "English",	"Welcome to Installer
+Sorry for my bad English ;)",			0	#-- selected.0 = 2
+ 		
+);
+
+if prop("lang.prop","selected.0")=="1" then
+	loadlang("langs/es.lang");
+	setvar("changelog", "changelog_es.txt");
+endif;
+if prop("lang.prop","selected.0")=="2" then
+	loadlang("langs/en.lang");
+	setvar("changelog", "changelog_en.txt");
+endif;
+
+
+###
+# Changelog
+#
+
+textbox(
+	"<~changelog.title>",
+	"<~changelog.desc>",
+	"@welcome",
+	resread(getvar("changelog"))
+);
+
+
+###
+# Instalacion
+#
+
+form(
+	"<~menu.title>",
+	"<~menu.desc>",
+	"@personalize",
+	"menu.prop",
+
+	"group1",     "<b><~menu.group1></b>",  "",                     	"group",
+	  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
+	  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
+	"group2",     "<b><~menu.group2></b>",  "",                     	"group",
+	  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
+	  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
+);
+
+
+#########################################################################################
+# Confirmar
+#
+
+viewbox(
+	"<~confirm.1>",
+	"\n\n<~confirm.2>\n\n"+
+	"<~confirm.3>",
+	"@flashing"
+);
+
+
+#########################################################################################
+# Instalacion
+#
+
+setvar("retstatus",
+	install(
+		"<~inst.1>",
+		"<b>"+ini_get("rom_name")+"</b>\n"+
+		"<~inst.2>",	
+		"@install",	
+		"<~inst.3>\n"+
+		"<~inst.4>"
+	)
+);
+
+
+#########################################################################################
+# Final
+#
+
+
+#set Next text fo Finish
+ini_set("text_next", "<~text_finish>");
+
+
+if (prop("abort.prop","abort")=="1") then
+	viewbox(
+		"",
+		"<#selectbg_g><b><~abort.1></b></#>\n\n"+
+		"<~abort.2>\n\n"+
+		"<~abort.4>",
+		"@alert"
+	);
+else
+	viewbox(
+		"",
+		"<#selectbg_g><b><~final.1></b></#>\n\n"+
+		"<~final.2>\n\n"+
+		"<~final.4>",
+		"@welcome"
+	);
+endif;
+
+
+
+

@@ -247,11 +247,9 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # "make" in the configured kernel build directory always uses that.
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
-#ARCH		?= $(SUBARCH)
-#CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
-ARCH            ?= arm64
-CROSS_COMPILE   ?= ../PLATFORM/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-#CROSS_COMPILE   ?= /opt/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+ARCH		?= $(SUBARCH)
+CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
+
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -413,7 +411,6 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -Werror \
 		   -std=gnu89
 
 KBUILD_AFLAGS_KERNEL :=
@@ -484,6 +481,7 @@ asm-generic:
 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.asm-generic \
 	            src=uapi/asm obj=arch/$(SRCARCH)/include/generated/uapi/asm
 
+PLATFORM_VERSION=$(BUILD_PLATFORM_VERSION)
 ifneq ($(PLATFORM_VERSION), )
 PLATFORM_VERSION_NUMBER=$(shell $(CONFIG_SHELL) $(srctree)/scripts/android-version.sh $(PLATFORM_VERSION))
 MAJOR_VERSION=$(shell $(CONFIG_SHELL) $(srctree)/scripts/android-major-version.sh $(PLATFORM_VERSION))
@@ -497,6 +495,7 @@ else
 export ANDROID_VERSION=990000
 KBUILD_CFLAGS += -DANDROID_VERSION=990000
 endif
+
 PHONY += replace_dirs
 replace_dirs:
 ifneq ($(PLATFORM_VERSION), )

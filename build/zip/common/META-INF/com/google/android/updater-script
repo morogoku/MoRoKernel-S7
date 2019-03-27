@@ -1,0 +1,40 @@
+#
+# MoRoKernel Aroma Installer
+# by Morogoku
+#
+
+ui_print("***********************************************");
+ui_print("* MoRoKernel Pie Port Kernel");
+ui_print("* For Samsung Galaxy S7");
+ui_print("* Developed by MoroGoku");
+ui_print("* https://www.espdroids.com");
+ui_print("***********************************************");
+
+# Copy scripts
+package_extract_dir("moro", "/tmp/moro");
+set_perm_recursive(0, 0, 0777, 0777, "/tmp/moro");
+
+
+# Prepare partitions
+ui_print(" ");
+ui_print("@Mounting Partitions");
+ifelse(is_mounted("/system"), unmount("/system"));
+ifelse(is_mounted("/data"), unmount("/data"));
+run_program("/sbin/mount", "/system");
+run_program("/sbin/mount", "/data");
+
+
+# Run install script
+run_program("/tmp/moro/install_kernel.sh");
+
+
+ui_print(" ");
+ui_print("@Unmounting Partitions");
+delete_recursive("/tmp/moro");
+ifelse(is_mounted("/system"), unmount("/system"));
+
+
+ui_print(" ");
+ui_print("** Done **");
+ui_print(" ");
+

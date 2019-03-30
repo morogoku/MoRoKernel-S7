@@ -1,0 +1,8 @@
+
+#
+# OREO Stock
+#
+# CONFIG_WLAN_GRACE is not set
+CONFIG_CAMERA_HERO=y
+# CONFIG_CAMERA_GRACE is not set
+CONFIG_DDK_VERSION_OS="o"

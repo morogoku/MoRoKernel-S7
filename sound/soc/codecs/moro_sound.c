@@ -4,6 +4,7 @@
  * Author	: @morogoku https://github.com/morogoku
  * 
  * Date		: March 2019 - v2.0
+ *		: April 2019 - v2.1
  *
  *
  * Based on the Boeffla Sound 1.6 for Galaxy S3
@@ -521,6 +522,18 @@ static ssize_t headphone_gain_store(struct device *dev, struct device_attribute 
 	if (ret != 2)
 		return -EINVAL;
 
+	if (val_l < HEADPHONE_MIN)
+		val_l = HEADPHONE_MIN;
+
+	if (val_l > HEADPHONE_MAX)
+		val_l = HEADPHONE_MAX;
+
+	if (val_r < HEADPHONE_MIN)
+		val_r = HEADPHONE_MIN;
+
+	if (val_r > HEADPHONE_MAX)
+		val_r = HEADPHONE_MAX;
+
 	// store new values
 	headphone_gain_l = val_l;
 	headphone_gain_r = val_r;
@@ -534,6 +547,12 @@ static ssize_t headphone_gain_store(struct device *dev, struct device_attribute 
 		printk("Moro-sound: headphone volume L=%d R=%d\n", headphone_gain_l, headphone_gain_r);
 
 	return count;
+}
+
+static ssize_t headphone_limits_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+	// return version information
+	return sprintf(buf, "Min:%d\nMax:%d\nDef:%d\n", HEADPHONE_MIN, HEADPHONE_MAX, HEADPHONE_DEFAULT);
 }
 
 
@@ -561,6 +580,12 @@ static ssize_t earpiece_gain_store(struct device *dev, struct device_attribute *
 	if (ret != 1)
 		return -EINVAL;
 
+	if (val < EARPIECE_MIN)
+		val = EARPIECE_MIN;
+
+	if (val > EARPIECE_MAX)
+		val = EARPIECE_MAX;
+
 	// store new values
 	earpiece_gain = val;
 
@@ -572,6 +597,12 @@ static ssize_t earpiece_gain_store(struct device *dev, struct device_attribute *
 		printk("Moro-sound: earpiece volume: %d\n", earpiece_gain);
 
 	return count;
+}
+
+static ssize_t earpiece_limits_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+	// return version information
+	return sprintf(buf, "Min:%d\nMax:%d\nDef:%d\n", EARPIECE_MIN, EARPIECE_MAX, EARPIECE_DEFAULT);
 }
 
 
@@ -612,6 +643,12 @@ static ssize_t speaker_gain_store(struct device *dev, struct device_attribute *a
 		printk("Moro-sound: speaker volume: %d\n", speaker_gain);
 
 	return count;
+}
+
+static ssize_t speaker_limits_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+	// return version information
+	return sprintf(buf, "Min:%d\nMax:%d\nDef:%d\n", SPEAKER_MIN, SPEAKER_MAX, SPEAKER_DEFAULT);
 }
 
 
@@ -1017,8 +1054,11 @@ static ssize_t version_show(struct device *dev, struct device_attribute *attr, c
 // define objects
 static DEVICE_ATTR(moro_sound, 0664, moro_sound_show, moro_sound_store);
 static DEVICE_ATTR(headphone_gain, 0664, headphone_gain_show, headphone_gain_store);
+static DEVICE_ATTR(headphone_limits, 0664, headphone_limits_show, NULL);
 static DEVICE_ATTR(earpiece_gain, 0664, earpiece_gain_show, earpiece_gain_store);
+static DEVICE_ATTR(earpiece_limits, 0664, earpiece_limits_show, NULL);
 static DEVICE_ATTR(speaker_gain, 0664, speaker_gain_show, speaker_gain_store);
+static DEVICE_ATTR(speaker_limits, 0664, speaker_limits_show, NULL);
 static DEVICE_ATTR(eq, 0664, eq_show, eq_store);
 static DEVICE_ATTR(eq_gains, 0664, eq_gains_show, eq_gains_store);
 static DEVICE_ATTR(eq_b1_gain, 0664, eq_b1_gain_show, eq_b1_gain_store);
@@ -1034,8 +1074,11 @@ static DEVICE_ATTR(reg_dump, 0664, reg_dump_show, NULL);
 static struct attribute *moro_sound_attributes[] = {
 	&dev_attr_moro_sound.attr,
 	&dev_attr_headphone_gain.attr,
+	&dev_attr_headphone_limits.attr,
 	&dev_attr_earpiece_gain.attr,
+	&dev_attr_earpiece_limits.attr,
 	&dev_attr_speaker_gain.attr,
+	&dev_attr_speaker_limits.attr,
 	&dev_attr_eq.attr,
 	&dev_attr_eq_gains.attr,
 	&dev_attr_eq_b1_gain.attr,

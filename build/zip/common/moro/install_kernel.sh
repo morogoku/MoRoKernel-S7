@@ -92,6 +92,7 @@ set_progress 0.35
 ## PATCH SYSTEM
 ui_print " "
 ui_print "@Patching system and vendor libs"
+rm -Rf /system/vendor/etc/wifi
 cp -rf system/. /system
 
 

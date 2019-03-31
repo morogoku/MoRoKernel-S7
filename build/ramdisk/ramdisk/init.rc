@@ -650,6 +650,9 @@ on post-fs-data
     mkdir /data/wifi/ 0770 system root
 
     # for WIFI Antenna
+    # Hotspot
+    write /data/vendor/conn/.softap.info 0
+
     write /data/misc/conn/.wificable.info E
     chown system root /data/misc/conn/.wificable.info
     chmod 0666 /data/misc/conn/.wificable.info

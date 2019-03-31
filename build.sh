@@ -29,7 +29,7 @@ DEFCONFIG=moro_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
-export K_VERSION="v0"
+export K_VERSION="v1r05"
 export K_BASE="NFEPort-CSC4"
 export K_NAME="MoRoKernel"
 export REVISION="RC"

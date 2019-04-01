@@ -29,7 +29,7 @@ DEFCONFIG=moro_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
-export K_VERSION="v1r05"
+export K_VERSION="v1.0"
 export K_BASE="NFEPort-CSC4"
 export K_NAME="MoRoKernel"
 export REVISION="RC"
@@ -224,7 +224,7 @@ if [ $prompt == "1" ]; then
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     ZIP=yes
-    ZIP_NAME=$K_NAME-$MODEL-P-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-$MODEL-NFEPort-$K_VERSION.zip
     MAIN
 	
 elif [ $prompt == "2" ]; then
@@ -234,7 +234,7 @@ elif [ $prompt == "2" ]; then
     MODEL=G935
     KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
     ZIP=yes
-    ZIP_NAME=$K_NAME-$MODEL-P-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-$MODEL-NFEPort-$K_VERSION.zip
     MAIN
 	
 elif [ $prompt == "3" ]; then
@@ -249,7 +249,7 @@ elif [ $prompt == "3" ]; then
     MODEL=G930
     KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
     ZIP=yes
-    ZIP_NAME=$K_NAME-G93X-P-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-G93X-NFEPort-$K_VERSION.zip
     MAIN
 fi
 

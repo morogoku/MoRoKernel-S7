@@ -1,9 +1,9 @@
 	
 <b>INFORMACIÓN DEL KERNEL:</b>
 
-	NOMBRE	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v0</#></b>
-	FECHA	: <b><#selectbg_g>21/03/2019</#></b>
+	NOMBRE	: <b><#selectbg_g>MoRoKernel S7 NFE Port</#></b>	
+	VERSIÓN	: <b><#selectbg_g>v1.0</#></b>
+	FECHA	: <b><#selectbg_g>02/04/2019</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
@@ -11,6 +11,29 @@
 
 <b>CHANGELOG:</b>
 
-<u><b><#selectbg_g>MoRoKernel v0</#></b></u>
-
+<u><b><#selectbg_g>MoRoKernel v1.0</#></b></u>
+<*>Sources Pie Note 7 FE N935FXXU4CSC4</*>
+<*>Wifi fixed</*>
+<*>Hot-Spot fixed</*>
+<*>Game Launcher fixed</*>
+<*>4 Cores to MAX FREQ, selectable</*>
+<*>MoRoSOund v2.1, with 5 bands Equalizer</*>
+<*>Wake gestures: sweep2wake, doubletap2wake and sweep2sleep</*>
+<*>MTweaks 2.13.5</*>
+<*>A lot of CPU governors </*>
+<*>A lot of IO Shedulers</*>
+<*>GPU Freq: 112-806MHz</*>
+<*>Battery Store mode</*>
+<*>Voltage settings for CPU, GPU, Int, Mif, Dsip, Cam</*>
+<*>Battery settings</*>
+<*>USB charge to 900MHz</*>
+<*>PWMfree brightness control</*>
+<*>Magisk 19</*>
+<*>Powersuspend 4 modes, Autosleep, Userspace, LCD panel, Hybrid</*>
+<*>Wakelocks settings</*>
+<*>Boeffla Wakelock Settings</*>
+<*>SELinux Selectable Permissive</*>
+<*>Swap with LZ4 compression</*>
+<*>Led Settings</*>
+<*>Wireguard VPN compatible</*>
 

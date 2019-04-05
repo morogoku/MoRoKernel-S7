@@ -87,7 +87,7 @@ menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09
 menu.5desc=Famous Root of Chainfire.
 menu.group2=Other options
-menu.3=MTweaks v2.9.2
+menu.3=MTweaks v2.14.0
 menu.3desc=Application for kernel management\
 Kernel Adiutor Mod for Exynos.
 menu.4=Busybox

@@ -2,14 +2,19 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSION	: <b><#selectbg_g>v4.6</#></b>
-	DATE	: <b><#selectbg_g>17/09/2018</#></b>
+	VERSION	: <b><#selectbg_g>v4.7</#></b>
+	DATE	: <b><#selectbg_g>05/04/2019</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel-O v4.7</#></b></u>
+<*>Magisk 19</*>
+<*>MTweaks 3.14.0</*>
+<*>MoroSound v2.1</*>
 
 <u><b><#selectbg_g>MoRoKernel-O v4.6</#></b></u>
 <*>Linux 3.18.122</*>

@@ -132,7 +132,11 @@ static int __init console_setup(char *str)
 	
 	return 0;
 }
+#if defined(CONFIG_MODEL_GRACELTE) || defined(CONFIG_MODEL_GRACELTEKOR)
 __setup("androidboot.revision=", console_setup);
+#else
+__setup("androidboot.hw_rev=", console_setup);
+#endif
 #else
 static int get_system_rev(struct device_node *np)
 {

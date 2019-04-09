@@ -2,8 +2,8 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7 NFE Port</#></b>	
-	VERSION	: <b><#selectbg_g>v1.0</#></b>
-	DATE	: <b><#selectbg_g>02/04/2019</#></b>
+	VERSION	: <b><#selectbg_g>v1.1</#></b>
+	DATE	: <b><#selectbg_g>09/04/2019</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
@@ -11,7 +11,13 @@
 
 <b>CHANGELOG:</b>
 
-<u><b><#selectbg_g>MoRoKernel v0</#></b></u>
+<u><b><#selectbg_g>MoRoKernel v1.1</#></b></u>
+<*>Fix Camera all modes, all sensors</*>
+<*>Spectrum support, with profiles in sdcard</*>
+<*>Clean some log errors</*>
+<*>MTweaks 2.14.0</*>
+
+<u><b><#selectbg_g>MoRoKernel v1.0</#></b></u>
 <*>Sources Pie Note 7 FE N935FXXU4CSC4</*>
 <*>Wifi fixed</*>
 <*>Hot-Spot fixed</*>

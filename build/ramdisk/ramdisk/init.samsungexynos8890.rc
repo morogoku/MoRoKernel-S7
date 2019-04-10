@@ -1106,7 +1106,7 @@ service apexserver /system/bin/apexserver
 	disabled
 
 # irisd
-service irisd /system/bin/irisd
-    class late_start
-    user system
-    group system
+#service irisd /system/bin/irisd
+#    class late_start
+#    user system
+#    group system

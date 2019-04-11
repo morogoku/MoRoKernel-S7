@@ -29,8 +29,9 @@ fi
 	echo " " >> $LOG
 
 	
-	# Stop secure_storage service
+	# Stop services
 	su -c "stop secure_storage"
+	su -c "stop irisd"
 
 
 	# Selinux permissive

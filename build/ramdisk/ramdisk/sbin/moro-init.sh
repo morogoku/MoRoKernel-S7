@@ -79,26 +79,33 @@ fi
 	fi
 
 	
+sleep 1
+
+
 	# Install APK
 	echo "## -- Start Install APK" >> $LOG
 	if [ ! -d $MORO_DIR/apk ]; then
 		mkdir -p $MORO_DIR/apk;
-		chown -R root.root $MORO_DIR/apk;
-		chmod 750 $MORO_DIR/apk;
 	fi
+	
+	chown -R root.root $MORO_DIR/apk;
+	chmod 777 $MORO_DIR/apk;
 
 	if [ "$(ls -A /$MORO_DIR/apk)" ]; then
 		cd $MORO_DIR/apk
 		chmod 777 *;
 		for apk in *.apk; do
 			echo "## Install $apk" >> $LOG
-			pm install -r $apk;
+			su -c "pm install -r -g --user 0 $apk"
 			rm $apk
 		done;
 	else
 		echo "## No files found" >> $LOG
 	fi
 	echo "## -- End Install APK" >> $LOG
+	
+
+sleep 1
 
 
 	# Init.d support
@@ -107,7 +114,7 @@ fi
 	    	mkdir -p /system/etc/init.d;
 	fi
 
-    	chown -R root.root /system/etc/init.d;
+	chown -R root.root /system/etc/init.d;
 	chmod 777 /system/etc/init.d;
 
 	if [ "$(ls -A /system/etc/init.d)" ]; then

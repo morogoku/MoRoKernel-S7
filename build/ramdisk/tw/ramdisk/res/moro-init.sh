@@ -1,17 +1,15 @@
 #!/system/bin/sh
 # 
-# Init MoRoKernel 2
+# Init MoRoKernel
 #
 
-OLD_LOG="/data/morokernel.log"
 MORO_DIR="/data/.morokernel"
 LOG="$MORO_DIR/morokernel.log"
 
 rm -f $LOG
-rm -f $OLD_LOG
 
 BB="/sbin/busybox"
-RESETPROP="/res/magisk resetprop -v -n"
+RESETPROP="/sbin/resetprop -v -n"
 
 
 # Mount
@@ -31,8 +29,9 @@ fi
 	echo " " >> $LOG
 
 	
-	# Stop secure_storage service
+	# Stop services
 	su -c "stop secure_storage"
+	su -c "stop irisd"
 
 
 	# Selinux permissive
@@ -45,28 +44,6 @@ fi
 	echo "## -- SafetyNet permissions" >> $LOG
 	chmod 640 /sys/fs/selinux/enforce
 	chmod 440 /sys/fs/selinux/policy
-	echo " " >> $LOG
-
-
-	# Fake Knox 0
-	echo "## -- Fake Knox 0" >> $LOG
-	$RESETPROP ro.boot.warranty_bit "0"
-	$RESETPROP ro.warranty_bit "0"
-	echo " " >> $LOG
-
-	
-	# Samsung related flags
-	echo "## -- Samsung Flags" >> $LOG
-	$RESETPROP ro.fmp_config "1"
-	$RESETPROP ro.boot.fmp_config "1"
-	$RESETPROP ro.boot.verifiedbootstate "green"
-	$RESETPROP ro.boot.veritymode "enforcing"
-	$RESETPROP ro.boot.flash.locked "1"
-	$RESETPROP ro.oem_unlock_supported "0"
-	$RESETPROP sys.oem_unlock_allowed "0"
-	$RESETPROP ro.debuggable "0"
-	$RESETPROP ro.secure "1"
-	#$RESETPROP ro.adb.secure "1"
 	echo " " >> $LOG
 
 
@@ -102,31 +79,18 @@ fi
 	fi
 
 	
-	# Suhide
-	if [ -d /data/adb/su/suhide ]; then
-		echo "## -- Start SUHide support" >> $LOG
-		if [ -f /data/adb/su/su.d/zz99suhide ]; then
-			rm -f /data/adb/su/su.d/zz99suhide
-		fi
-
-		sed -i '/supersu_prop/d' /plat_property_contexts
-		restorecon /plat_property_contexts
-		rm /init.supersu.rc
-		rm -rf /boot
-
-		/sbin/supersu/suhide/suhide
-		echo " " >> $LOG
-	fi
-	
-	
 	# Init.d support
 	echo "## -- Start Init.d support" >> $LOG
 	if [ ! -d /system/etc/init.d ]; then
 	    	mkdir -p /system/etc/init.d;
 	fi
 
-    	chown -R root.root /system/etc/init.d;
+	chown -R root.root /system/etc/init.d;
 	chmod 777 /system/etc/init.d;
+
+	# remove detach script
+	rm -f /system/etc/init.d/*detach* 2>/dev/null
+	rm -f /system/su.d/*detach* 2>/dev/null
 
 	if [ "$(ls -A /system/etc/init.d)" ]; then
 		chmod 777 /system/etc/init.d/*;
@@ -141,21 +105,22 @@ fi
 	echo "## -- End Init.d support" >> $LOG
 	echo " " >> $LOG
 
-
+	
 	# Install APK
 	echo "## -- Start Install APK" >> $LOG
 	if [ ! -d $MORO_DIR/apk ]; then
 		mkdir -p $MORO_DIR/apk;
-		chown -R root.root $MORO_DIR/apk;
-		chmod 750 $MORO_DIR/apk;
 	fi
+	
+	chown -R root.root $MORO_DIR/apk;
+	chmod 777 $MORO_DIR/apk;
 
 	if [ "$(ls -A /$MORO_DIR/apk)" ]; then
 		cd $MORO_DIR/apk
 		chmod 777 *;
 		for apk in *.apk; do
 			echo "## Install $apk" >> $LOG
-			pm install -r $apk >/dev/null;
+			su -c "pm install -r $apk"
 			rm $apk
 		done;
 	else

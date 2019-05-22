@@ -249,9 +249,6 @@ show_progress 0.34 -19000
 		sh /tmp/moro/moro_clean.sh com.topjohnwu.magisk -asd
 	fi
 
-	# Install apk
-	cp -rf /tmp/moro/magisk/magisk.apk /data/.morokernel/apk
-
 	ui_print "-- Rooting with Magisk Manager"
 	ui_print " "
 	$BB unzip /tmp/moro/magisk/magisk.zip META-INF/com/google/android/* -d /tmp/moro/magisk

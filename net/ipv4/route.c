@@ -488,13 +488,15 @@ EXPORT_SYMBOL(ip_idents_reserve);
 void __ip_select_ident(struct iphdr *iph, int segs)
 {
 	static u32 ip_idents_hashrnd __read_mostly;
+	static u32 ip_idents_hashrnd_extra __read_mostly;
 	u32 hash, id;
 
 	net_get_random_once(&ip_idents_hashrnd, sizeof(ip_idents_hashrnd));
+	net_get_random_once(&ip_idents_hashrnd_extra, sizeof(ip_idents_hashrnd_extra));
 
 	hash = jhash_3words((__force u32)iph->daddr,
 			    (__force u32)iph->saddr,
-			    iph->protocol,
+			    iph->protocol ^ ip_idents_hashrnd_extra,
 			    ip_idents_hashrnd);
 	id = ip_idents_reserve(hash, segs);
 	iph->id = htons(id);
@@ -1152,11 +1154,39 @@ static struct dst_entry *ipv4_dst_check(struct dst_entry *dst, u32 cookie)
 	return dst;
 }
 
+static void ipv4_send_dest_unreach(struct sk_buff *skb)
+{
+	struct ip_options opt;
+	int res;
+
+	/* Recompile ip options since IPCB may not be valid anymore.
+	 * Also check we have a reasonable ipv4 header.
+	 */
+	if (!pskb_network_may_pull(skb, sizeof(struct iphdr)) ||
+	    ip_hdr(skb)->version != 4 || ip_hdr(skb)->ihl < 5)
+		return;
+
+	memset(&opt, 0, sizeof(opt));
+	if (ip_hdr(skb)->ihl > 5) {
+		if (!pskb_network_may_pull(skb, ip_hdr(skb)->ihl * 4))
+			return;
+		opt.optlen = ip_hdr(skb)->ihl * 4 - sizeof(struct iphdr);
+
+		rcu_read_lock();
+		res = __ip_options_compile(dev_net(skb->dev), &opt, skb, NULL);
+		rcu_read_unlock();
+
+		if (res)
+			return;
+	}
+	__icmp_send(skb, ICMP_DEST_UNREACH, ICMP_HOST_UNREACH, 0, &opt);
+}
+
 static void ipv4_link_failure(struct sk_buff *skb)
 {
 	struct rtable *rt;
 
-	icmp_send(skb, ICMP_DEST_UNREACH, ICMP_HOST_UNREACH, 0);
+	ipv4_send_dest_unreach(skb);
 
 	rt = skb_rtable(skb);
 	if (rt)

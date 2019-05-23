@@ -91,6 +91,7 @@ out_poc_erase:
 
 }
 
+
 extern int poc_read_data(struct panel_private *panel, u8 *buf, u32 addr, u32 len)
 {
 	struct panel_poc_device *poc_dev = &panel->poc_dev;

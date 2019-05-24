@@ -2,14 +2,23 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel-Oreo</#></b>	
-	VERSION	: <b><#selectbg_g>v6.0.2</#></b>
-	DATE	: <b><#selectbg_g>23/03/2019</#></b>
+	VERSION	: <b><#selectbg_g>v6.1.0</#></b>
+	DATE	: <b><#selectbg_g>25/05/2019</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel v6.1.0</#></b></u>
+<*>G93xFXXU5ESD2 Samsung sources</*>
+<*>Ramdisk G93xFXXU5ESD2</*>
+<*>Linux 3.18.140</*>
+<*>Magisk 19.2</*>
+<*>Busybox 1.30.1 in /sbin</*>
+<*>Stock Freqs on Spectrum Balanced profile</*>
+<*>MoroSound 2.1.1</*>
 
 <u><b><#selectbg_g>MoRoKernel v6.0.2</#></b></u>
 <*>MTweaks 2.13.5</*>

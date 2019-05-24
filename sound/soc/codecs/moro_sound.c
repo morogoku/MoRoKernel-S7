@@ -153,7 +153,7 @@ static void set_out1l_mix_source(int value)
 
 	moon_read(ARIZONA_OUT1LMIX_INPUT_1_SOURCE, &val);
 	val &= ~ARIZONA_MIXER_SOURCE_MASK;
-	val |= (out1l_mix_source << ARIZONA_MIXER_SOURCE_SHIFT);
+	val |= (value << ARIZONA_MIXER_SOURCE_SHIFT);
 	moon_write(ARIZONA_OUT1LMIX_INPUT_1_SOURCE, val);
 }
 
@@ -483,8 +483,11 @@ static ssize_t moro_sound_store(struct device *dev, struct device_attribute *att
 				first = 0;
 			}
 
-			if(val == 1) update_audio_hub();
-			if(val == 0) reset_audio_hub();
+			if(val == 1) {
+				update_audio_hub();
+			} else {
+				reset_audio_hub();
+			}
 		}
 
 		// print debug info
@@ -552,7 +555,7 @@ static ssize_t headphone_gain_store(struct device *dev, struct device_attribute 
 static ssize_t headphone_limits_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	// return version information
-	return sprintf(buf, "Min:%d\nMax:%d\nDef:%d\n", HEADPHONE_MIN, HEADPHONE_MAX, HEADPHONE_DEFAULT);
+	return sprintf(buf, "Min:%u Max:%u Def:%u\n", HEADPHONE_MIN, HEADPHONE_MAX, HEADPHONE_DEFAULT);
 }
 
 
@@ -602,7 +605,7 @@ static ssize_t earpiece_gain_store(struct device *dev, struct device_attribute *
 static ssize_t earpiece_limits_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	// return version information
-	return sprintf(buf, "Min:%d\nMax:%d\nDef:%d\n", EARPIECE_MIN, EARPIECE_MAX, EARPIECE_DEFAULT);
+	return sprintf(buf, "Min:%u Max:%u Def:%u\n", EARPIECE_MIN, EARPIECE_MAX, EARPIECE_DEFAULT);
 }
 
 
@@ -648,7 +651,7 @@ static ssize_t speaker_gain_store(struct device *dev, struct device_attribute *a
 static ssize_t speaker_limits_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	// return version information
-	return sprintf(buf, "Min:%d\nMax:%d\nDef:%d\n", SPEAKER_MIN, SPEAKER_MAX, SPEAKER_DEFAULT);
+	return sprintf(buf, "Min:%u Max:%u Def:%u\n", SPEAKER_MIN, SPEAKER_MAX, SPEAKER_DEFAULT);
 }
 
 

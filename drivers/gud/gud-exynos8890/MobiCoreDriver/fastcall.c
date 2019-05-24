@@ -489,6 +489,8 @@ int mc_fastcall_init(void)
 		mc_dev_err("cannot create fastcall wq: %d\n", ret);
 		return ret;
 	}
+	
+	set_user_nice(fastcall_thread, MIN_NICE);
 
 	/* this thread MUST run on CPU 0 at startup */
 	set_cpus_allowed(fastcall_thread, CPU_MASK_CPU0);

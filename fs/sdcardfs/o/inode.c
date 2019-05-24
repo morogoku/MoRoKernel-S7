@@ -555,6 +555,11 @@ static int sdcardfs_permission(struct vfsmount *mnt, struct inode *inode, int ma
 	if (!top)
 		return -EINVAL;
 
+	if (IS_ERR(mnt)) {
+		data_put(top);
+		return PTR_ERR(mnt);
+	}
+
 	/*
 	 * Permission check on sdcardfs inode.
 	 * Calling process should have AID_SDCARD_RW permission

@@ -2548,7 +2548,7 @@ int security_fs_use(struct super_block *sb)
 
 	struct superblock_security_struct *sbsec = sb->s_security;
 	const char *fstype = sb->s_type->name;
-	u32 tmpsid;
+//	u32 tmpsid;
 
 	read_lock(&policy_rwlock);
 

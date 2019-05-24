@@ -146,6 +146,7 @@ knoxguard_service                           u:object_r:knoxguard_service:s0
 biometric_service							u:object_r:biometric_service:s0
 HcmManagerService                           u:object_r:HcmManagerService_service:s0
 dsms                                        u:object_r:dsms_service:s0
+IIBCService.IBCStackService                 u:object_r:IBCStack_service:s0
 AAS                                         u:object_r:AAS_service:s0
 ABTPersistenceService                       u:object_r:abt_persistence_service:s0
 AODManagerService                           u:object_r:aod_manager_service:s0

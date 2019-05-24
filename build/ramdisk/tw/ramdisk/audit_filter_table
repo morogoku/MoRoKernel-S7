@@ -859,3 +859,6 @@ auditfilter idmap sdcardfs:file { read write };
 # http://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-774
 auditfilter radio omr_file:file open;
 
+# http://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-1115
+auditfilter wlbtd property_socket:sock_file write;
+

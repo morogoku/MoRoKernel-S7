@@ -1024,6 +1024,18 @@ on boot
    chmod 0640 /efs/FactoryApp/cisd_wc_data
    chown radio system /efs/Battery/batt_capacity_max
    chmod 0664 /efs/Battery/batt_capacity_max
+   chown system system /sys/class/power_supply/battery/fg_asoc
+   chmod 0660 /sys/class/power_supply/battery/fg_asoc
+   chown system system /sys/class/power_supply/battery/fg_capacity
+   chmod 0640 /sys/class/power_supply/battery/fg_capacity
+   chown system system /sys/class/power_supply/battery/fg_fullcapnom
+   chmod 0640 /sys/class/power_supply/battery/fg_fullcapnom
+   chown system system /sys/class/power_supply/battery/psb_data
+   chmod 0660 /sys/class/power_supply/battery/psb_data
+   chown system system /efs/FactoryApp/psb_data
+   chmod 0640 /efs/FactoryApp/psb_data
+   chown system radio /sys/class/power_supply/battery/psb_data_json
+   chmod 0660 /sys/class/power_supply/battery/psb_data_json
 
 #Meta event
     chown system radio /sys/class/sensors/sensor_dev/flush
@@ -1229,6 +1241,10 @@ on property:sys.init_log_level=*
     loglevel ${sys.init_log_level}
 
 on charger
+    chown system system /sys/class/power_supply/battery/psb_data
+    chmod 0660 /sys/class/power_supply/battery/psb_data
+    chown system system /efs/FactoryApp/psb_data
+    chmod 0640 /efs/FactoryApp/psb_data
     chmod 0664 /sys/class/power_supply/battery/batt_temp_table
     chown system radio /sys/class/power_supply/battery/batt_temp_table
     chmod 0664 /sys/class/power_supply/battery/batt_capacity_max

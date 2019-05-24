@@ -24,6 +24,7 @@ user=_app seinfo=platform name=com.samsung.sdm.sdmviewer domain=platform_app typ
 user=oem_5020 seinfo=platform domain=platform_app type=app_data_file levelFrom=user
 user=daimler seinfo=platform domain=platform_app type=app_data_file levelFrom=user
 user=_app seinfo=platform name=com.samsung.android.dsms domain=dsms_app type=app_data_file levelFrom=user
+user=adaptive_brightness seinfo=platform name=com.samsung.adaptivebrightnessgo domain=platform_app type=app_data_file levelFrom=user
 user=drm seinfo=platform name=com.sec.android.SamsungDrmProvider domain=platform_app type=platform_app_data_file levelFrom=user
 user=smartcard seinfo=platform domain=platform_app type=platform_app_data_file levelFrom=user
 user=msgcom seinfo=platform domain=platform_app type=app_data_file levelFrom=user

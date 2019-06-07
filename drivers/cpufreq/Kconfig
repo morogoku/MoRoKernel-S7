@@ -243,6 +243,13 @@ config CPU_FREQ_DEFAULT_GOV_CULTIVATION
 	help
 	Use the CPUFreq governor 'cultivation' as default.
 
+config CPU_FREQ_DEFAULT_GOV_INTELLIMM
+       bool "intelliminmax"
+       select CPU_FREQ_GOV_INTELLIMM
+       help
+         Use the CPUFreq governor 'intelliminmax' as default. This is
+	 governor will use only 3 different frequencies, idle, UI and max
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -360,8 +367,6 @@ config CPU_FREQ_GOV_SCHED
 
 	  If in doubt, say N.
 
-comment "CPU frequency scaling drivers"
-
 config CPU_FREQ_GOV_BIOSHOCK
 	tristate "'bioshock' cpufreq bioshock"
 	depends on CPU_FREQ
@@ -371,19 +376,19 @@ config CPU_FREQ_GOV_BIOSHOCK
 config CPU_FREQ_GOV_BLU_ACTIVE
 	tristate "'blu_active' cpufreq policy governor"
 	help
-		'blu_active' - This driver adds a dynamic cpufreq policy governor
-		interactive workloads.
+	  'blu_active' - This driver adds a dynamic cpufreq policy governor
+	  interactive workloads.
 
-		To compile this driver as a module, choose M here: the
-		module will be called cpufreq_blu_active.
-		designed for latency-sensitive workloads.
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_blu_active.
+	  designed for latency-sensitive workloads.
 
 config CPU_FREQ_GOV_DANCEDANCE
-           tristate "'dancedance' cpufreq governor"
-           depends on CPU_FREQ
-           help
-             dancedance' - a "smart" optimized governor!
-             If in doubt, say N.
+	tristate "'dancedance' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  dancedance' - a "smart" optimized governor!
+	  If in doubt, say N.
 
 config CPU_FREQ_GOV_ELECTRODEMAND
 	tristate "'electrodemand' cpufreq policy governor"
@@ -490,6 +495,18 @@ config CPU_FREQ_GOV_IMPULSE
 config CPU_FREQ_GOV_WHEATLEY
 	tristate "'wheatley' cpufreq governor"
 	depends on CPU_FREQ	
+
+config CPU_FREQ_GOV_INTELLIMM
+       tristate "'intelliminmax' cpufreq policy governor"
+       help
+         To compile this driver as a module, choose M here: the
+         module will be called cpufreq_interactive.
+
+         For details, take a look at linux/Documentation/cpu-freq.
+
+	 If in doubt, say N.
+
+comment "CPU frequency scaling drivers"
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"

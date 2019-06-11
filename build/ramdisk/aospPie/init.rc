@@ -52,6 +52,9 @@ on init
     # Backward compatibility.
     symlink /sys/kernel/debug /d
 
+    # Link /odm to /system/odm for devices without a odm partition.
+    symlink /system/odm /odm
+
     # Link /vendor to /system/vendor for devices without a vendor partition.
     symlink /system/vendor /vendor
 

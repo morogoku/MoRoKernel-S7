@@ -110,6 +110,7 @@ form(
 	  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
 	"group2",     "<b><~menu.group2></b>",  "",                     	"group",
 	  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
+	  "chk10",    "<b><~menu.10></b>",      "<~menu.10desc>",		"check.checked",
 	  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
 );
 

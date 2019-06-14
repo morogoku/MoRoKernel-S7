@@ -1,0 +1,29 @@
+# SPECTRUM KERNEL MANAGER
+# Ramdisk file for profile based kernel management
+# Implimentation inspired by Franco's fku profiles
+
+# Initialization
+on property:sys.boot_completed=1
+   # Set default profile on first boot
+   exec u:r:init:s0 root root -- /init.spectrum.sh
+
+   # Enable Spectrum support
+   setprop spectrum.support 1
+   setprop persist.spectrum.kernel MoRo
+
+# Balance (default profile)
+on property:persist.spectrum.profile=0
+   exec u:r:init:s0 root root -- /sbin/spa balance
+
+# Performance
+on property:persist.spectrum.profile=1
+   exec u:r:init:s0 root root -- /sbin/spa performance
+
+# Battery
+on property:persist.spectrum.profile=2
+   exec u:r:init:s0 root root -- /sbin/spa battery
+
+# Gaming
+on property:persist.spectrum.profile=3
+   exec u:r:init:s0 root root -- /sbin/spa gaming
+

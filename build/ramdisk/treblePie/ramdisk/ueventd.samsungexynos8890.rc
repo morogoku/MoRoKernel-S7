@@ -6,7 +6,7 @@
 /dev/video1               0660   system     camera
 /dev/video2               0660   system     camera
 /dev/video3               0660   system     camera
-/dev/video20              0660   system     system
+/dev/video20              0666   system     system
 # media0 is used for GSC, DECON, etc
 /dev/media0               0660   system     camera
 # media1 is used for DECON Ext WB
@@ -38,7 +38,7 @@
 /dev/v4l-subdev21         0660   system     graphics
 /dev/v4l-subdev32         0660   system     graphics
 
-# gscalers
+# gscalersdev20
 /dev/video23              0660   media      graphics
 /dev/video26              0660   media      graphics
 /dev/video24              0660   media      graphics
@@ -118,7 +118,7 @@
 
 # jpeg
 /dev/m2m1shot_jpeg	  0660   media      media
-/dev/video12              0660   media      media
+/dev/video12              0666   media      media
 
 # audio
 /dev/seiren               0660   system     audio

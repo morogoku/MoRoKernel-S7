@@ -103,6 +103,16 @@ menu.9desc=Only with S7 Stock based Roms
 menu.10=Spectrum Profiles
 menu.10desc=Copy in sdcard/Spectrum/profiles
 
+# GPU driver
+gpu.title=GPU Driver % Libs
+gpu.desc=Select the GPU Driver appropriate to your needs.\
+If you do not know, leave the r28 and click Next
+gpu.group=GPU Driver
+gpu.1=r22 GPU Driver
+gpu.1desc=Solve problems with some games, but SmartView may fail in some Roms
+gpu.2=r28 GPU Driver
+gpu.2desc=The most stable for SmartView in all Roms, but can produce LAG in some games
+
 # Sin Root
 stock.title=Without root
 stock.desc=Do you want to clean the remains of the previous root?

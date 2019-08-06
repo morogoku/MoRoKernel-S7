@@ -51,6 +51,7 @@ MODEL1=G930
 MODEL1_DESC="S7 Flat G930"
 MODEL2=G935
 MODEL2_DESC="S7 Edge G935"
+GPU=r22
 if [ $MODEL == $MODEL1 ]; then MODEL_DESC=$MODEL1_DESC; fi
 if [ $MODEL == $MODEL2 ]; then MODEL_DESC=$MODEL2_DESC; fi
 
@@ -102,6 +103,48 @@ fi
 
 
 set_progress 0.10
+
+
+## PATCH SYSTEM
+ui_print " "
+ui_print "@Patching system and vendor libs"
+
+cd /tmp/moro
+ui_print "-- Extracting"
+$BB tar -Jxf gpu_libs.tar.xz
+$BB tar -Jxf secure_storage.tar.xz
+ui_print "-- Copying files"
+
+# GPU libs
+if [ "$(file_getprop /tmp/aroma/gpu.prop selected.1)" == 1 ]; then
+	ui_print "-- r22 GPU Driver & libs"
+	cp -rf r22_libs/. /
+fi
+if [ "$(file_getprop /tmp/aroma/gpu.prop selected.1)" == 2 ]; then
+	ui_print "-- r28 GPU Driver & libs"
+	GPU=r28
+	cp -rf r28_libs/. /
+fi
+
+# Copy secure_storage libs
+if [ $OS == "twOreo" ];then
+	ui_print "-- secure_storage libs to /system/vendor"
+	cp -rf secure/. /system/vendor
+        set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage.so u:object_r:system_file:s0
+        set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage_jni.so u:object_r:system_file:s0
+        set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage.so u:object_r:system_file:s0
+        set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
+else
+	ui_print "-- secure_storage libs to /system"
+	cp -rf secure/. /system/
+        set_perm 0 2000 0644 /system/lib/libsecure_storage.so u:object_r:system_file:s0
+        set_perm 0 2000 0644 /system/lib/libsecure_storage_jni.so u:object_r:system_file:s0
+        set_perm 0 2000 0644 /system/lib64/libsecure_storage.so u:object_r:system_file:s0
+        set_perm 0 2000 0644 /system/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
+fi
+
+
+set_progress 0.25
 show_progress 0.25 -4000
 
 ## FLASH KERNEL
@@ -110,39 +153,13 @@ ui_print "@Flashing kernel"
 
 cd /tmp/moro
 ui_print "-- Extracting"
-$BB tar -Jxf kernel.tar.xz $MODEL-$OS-boot.img
-ui_print "-- Flashing kernel $MODEL-$OS-boot.img"
-dd of=/dev/block/platform/155a0000.ufs/by-name/BOOT if=/tmp/moro/$MODEL-$OS-boot.img
+$BB tar -Jxf kernel.tar.xz $MODEL-$OS-$GPU-boot.img
+ui_print "-- Flashing kernel $MODEL-$OS-$GPU-boot.img"
+dd of=/dev/block/platform/155a0000.ufs/by-name/BOOT if=/tmp/moro/$MODEL-$OS-$GPU-boot.img
 ui_print "-- Done"
 
 
-set_progress 0.35
-
-
-## PATCH SYSTEM
-ui_print " "
-ui_print "@Patching system and vendor libs"
-
-ui_print "-- Extracting"
-$BB tar -Jxf r22_libs.tar.xz
-$BB tar -Jxf secure_storage.tar.xz
-ui_print "-- Copying files"
-
-# GPU libs
-ui_print "-- r22 GPU libs"
-cp -rf libs/. /
-
-# Copy secure_storage libs
-if [ $OS == "twOreo" ];then
-	ui_print "-- secure_storage libs to /system/vendor"
-	cp -rf secure/. /system/vendor
-else
-	ui_print "-- secure_storage libs to /system"
-	cp -rf secure/. /system/
-fi
-
-
-set_progress 0.40
+set_progress 0.50
 
 #======================================
 # OPTIONS
@@ -166,19 +183,8 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ]; then
 fi
 
 
-set_progress 0.45
-show_progress 0.25 -5000
-
-## PERMISSIONS
-ui_print " "
-ui_print "@Setting Permissions"
-set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage.so u:object_r:system_file:s0
-set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage_jni.so u:object_r:system_file:s0
-set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage.so u:object_r:system_file:s0
-set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
-
-
 set_progress 0.65
+
 
 #======================================
 # ROOT
@@ -190,6 +196,8 @@ ui_print "@Root"
 	
 ## WITHOUT ROOT
 if [ "$(file_getprop /tmp/aroma/menu.prop group1)" == "opt1" ]; then
+show_progress 0.34 -5000
+
 	ui_print "-- Without Root"
 	if [ "$(file_getprop /tmp/aroma/menu.prop chk7)" == 1 ]; then
 		ui_print "-- Clear root data"

@@ -15,8 +15,15 @@ ini_set("force_colorspace", "rgba");
 # Splash
 # splash(4000,"splash/splash");
 
-# Options
-writetmpfile("abort.prop","abort =0");
+# INITIALIZE VARIABLES
+# Abort variable
+writetmpfile("abort.prop","abort=0");
+
+# Show GPU driver menu variable
+writetmpfile("gpu_driver.prop","show=0");
+# Execute script to update variable
+restotmp("files/show_gpu.sh","show_gpu.sh");
+exec("/tmp/aroma/show_gpu.sh");
 
 ##
 # Show Animated Splash
@@ -114,6 +121,23 @@ form(
 	  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
 );
 
+if (prop("gpu_driver.prop","show")=="1") then
+
+	selectbox(
+		"<~gpu.title>",
+		"<~gpu.desc>",
+		"icons/default",
+		"gpu.prop",
+		
+		"<b><~gpu.group></b>", 	"",				2,	#-- Grupo 1
+		"<b><~gpu.1></b>",		"<~gpu.1desc>",		0,	#-- selected.1 = 1
+		"<b><~gpu.2></b>",		"<~gpu.2desc>",		1	#-- selected.1 = 2
+	);
+else
+
+	writetmpfile("gpu.prop","selected.1=1");
+
+endif;
 
 #########################################################################################
 # Confirmar

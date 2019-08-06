@@ -86,6 +86,16 @@ menu.9desc=Solo con Roms basadas en S7 Stock.
 menu.10=Perfiles Spectrum
 menu.10desc=Copiar en sdcard/Spectrum/profiles
 
+# GPU driver
+gpu.title=GPU Driver & Libs
+gpu.desc=Seleccione el Driver GPU adecuadas a sus necesidades.\
+Si no sabe, deje el r28 y pulse Siguiente
+gpu.group=GPU Driver
+gpu.1=r22 Gpu Driver
+gpu.1desc=Soluciona problemas con algunos juegos, pero puede fallar con SmartView en algunas Roms
+gpu.2=r28 Gpu Driver
+gpu.2desc=Lo mas estable para SmartView en todas las Roms, pero puede producir LAG en algunos juegos
+
 # Sin Root
 stock.title=Sin Root
 stock.desc=Desea limpiar los restos del root anterior?

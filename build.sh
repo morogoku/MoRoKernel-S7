@@ -74,6 +74,11 @@ FUNC_BUILD_KERNEL()
 		sed -i 's/CONFIG_USB_ANDROID_SAMSUNG_MTP=y/# CONFIG_USB_ANDROID_SAMSUNG_MTP is not set/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
 	
+	if [ $GPU == "r28" ]; then
+		sed -i 's/CONFIG_MALI_R22P0=y/# CONFIG_MALI_R22P0 is not set/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
+		sed -i 's/# CONFIG_MALI_R28P0 is not set/CONFIG_MALI_R28P0=y/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
+	fi
+	
 
 	#FUNC_CLEAN_DTB
 
@@ -162,7 +167,7 @@ FUNC_BUILD_RAMDISK()
 
 	echo SEANDROIDENFORCE >> image-new.img
 	mkdir $RDIR/build/kernel-temp 2>/dev/null
-	mv image-new.img $RDIR/build/kernel-temp/$MODEL-$OS-boot.img
+	mv image-new.img $RDIR/build/kernel-temp/$MODEL-$OS-$GPU-boot.img
 	rm -rf $RDIR/build/temp
 
 }
@@ -238,7 +243,7 @@ echo "Build Kernel for:"
 echo ""
 echo "Only S7 EDGE G935"
 echo "(1) S7 Edge - Samsung OREO"
-echo "(2) S7 Edge - Samsung PIE"
+echo "(2) S7 Edge - Samsung PIE (r28)"
 echo "(3) S7 Edge - AOSP PIE"
 echo ""
 echo "S7 AllInOne: OREO + PIE + AOSP"
@@ -256,6 +261,7 @@ if [ $prompt == "1" ]; then
 
     OS=twOreo
     K_OS=OREO
+    GPU=r22
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_OREO
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
@@ -265,10 +271,11 @@ if [ $prompt == "1" ]; then
 	
 elif [ $prompt == "2" ]; then
 
-    echo "S7 Edge - Samsung PIE Selected"
+    echo "S7 Edge - Samsung PIE Selected (r28)"
 
     OS=twPie
     K_OS=PIE
+    GPU=r28
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
@@ -282,6 +289,7 @@ elif [ $prompt == "3" ]; then
 
     OS=aospPie
     K_OS=PIE
+    GPU=r22
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_OREO
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
@@ -295,6 +303,7 @@ elif [ $prompt == "4" ]; then
 
     OS=twOreo
     K_OS=OREO
+    GPU=r22
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_OREO
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
@@ -303,6 +312,7 @@ elif [ $prompt == "4" ]; then
 
     OS=twOreo
     K_OS=OREO
+    GPU=r22
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_OREO
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
@@ -311,6 +321,7 @@ elif [ $prompt == "4" ]; then
 
     OS=twPie
     K_OS=PIE
+    GPU=r28
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
@@ -319,6 +330,25 @@ elif [ $prompt == "4" ]; then
 
     OS=twPie
     K_OS=PIE
+    GPU=r28
+    MODEL=G930
+    OS_DEFCONFIG=$DEFCONFIG_PIE
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
+    ZIP=no
+    MAIN
+    
+    OS=twPie
+    K_OS=PIE
+    GPU=r22
+    MODEL=G935
+    OS_DEFCONFIG=$DEFCONFIG_PIE
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
+    ZIP=no
+    MAIN
+
+    OS=twPie
+    K_OS=PIE
+    GPU=r22
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
@@ -327,6 +357,7 @@ elif [ $prompt == "4" ]; then
 
     OS=aospPie
     K_OS=PIE
+    GPU=r22
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_OREO
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
@@ -335,6 +366,7 @@ elif [ $prompt == "4" ]; then
 
     OS=aospPie
     K_OS=PIE
+    GPU=r22
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_OREO
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT

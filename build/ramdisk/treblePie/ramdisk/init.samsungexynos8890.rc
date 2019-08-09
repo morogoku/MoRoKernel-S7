@@ -11,6 +11,7 @@ import init.helios.rc
 
 on early-init
     mount debugfs /sys/kernel/debug /sys/kernel/debug
+    mount ext4 /dev/block/platform/155a0000.ufs/by-name/EFS /efs nosuid nodev noatime noauto_da_alloc,discard,journal_async_commit,errors=panic
 
 on init
     start watchdogd

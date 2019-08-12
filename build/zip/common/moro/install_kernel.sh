@@ -68,30 +68,43 @@ if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
 	ui_print " "
 	ui_print "@Device detected"
 	# Set OS
-	if [ -f /system/framework/com.samsung.device.jar ]; then
-		# If Samsung rom
+	if [ "$(ls /dev/block/platform/155a0000.ufs/by-name | grep 'VENDOR')" == "VENDOR" ]; then
+		# If Treble Rom
 		ui_print "-- $MODEL_DESC"
-		if [ $SDK == 26 ]; then
-			ui_print "-- Rom: Samsung OREO"
-			OS="twOreo"
-		elif [ $SDK == 28 ]; then
-			ui_print "-- Rom: Samsung PIE"
-			OS="twPie"
-		else
-			ui_print " "
-			ui_print "@** UNSUPPORTED ANDROID VERSION **"
-			abort "-- This kernel is only for Samsung OREO Rom, Aborting..."
-		fi
-		
-	else
-		# If AOSP rom
 		if [ $SDK == 28 ]; then
-			ui_print "-- Rom: AOSP PIE"
-			OS="aospPie"
+			ui_print "-- Rom: Treble PIE"
+			OS="treblePie"
 		else
 			ui_print " "
 			ui_print "@** UNSUPPORTED ANDROID VERSION **"
-			abort "-- This kernel is only for AOSP PIE Rom, Aborting..."
+			abort "-- This kernel is only for TREBLE PIE Rom, Aborting..."
+		fi
+	else
+		if [ -f /system/framework/com.samsung.device.jar ]; then
+			# If Samsung rom
+			ui_print "-- $MODEL_DESC"
+			if [ $SDK == 26 ]; then
+				ui_print "-- Rom: Samsung OREO"
+				OS="twOreo"
+			elif [ $SDK == 28 ]; then
+				ui_print "-- Rom: Samsung PIE"
+				OS="twPie"
+			else
+				ui_print " "
+				ui_print "@** UNSUPPORTED ANDROID VERSION **"
+				abort "-- This kernel is only for Samsung OREO Rom, Aborting..."
+			fi
+			
+		else
+			# If AOSP rom
+			if [ $SDK == 28 ]; then
+				ui_print "-- Rom: AOSP PIE"
+				OS="aospPie"
+			else
+				ui_print " "
+				ui_print "@** UNSUPPORTED ANDROID VERSION **"
+				abort "-- This kernel is only for AOSP PIE Rom, Aborting..."
+			fi
 		fi
 	fi
 else
@@ -103,7 +116,7 @@ fi
 
 
 set_progress 0.10
-
+show_progress 0.25 -5000
 
 ## PATCH SYSTEM
 ui_print " "
@@ -116,35 +129,34 @@ $BB tar -Jxf secure_storage.tar.xz
 ui_print "-- Copying files"
 
 # GPU libs
-if [ "$(file_getprop /tmp/aroma/gpu.prop selected.1)" == 1 ]; then
-	ui_print "-- r22 GPU Driver & libs"
-	cp -rf r22_libs/. /
-fi
-if [ "$(file_getprop /tmp/aroma/gpu.prop selected.1)" == 2 ]; then
-	ui_print "-- r28 GPU Driver & libs"
+if [ $OS == "treblePie" ];then
 	GPU=r28
-	cp -rf r28_libs/. /
-fi
-
-# Copy secure_storage libs
-if [ $OS == "twOreo" ];then
-	ui_print "-- secure_storage libs to /system/vendor"
-	cp -rf secure/. /system/vendor
-        set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage.so u:object_r:system_file:s0
-        set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage_jni.so u:object_r:system_file:s0
-        set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage.so u:object_r:system_file:s0
-        set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
 else
-	ui_print "-- secure_storage libs to /system"
-	cp -rf secure/. /system/
-        set_perm 0 2000 0644 /system/lib/libsecure_storage.so u:object_r:system_file:s0
-        set_perm 0 2000 0644 /system/lib/libsecure_storage_jni.so u:object_r:system_file:s0
-        set_perm 0 2000 0644 /system/lib64/libsecure_storage.so u:object_r:system_file:s0
-        set_perm 0 2000 0644 /system/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
+	# GPU libs
+	if [ "$(file_getprop /tmp/aroma/gpu.prop selected.1)" == 1 ]; then
+		ui_print "-- r22 GPU Driver & libs"
+		cp -rf r22_libs/. /
+	fi
+	if [ "$(file_getprop /tmp/aroma/gpu.prop selected.1)" == 2 ]; then
+		ui_print "-- r28 GPU Driver & libs"
+		GPU=r28
+		cp -rf r28_libs/. /
+	fi
+
+
+	# Copy secure_storage libs
+	if [ $OS == "twOreo" ];then
+		ui_print "-- secure_storage libs to /system/vendor"
+		cp -rf secure/. /system/vendor
+		set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage.so u:object_r:system_file:s0
+		set_perm 0 2000 0644 /system/vendor/lib/libsecure_storage_jni.so u:object_r:system_file:s0
+		set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage.so u:object_r:system_file:s0
+		set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
+	fi
 fi
 
 
-set_progress 0.25
+set_progress 0.35
 show_progress 0.25 -4000
 
 ## FLASH KERNEL
@@ -159,7 +171,7 @@ dd of=/dev/block/platform/155a0000.ufs/by-name/BOOT if=/tmp/moro/$MODEL-$OS-$GPU
 ui_print "-- Done"
 
 
-set_progress 0.50
+set_progress 0.60
 
 #======================================
 # OPTIONS

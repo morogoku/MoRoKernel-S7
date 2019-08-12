@@ -29,12 +29,6 @@ fi
 	echo " " >> $LOG;
 
 	
-	# Selinux permissive
-	echo "## -- Selinux permissive" >> $LOG;
-	echo "0" > /sys/fs/selinux/enforce ;
-	echo " " >> $LOG;
-
-	
 	# SafetyNet
 	echo "## -- SafetyNet permissions" >> $LOG;
 	chmod 640 /sys/fs/selinux/enforce;

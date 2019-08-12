@@ -66,5 +66,26 @@ echo "" > build/ramdisk/aospPie/storage/.placeholder
 echo "" > build/ramdisk/aospPie/sys/.placeholder
 echo "" > build/ramdisk/aospPie/system/.placeholder
 
+echo "" > build/ramdisk/treblePie/ramdisk/acct/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/cache/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/carrier/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/config/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/data/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/dev/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/dqmdbg/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/efs/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/keydata/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/keyrefuge/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/lib/modules/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/mnt/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/oem/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/omr/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/proc/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/storage/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/sys/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/system/.placeholder
+echo "" > build/ramdisk/treblePie/ramdisk/vendor/.placeholder
+
+
 
 

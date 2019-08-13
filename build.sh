@@ -148,26 +148,38 @@ FUNC_BUILD_RAMDISK()
 	cd $RDIR/build
 	mkdir temp 2>/dev/null
 	cp -rf aik/. temp
-	cp -rf ramdisk/$OS/. temp/ramdisk
-	cp -rf ramdisk/split_img/. temp/split_img
-	rm -f temp/split_img/boot.img-zImage
-	rm -f temp/split_img/boot.img-dtb
-	mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
-	mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
-	cd temp
+	
+	if [ $OS == "treblePie" ]; then
+		cp -rf ramdisk/treblePie/ramdisk/. temp/ramdisk
+		cp -rf ramdisk/treblePie/split_img/. temp/split_img
+		rm -f temp/split_img/boot.img-zImage
+		rm -f temp/split_img/boot.img-dtb
+		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
+		cd temp
+	
+	else
+		cp -rf ramdisk/$OS/. temp/ramdisk
+		cp -rf ramdisk/split_img/. temp/split_img
+		rm -f temp/split_img/boot.img-zImage
+		rm -f temp/split_img/boot.img-dtb
+		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
+		cd temp
 
-	if [ $MODEL == "G930" ]; then
-		sed -i 's/SRPOI30A003KU/SRPOI17A003KU/g' split_img/boot.img-board
+		if [ $MODEL == "G930" ]; then
+			sed -i 's/SRPOI30A003KU/SRPOI17A003KU/g' split_img/boot.img-board
 
-		sed -i 's/G935/G930/g' ramdisk/default.prop
-		sed -i 's/hero2/hero/g' ramdisk/default.prop
-		if [ $OS == "tw" ]; then 
-			sed -i 's/G935/G930/g' ramdisk/sepolicy_version
+			sed -i 's/G935/G930/g' ramdisk/default.prop
+			sed -i 's/hero2/hero/g' ramdisk/default.prop
+			if [ $OS == "tw" ]; then 
+				sed -i 's/G935/G930/g' ramdisk/sepolicy_version
+			fi
 		fi
-	fi
 
-	if [ $OS == "twPie" ]; then
-		sed -i 's/8.0.0/9.0.0/g' split_img/boot.img-osversion
+		if [ $OS == "twPie" ]; then
+			sed -i 's/8.0.0/9.0.0/g' split_img/boot.img-osversion
+		fi
 	fi
 
 	echo "Model: $MODEL, OS: $OS"
@@ -207,7 +219,7 @@ FUNC_BUILD_FLASHABLES()
 MAIN()
 {
 
-if [ $OS == "twPie" ]; then
+if [ $OS == "twPie" ] || [ $OS == "treblePie" ]; then
 	export ANDROID_MAJOR_VERSION=p
 	export ANDROID_VERSION=90000
 	export BUILD_PLATFORM_VERSION=9.0.0
@@ -254,6 +266,7 @@ echo "Only S7 EDGE G935"
 echo "(1) S7 Edge - Samsung OREO"
 echo "(2) S7 Edge - Samsung PIE (r28)"
 echo "(3) S7 Edge - AOSP PIE"
+echo "(5) S7 Edge - TREBLE PIE"
 echo ""
 echo "S7 AllInOne: OREO + PIE + AOSP"
 echo "(4) S7 AllInOne: OREO + PIE + AOSP"
@@ -301,6 +314,20 @@ elif [ $prompt == "3" ]; then
     GPU=r22
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_OREO
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
+    ZIP=yes
+    ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
+    MAIN
+    
+elif [ $prompt == "5" ]; then
+
+    echo "S7 Edge - TREBLE PIE Selected"
+
+    OS=treblePie
+    K_OS=PIE
+    GPU=r28
+    MODEL=G935
+    OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
     ZIP=yes
     ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
@@ -378,6 +405,24 @@ elif [ $prompt == "4" ]; then
     GPU=r22
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_OREO
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
+    ZIP=no
+    MAIN
+    
+    OS=treblePie
+    K_OS=PIE
+    GPU=r28
+    MODEL=G935
+    OS_DEFCONFIG=$DEFCONFIG_PIE
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
+    ZIP=no
+    MAIN
+    
+    OS=treblePie
+    K_OS=PIE
+    GPU=r28
+    MODEL=G930
+    OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
     ZIP=yes
     ZIP_NAME=$K_NAME-AllInOne-$K_BASE-$K_VERSION.zip

@@ -100,11 +100,20 @@ FUNC_BUILD_DTB()
 	}
 	case $MODEL in
 	G930)
-		DTSFILES="exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
+		if [ $OS == "treblePie" ]; then
+			DTSFILES="exynos8890-herolte_eur_open_treble_04 exynos8890-herolte_eur_open_treble_08
+				exynos8890-herolte_eur_open_treble_09 exynos8890-herolte_eur_open_treble_10"
+		else
+			DTSFILES="exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
 				exynos8890-herolte_eur_open_09 exynos8890-herolte_eur_open_10"
+		fi
 		;;
 	G935)
-		DTSFILES="exynos8890-hero2lte_eur_open_04 exynos8890-hero2lte_eur_open_08"
+		if [ $OS == "treblePie" ]; then
+			DTSFILES="exynos8890-hero2lte_eur_open_treble_04 exynos8890-hero2lte_eur_open_treble_08"
+		else
+			DTSFILES="exynos8890-hero2lte_eur_open_04 exynos8890-hero2lte_eur_open_08"
+		fi
 		;;
 	*)
 

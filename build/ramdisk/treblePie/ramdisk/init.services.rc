@@ -5,6 +5,10 @@
 #
 
 
+on early-init
+    start nuke
+    
+
 on property:sys.boot_completed=1
     start kernelinit
     stop secure_storage
@@ -17,4 +21,11 @@ service kernelinit /sbin/moro-init.sh
     seclabel u:r:init:s0
     oneshot
     disabled
+    
+    
+service nuke /vendor/etc/nuke.sh
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled  
 

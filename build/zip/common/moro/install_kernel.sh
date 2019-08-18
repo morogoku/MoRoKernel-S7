@@ -68,7 +68,7 @@ if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
 	ui_print " "
 	ui_print "@Device detected"
 	# Set OS
-	if [ "$(ls /dev/block/platform/155a0000.ufs/by-name | grep 'VENDOR')" == "VENDOR" ]; then
+	if [ "$(ls /dev/block/platform/155a0000.ufs/by-name | grep 'VENDOR')" == "VENDOR" ] && [ ! -f /system/framework/com.samsung.device.jar ]; then
 		# If Treble Rom
 		ui_print "-- $MODEL_DESC"
 		if [ $SDK == 28 ]; then

@@ -116,7 +116,7 @@ fi
 
 
 set_progress 0.10
-show_progress 0.25 -5000
+show_progress 0.25 -6000
 
 ## PATCH SYSTEM
 ui_print " "
@@ -157,7 +157,7 @@ fi
 
 
 set_progress 0.35
-show_progress 0.25 -4000
+show_progress 0.25 -9000
 
 ## FLASH KERNEL
 ui_print " "

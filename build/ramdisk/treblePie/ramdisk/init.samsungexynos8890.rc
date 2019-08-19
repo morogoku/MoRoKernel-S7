@@ -994,13 +994,17 @@ on property:ro.bootmode=charger
     wait /dev/block/platform/155a0000.ufs/by-name/EFS
     mount ext4 /dev/block/platform/155a0000.ufs/by-name/EFS /efs nosuid nodev noatime noauto_da_alloc,discard,journal_async_commit,errors=panic
 
-on property:ro.bootmode=charger
-    mkdir /efs/lpm 0775 system system
-    class_start sec-charger
+on charger
+# Set cpu governor to powersave while in charging mode
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor powersave
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor powersave
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor powersave
 
-service lpm /system/bin/lpm
-    class sec-charger
+service charger /charger
+    class charger
     critical
+    seclabel u:r:charger:s0
 
 # sem_daemon permission
     chown system system /efs/sec_efs/ssp_data

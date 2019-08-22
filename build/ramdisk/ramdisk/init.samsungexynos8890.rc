@@ -645,6 +645,7 @@ on fs
     chmod 0664 /sys/class/input_booster/level
     chmod 0664 /sys/class/input_booster/head
     chmod 0664 /sys/class/input_booster/tail
+    chmod 0666 /sys/class/input_booster/touchkey/time
 
 # Performance
     chown system radio /sys/power/cpufreq_max_limit
@@ -1057,17 +1058,17 @@ service fwup /sbin/ffu -a
     oneshot
 
 # Secure Storage startup
-service secure_storage /system/bin/secure_storage_daemon
-    class core
-    user system
-    group system
-    disabled
+#service secure_storage /system/bin/secure_storage_daemon
+#    class core
+#    user system
+#    group system
+#    disabled
 
-on property:ro.securestorage.support=true
-    mkdir /dev/.secure_storage
-    chmod 0711 /dev/.secure_storage
-    chown system system /dev/.secure_storage
-    start secure_storage
+#on property:ro.securestorage.support=true
+#    mkdir /dev/.secure_storage
+#    chmod 0711 /dev/.secure_storage
+#    chown system system /dev/.secure_storage
+#    start secure_storage
 
 # SSWAP
 service swapon /sbin/sswap -s -f 2048
@@ -1105,7 +1106,7 @@ service apexserver /system/bin/apexserver
 	disabled
 
 # irisd
-service irisd /system/bin/irisd
-    class late_start
-    user system
-    group system
+#service irisd /system/bin/irisd
+#    class late_start
+#    user system
+#    group system

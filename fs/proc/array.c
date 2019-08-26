@@ -590,6 +590,7 @@ int proc_pid_statm(struct seq_file *m, struct pid_namespace *ns,
 
 	return 0;
 }
+#ifdef CONFIG_ZSWAP
 int proc_pid_statlmkd(struct seq_file *m, struct pid_namespace *ns,
 			struct pid *pid, struct task_struct *task)
 {
@@ -615,6 +616,7 @@ int proc_pid_statlmkd(struct seq_file *m, struct pid_namespace *ns,
 
 	return 0;
 }
+#endif
 #ifdef CONFIG_CHECKPOINT_RESTORE
 static struct pid *
 get_children_pid(struct inode *inode, struct pid *pid_prev, loff_t pos)

@@ -4,7 +4,7 @@
    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 338000
+   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 442000
    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1586000
    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
@@ -36,9 +36,9 @@
    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 416000
+   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 728000
    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 2288000
+   write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 2600000
    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load
    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 89
    chmod 0664 /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay
@@ -93,9 +93,9 @@
 
 
    # IO Scheduler
-   write /sys/block/sda/queue/scheduler deadline
+   write /sys/block/sda/queue/scheduler cfq
    write /sys/block/sda/queue/read_ahead_kb 1024
-   write /sys/block/mmcblk0/queue/scheduler deadline
+   write /sys/block/mmcblk0/queue/scheduler cfq
    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
 
    # Wakelocks
@@ -108,7 +108,7 @@
    write /sys/module/sync/parameters/fsync_enabled 0
    write /sys/kernel/dyn_fsync/Dyn_fsync_active 0
    write /sys/kernel/sched/gentle_fair_sleepers 0
-   write /sys/kernel/sched/arch_power 1
+   write /sys/kernel/sched/arch_power 0
    write /sys/kernel/power_suspend/power_suspend_mode 2
    write /proc/sys/net/ipv4/tcp_congestion_control westwood
 

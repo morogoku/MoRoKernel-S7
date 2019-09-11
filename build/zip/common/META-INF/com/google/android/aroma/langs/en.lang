@@ -82,7 +82,7 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
-menu.2=Magisk 19.3 (19200)3
+menu.2=Magisk v19.4-f383d11d
 menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09
 menu.5desc=Famous Root of Chainfire.

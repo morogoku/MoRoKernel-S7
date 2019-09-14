@@ -78,6 +78,11 @@ FUNC_BUILD_KERNEL()
 		sed -i 's/CONFIG_MALI_R22P0=y/# CONFIG_MALI_R22P0 is not set/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
 		sed -i 's/# CONFIG_MALI_R28P0 is not set/CONFIG_MALI_R28P0=y/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
+
+	if [ $OS == "twOreo" ]; then
+		sed -i 's/# CONFIG_ANDROID_LOW_MEMORY_KILLER is not set/CONFIG_ANDROID_LOW_MEMORY_KILLER=y/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
+		sed -i 's/# CONFIG_ANDROID_LOW_MEMORY_KILLER_AUTODETECT_OOM_ADJ_VALUES is not set/CONFIG_ANDROID_LOW_MEMORY_KILLER_AUTODETECT_OOM_ADJ_VALUES=y/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
+	fi
 	
 
 	#FUNC_CLEAN_DTB

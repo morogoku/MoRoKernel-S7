@@ -77,9 +77,13 @@ fi
 	chown -R root.root /system/etc/init.d;
 	chmod 777 /system/etc/init.d;
 
-	# remove detach script
+	# remove scripts
+	rm -f /system/etc/init.d/ts_swapoff.sh 2>/dev/null;
+	rm -f /system/etc/init.d/feravolt_gms.sh 2>/dev/null;
+	rm -f /system/etc/init.d/tskillgooogle.sh 2>/dev/null;
 	rm -f /system/etc/init.d/*detach* 2>/dev/null;
 	rm -f /system/su.d/*detach* 2>/dev/null;
+
 
 	if [ "$(ls -A /system/etc/init.d)" ]; then
 		chmod 777 /system/etc/init.d/*;

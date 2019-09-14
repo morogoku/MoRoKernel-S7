@@ -13,10 +13,10 @@ RESETPROP="/sbin/resetprop -v -n"
 
 
 # Mount
-mount -t rootfs -o remount,rw rootfs;
-mount -o remount,rw /system;
-mount -o remount,rw /data;
-mount -o remount,rw /;
+mount -t rootfs -o rw,remount rootfs;
+mount -o rw,remount /system;
+mount -o rw,remount /data;
+mount -o rw,remount /;
 
 # Create morokernel folder
 if [ ! -d $MORO_DIR ]; then
@@ -126,8 +126,8 @@ fi
 chmod 777 $LOG;
 
 # Unmount
-mount -t rootfs -o remount,ro rootfs;
-mount -o remount,ro /system;
-mount -o remount,rw /data;
-mount -o remount,ro /;
+mount -t rootfs -o ro,remount rootfs;
+mount -o ro,remount /system;
+mount -o rw,remount /data;
+mount -o ro,remount /;
 

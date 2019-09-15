@@ -2,8 +2,8 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v7.1.1</#></b>
-	DATE	: <b><#selectbg_g>20/08/2019</#></b>
+	VERSION	: <b><#selectbg_g>v7.2</#></b>
+	DATE	: <b><#selectbg_g>15/09/2019</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
@@ -11,9 +11,25 @@
 
 <b>CHANGELOG:</b>
 
+<u><b><#selectbg_g>MoRoKernel AIO v7.2</#></b></u>
+<*>Thanks to Tetsuo Osaka for his advice</*>
+<*>Fixed Spectrum profile on reboot</*>
+<*>Spectrum battery profile by mrtakak</*>
+<*>add Input Boost (Thanks to @nalas)</*>
+<*>add Fingerprint Boost (Thanks to @nalas)</*>
+<*>Enable LZ4 compress for ZRAM </*>
+<*>Kernel LMK Disabled, working with LMK Daemon</*>
+<*>Irqchip exynos-combiner updated</*>
+<*>F2FS supported</*>
+<*>F2FS driver updated to latest</*>
+<*>Updated CFQ iosched</*>
+<*>Magisk 19.4-f383d11d (19309)</*>
+<*>MTweaks 2.15.1</*>
+<*>Fixed moro-init.sh mount (Thanks to akella)</*>
+
 <u><b><#selectbg_g>MoRoKernel AIO v7.1.1</#></b></u>
 <*>(treble kernel) Lineage offline charge</*>
-<*>8treble kernel) Fix MTP </*>
+<*>(treble kernel) Fix MTP </*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v7.1.0</#></b></u>
 <*>All In One KERNEL, OREO, PIE, LINEAGE, and TREBLE</*>

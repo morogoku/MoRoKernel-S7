@@ -31,7 +31,7 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 K_VERSION="v7.2"
 K_BASE="CSF1"
-K_NAME="MoRoKernel"
+K_NAME="20190916-MoRoKernel"
 export KBUILD_BUILD_VERSION="1"
 
 

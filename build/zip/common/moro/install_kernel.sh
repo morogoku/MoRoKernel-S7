@@ -1,10 +1,7 @@
 #!/sbin/sh
 #
-# MoRoKernel Flash script 2.0
+# MoRoKernel Flash script
 #
-# Credit also goes to @djb77
-# @lyapota, @Tkkg1994, @osm0sis
-# @dwander for bits of code
 # 
 
 
@@ -154,6 +151,9 @@ else
 		set_perm 0 2000 0644 /system/vendor/lib64/libsecure_storage_jni.so u:object_r:system_file:s0
 	fi
 fi
+
+# REMOVE RO.LMK... FROM BUILD.PROP
+sed -i '/ro.lmk/d' /system/build.prop
 
 
 set_progress 0.35

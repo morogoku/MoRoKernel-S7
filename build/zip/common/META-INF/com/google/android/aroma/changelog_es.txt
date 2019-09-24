@@ -2,14 +2,19 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v7.2</#></b>
-	FECHA	: <b><#selectbg_g>15/09/2019</#></b>
+	VERSIÓN	: <b><#selectbg_g>v7.3</#></b>
+	FECHA	: <b><#selectbg_g>24/09/2019</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v7.3</#></b></u>
+<*>kernel updated to 3.18.140-20190916</*>
+<*>Re-enabled Low Memory Killer</*>
+<*>Magisk 19.4</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v7.2</#></b></u>
 <*>Gracias a Tetsuo Osaka por sus consejos</*>

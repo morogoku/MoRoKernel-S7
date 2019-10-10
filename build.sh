@@ -70,7 +70,7 @@ FUNC_BUILD_KERNEL()
 	cat $RDIR/arch/$ARCH/configs/$OS_DEFCONFIG >> $RDIR/arch/$ARCH/configs/tmp_defconfig
 	cat $RDIR/arch/$ARCH/configs/$DEVICE_DEFCONFIG >> $RDIR/arch/$ARCH/configs/tmp_defconfig
 
-	if [ $OS == "aospPie" ] || [ $OS == "treblePie" ]; then
+	if [ $OS == "lineage16" ] || [ $OS == "treblePie" ]; then
 		sed -i 's/CONFIG_USB_ANDROID_SAMSUNG_MTP=y/# CONFIG_USB_ANDROID_SAMSUNG_MTP is not set/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
 	
@@ -309,7 +309,7 @@ elif [ $prompt == "3" ]; then
 
     echo "S7 Edge - AOSP PIE Selected"
 
-    OS=aospPie
+    OS=lineage16
     K_OS=PIE
     GPU=r22
     MODEL=G935
@@ -391,7 +391,7 @@ elif [ $prompt == "4" ]; then
     ZIP=no
     MAIN
 
-    OS=aospPie
+    OS=lineage16
     K_OS=PIE
     GPU=r22
     MODEL=G935
@@ -400,7 +400,7 @@ elif [ $prompt == "4" ]; then
     ZIP=no
     MAIN
 
-    OS=aospPie
+    OS=lineage16
     K_OS=PIE
     GPU=r22
     MODEL=G930

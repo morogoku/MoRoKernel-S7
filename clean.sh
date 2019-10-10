@@ -55,16 +55,16 @@ echo "" > build/ramdisk/twPie/storage/.placeholder
 echo "" > build/ramdisk/twPie/sys/.placeholder
 echo "" > build/ramdisk/twPie/system/.placeholder
 
-echo "" > build/ramdisk/aospPie/acct/.placeholder
-echo "" > build/ramdisk/aospPie/config/.placeholder
-echo "" > build/ramdisk/aospPie/data/.placeholder
-echo "" > build/ramdisk/aospPie/dev/.placeholder
-echo "" > build/ramdisk/aospPie/mnt/.placeholder
-echo "" > build/ramdisk/aospPie/oem/.placeholder
-echo "" > build/ramdisk/aospPie/proc/.placeholder
-echo "" > build/ramdisk/aospPie/storage/.placeholder
-echo "" > build/ramdisk/aospPie/sys/.placeholder
-echo "" > build/ramdisk/aospPie/system/.placeholder
+echo "" > build/ramdisk/lineage16/acct/.placeholder
+echo "" > build/ramdisk/lineage16/config/.placeholder
+echo "" > build/ramdisk/lineage16/data/.placeholder
+echo "" > build/ramdisk/lineage16/dev/.placeholder
+echo "" > build/ramdisk/lineage16/mnt/.placeholder
+echo "" > build/ramdisk/lineage16/oem/.placeholder
+echo "" > build/ramdisk/lineage16/proc/.placeholder
+echo "" > build/ramdisk/lineage16/storage/.placeholder
+echo "" > build/ramdisk/lineage16/sys/.placeholder
+echo "" > build/ramdisk/lineage16/system/.placeholder
 
 echo "" > build/ramdisk/treblePie/ramdisk/acct/.placeholder
 echo "" > build/ramdisk/treblePie/ramdisk/cache/.placeholder

@@ -103,6 +103,11 @@ FUNC_BUILD_DTB()
 		if [ $OS == "treblePie" ]; then
 			DTSFILES="exynos8890-herolte_eur_open_treble_04 exynos8890-herolte_eur_open_treble_08
 				exynos8890-herolte_eur_open_treble_09 exynos8890-herolte_eur_open_treble_10"
+
+		elif [ $OS == "lineage16" ] || [ $OS == "lineage17" ]; then
+			DTSFILES="exynos8890-herolte_eur_open_lineage_04 exynos8890-herolte_eur_open_lineage_08
+				exynos8890-herolte_eur_open_lineage_09 exynos8890-herolte_eur_open_lineage_10"
+
 		else
 			DTSFILES="exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
 				exynos8890-herolte_eur_open_09 exynos8890-herolte_eur_open_10"
@@ -111,6 +116,10 @@ FUNC_BUILD_DTB()
 	G935)
 		if [ $OS == "treblePie" ]; then
 			DTSFILES="exynos8890-hero2lte_eur_open_treble_04 exynos8890-hero2lte_eur_open_treble_08"
+
+		elif [ $OS == "lineage16" ] || [ $OS == "lineage17" ]; then
+			DTSFILES="exynos8890-hero2lte_eur_open_lineage_04 exynos8890-hero2lte_eur_open_lineage_08"
+
 		else
 			DTSFILES="exynos8890-hero2lte_eur_open_04 exynos8890-hero2lte_eur_open_08"
 		fi

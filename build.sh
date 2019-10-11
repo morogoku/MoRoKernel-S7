@@ -70,7 +70,7 @@ FUNC_BUILD_KERNEL()
 	cat $RDIR/arch/$ARCH/configs/$OS_DEFCONFIG >> $RDIR/arch/$ARCH/configs/tmp_defconfig
 	cat $RDIR/arch/$ARCH/configs/$DEVICE_DEFCONFIG >> $RDIR/arch/$ARCH/configs/tmp_defconfig
 
-	if [ $OS == "lineage16" ] || [ $OS == "treblePie" ]; then
+	if [ $OS == "lineage16" ] || [ $OS == "lineage17" ] || [ $OS == "treblePie" ]; then
 		sed -i 's/CONFIG_USB_ANDROID_SAMSUNG_MTP=y/# CONFIG_USB_ANDROID_SAMSUNG_MTP is not set/g' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
 	
@@ -149,7 +149,16 @@ FUNC_BUILD_RAMDISK()
 	mkdir temp 2>/dev/null
 	cp -rf aik/. temp
 	
-	if [ $OS == "treblePie" ]; then
+	if [ $OS == "lineage17" ]; then
+		cp -rf ramdisk/lineage17/ramdisk/. temp/ramdisk
+		cp -rf ramdisk/lineage17/split_img/. temp/split_img
+		rm -f temp/split_img/boot.img-zImage
+		rm -f temp/split_img/boot.img-dtb
+		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
+		cd temp
+
+	elif [ $OS == "treblePie" ]; then
 		cp -rf ramdisk/treblePie/ramdisk/. temp/ramdisk
 		cp -rf ramdisk/treblePie/split_img/. temp/split_img
 		rm -f temp/split_img/boot.img-zImage
@@ -265,11 +274,12 @@ echo ""
 echo "Only S7 EDGE G935"
 echo "(1) S7 Edge - Samsung OREO"
 echo "(2) S7 Edge - Samsung PIE (r28)"
-echo "(3) S7 Edge - AOSP PIE"
+echo "(3) S7 Edge - Lineage 16"
+echo "(4) S7 Edge - Lineage 17"
 echo "(5) S7 Edge - TREBLE PIE"
 echo ""
-echo "S7 AllInOne: OREO + PIE + AOSP"
-echo "(4) S7 AllInOne: OREO + PIE + AOSP"
+echo "S7 AllInOne: OREO + PIE + Lineage + Treble"
+echo "(6) S7 AllInOne: OREO + PIE + AOSP"
 echo ""
 echo "**************************************"
 echo ""
@@ -307,9 +317,23 @@ elif [ $prompt == "2" ]; then
 	
 elif [ $prompt == "3" ]; then
 
-    echo "S7 Edge - AOSP PIE Selected"
+    echo "S7 Edge - Lineage 16 Selected"
 
     OS=lineage16
+    K_OS=PIE
+    GPU=r22
+    MODEL=G935
+    OS_DEFCONFIG=$DEFCONFIG_OREO
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
+    ZIP=yes
+    ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
+    MAIN
+
+elif [ $prompt == "4" ]; then
+
+    echo "S7 Edge - Lineage 17 Selected"
+
+    OS=lineage17
     K_OS=PIE
     GPU=r22
     MODEL=G935
@@ -333,7 +357,7 @@ elif [ $prompt == "5" ]; then
     ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
     MAIN
 
-elif [ $prompt == "4" ]; then
+elif [ $prompt == "6" ]; then
 
     echo "S7 AllInOne: OREO + PIE + AOSP"
 
@@ -401,6 +425,24 @@ elif [ $prompt == "4" ]; then
     MAIN
 
     OS=lineage16
+    K_OS=PIE
+    GPU=r22
+    MODEL=G930
+    OS_DEFCONFIG=$DEFCONFIG_OREO
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
+    ZIP=no
+    MAIN
+
+    OS=lineage17
+    K_OS=PIE
+    GPU=r22
+    MODEL=G935
+    OS_DEFCONFIG=$DEFCONFIG_OREO
+    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
+    ZIP=no
+    MAIN
+
+    OS=lineage17
     K_OS=PIE
     GPU=r22
     MODEL=G930

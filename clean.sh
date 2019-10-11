@@ -66,6 +66,13 @@ echo "" > build/ramdisk/lineage16/storage/.placeholder
 echo "" > build/ramdisk/lineage16/sys/.placeholder
 echo "" > build/ramdisk/lineage16/system/.placeholder
 
+echo "" > build/ramdisk/lineage17/ramdisk/apex/.placeholder
+echo "" > build/ramdisk/lineage17/ramdisk/debug_ramdisk/.placeholder
+echo "" > build/ramdisk/lineage17/ramdisk/dev/.placeholder
+echo "" > build/ramdisk/lineage17/ramdisk/mnt/.placeholder
+echo "" > build/ramdisk/lineage17/ramdisk/proc/.placeholder
+echo "" > build/ramdisk/lineage17/ramdisk/sys/.placeholder
+
 echo "" > build/ramdisk/treblePie/ramdisk/acct/.placeholder
 echo "" > build/ramdisk/treblePie/ramdisk/cache/.placeholder
 echo "" > build/ramdisk/treblePie/ramdisk/carrier/.placeholder

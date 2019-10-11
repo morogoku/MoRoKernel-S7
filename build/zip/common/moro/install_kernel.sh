@@ -5,34 +5,8 @@
 # 
 
 
-# Functions
-ui_print() { echo -n -e "ui_print $1\n"; }
-
-file_getprop() { grep "^$2" "$1" | cut -d= -f2; }
-
-show_progress() { echo "progress $1 $2"; }
-
-set_progress() { echo "set_progress $1"; }
-
-set_perm() {
-  chown $1.$2 $4
-  chown $1:$2 $4
-  chmod $3 $4
-  chcon $5 $4
-}
-
-clean_magisk() {
-	rm -rf /cache/*magisk* /cache/unblock /data/*magisk* /data/cache/*magisk* /data/property/*magisk* \
-        /data/Magisk.apk /data/busybox /data/custom_ramdisk_patch.sh /data/app/com.topjohnwu.magisk* \
-        /data/user*/*/magisk.db /data/user*/*/com.topjohnwu.magisk /data/user*/*/.tmp.magisk.config \
-        /data/adb/*magisk* 2>/dev/null
-}
-
-abort() {
-	ui_print "$*";
-	echo "abort=1" > /tmp/aroma/abort.prop
-	exit 1;
-}
+# Load mount and init functions
+. /tmp/moro/functions.sh
 
 
 # Initialice Morokernel folder
@@ -59,6 +33,13 @@ if [ $MODEL == $MODEL2 ]; then MODEL_DESC=$MODEL2_DESC; fi
 #======================================
 
 set_progress 0.01
+
+ui_print "@Mount partitions"
+ui_print "-- mount /system RW"
+if [ $SYSTEM_ROOT == true ]; then
+	ui_print "-- Device is system-as-root"
+	ui_print "-- Remounting /system as /system_root"
+fi
 
 ## CHECK SUPPORT, MODEL AND OS
 if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
@@ -93,10 +74,14 @@ if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
 			fi
 			
 		else
-			# If AOSP rom
+			# If Lineage rom
+			ui_print "-- $MODEL_DESC"
 			if [ $SDK == 28 ]; then
-				ui_print "-- Rom: AOSP PIE"
-				OS="aospPie"
+				ui_print "-- Rom: Lineage 16"
+				OS="lineage16"
+			elif [ $SDK == 29 ]; then
+				ui_print "-- Rom: Lineage 17"
+				OS="lineage17" 
 			else
 				ui_print " "
 				ui_print "@** UNSUPPORTED ANDROID VERSION **"
@@ -237,6 +222,13 @@ show_progress 0.34 -19000
 	sh /tmp/moro/magisk/META-INF/com/google/android/update-binary dummy 1 /tmp/moro/magisk/magisk.zip
 fi
 
+
+ui_print "@Unmounting"
+unmount_system
+ui_print "-- umount /system"
+if [ $SYSTEM_ROOT == true ]; then
+	ui_print "-- umount /system_root"
+fi
 
 set_progress 1.00
 

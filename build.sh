@@ -53,7 +53,7 @@ FUNC_CLEAN_DTB()
 		echo "rm files in : "$RDIR/arch/$ARCH/boot/dts/*.dtb""
 		rm $DTSDIR/*.dtb 2>/dev/null
 		rm $DTBDIR/*.dtb 2>/dev/null
-		rm $OUTDIR/boot.img-dtb 2>/dev/null
+		rm $OUTDIR/boot.img-dt 2>/dev/null
 		rm $OUTDIR/boot.img-zImage 2>/dev/null
 	fi
 }
@@ -153,27 +153,27 @@ FUNC_BUILD_RAMDISK()
 		cp -rf ramdisk/lineage17/ramdisk/. temp/ramdisk
 		cp -rf ramdisk/lineage17/split_img/. temp/split_img
 		rm -f temp/split_img/boot.img-zImage
-		rm -f temp/split_img/boot.img-dtb
+		rm -f temp/split_img/boot.img-dt
 		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
-		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dt
 		cd temp
 
 	elif [ $OS == "treblePie" ]; then
 		cp -rf ramdisk/treblePie/ramdisk/. temp/ramdisk
 		cp -rf ramdisk/treblePie/split_img/. temp/split_img
 		rm -f temp/split_img/boot.img-zImage
-		rm -f temp/split_img/boot.img-dtb
+		rm -f temp/split_img/boot.img-dt
 		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
-		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dt
 		cd temp
 	
 	else
 		cp -rf ramdisk/$OS/. temp/ramdisk
 		cp -rf ramdisk/split_img/. temp/split_img
 		rm -f temp/split_img/boot.img-zImage
-		rm -f temp/split_img/boot.img-dtb
+		rm -f temp/split_img/boot.img-dt
 		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
-		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dt
 		cd temp
 
 		if [ $MODEL == "G930" ]; then

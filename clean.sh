@@ -55,16 +55,16 @@ echo "" > build/ramdisk/twPie/storage/.placeholder
 echo "" > build/ramdisk/twPie/sys/.placeholder
 echo "" > build/ramdisk/twPie/system/.placeholder
 
-echo "" > build/ramdisk/lineage16/acct/.placeholder
-echo "" > build/ramdisk/lineage16/config/.placeholder
-echo "" > build/ramdisk/lineage16/data/.placeholder
-echo "" > build/ramdisk/lineage16/dev/.placeholder
-echo "" > build/ramdisk/lineage16/mnt/.placeholder
-echo "" > build/ramdisk/lineage16/oem/.placeholder
-echo "" > build/ramdisk/lineage16/proc/.placeholder
-echo "" > build/ramdisk/lineage16/storage/.placeholder
-echo "" > build/ramdisk/lineage16/sys/.placeholder
-echo "" > build/ramdisk/lineage16/system/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/acct/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/config/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/data/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/dev/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/mnt/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/oem/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/proc/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/storage/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/sys/.placeholder
+echo "" > build/ramdisk/lineage16/ramdisk/system/.placeholder
 
 echo "" > build/ramdisk/lineage17/ramdisk/apex/.placeholder
 echo "" > build/ramdisk/lineage17/ramdisk/debug_ramdisk/.placeholder

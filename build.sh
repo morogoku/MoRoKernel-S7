@@ -167,6 +167,15 @@ FUNC_BUILD_RAMDISK()
 		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dt
 		cd temp
 
+	elif [ $OS == "lineage16" ]; then
+		cp -rf ramdisk/lineage16/ramdisk/. temp/ramdisk
+		cp -rf ramdisk/lineage16/split_img/. temp/split_img
+		rm -f temp/split_img/boot.img-zImage
+		rm -f temp/split_img/boot.img-dt
+		mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
+		mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dt
+		cd temp
+
 	elif [ $OS == "treblePie" ]; then
 		cp -rf ramdisk/treblePie/ramdisk/. temp/ramdisk
 		cp -rf ramdisk/treblePie/split_img/. temp/split_img

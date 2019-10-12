@@ -65,7 +65,7 @@ Las opciones marcadas son las recomendadas.
 menu.group1=Opciones de Root
 menu.1=Sin Root
 menu.1desc=Recomendado si va a instalar otro tipo de root por su cuenta.
-menu.2=Magisk v19.4
+menu.2=Magisk v20.0
 menu.2desc=Magisk Manager con Root integrado
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09
 menu.5desc=Famoso root de Chainfire.

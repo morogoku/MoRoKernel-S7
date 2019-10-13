@@ -2,14 +2,21 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v7.3</#></b>
-	FECHA	: <b><#selectbg_g>24/09/2019</#></b>
+	VERSIÓN	: <b><#selectbg_g>v7.4</#></b>
+	FECHA	: <b><#selectbg_g>03/10/2019</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v7.4</#></b></u>
+<*>Kernel updated to 3.18.140.4 ASB-2019-10-05_3.18</*>
+<*>Soporte para Lineage 17</*>
+<*>Little A53 OC a 1794MHz</*>
+<*>Magisk 20.0</*>
+<*>Actualizado perfil Battery spectrum por rtakak</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v7.3</#></b></u>
 <*>kernel updated to 3.18.140-20190916</*>

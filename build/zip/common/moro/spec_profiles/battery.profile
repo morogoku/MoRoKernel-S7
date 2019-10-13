@@ -1,4 +1,4 @@
-# # Battery - rtakak Spectrum Profile For Moro Kernel
+# # Battery - rtakak Spectrum Profile For Moro Kernel v2
 
    # Little CPU
      chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -30,7 +30,7 @@
    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/param_index
    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/param_index 0
    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration
-   write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 30000
+   write /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration 40000
 
 
    # Big CPU
@@ -63,7 +63,7 @@
    chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/param_index
    write /sys/devices/system/cpu/cpu4/cpufreq/interactive/param_index 0
    chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration
-   write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 20000
+   write /sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration 30000
 
 
    # CPU HOTPLUG
@@ -71,9 +71,9 @@
 
    # HMP
    chmod 0664 /sys/kernel/hmp/up_threshold
-   write /sys/kernel/hmp/up_threshold 720
+   write /sys/kernel/hmp/up_threshold 780
    chmod 0664 /sys/kernel/hmp/down_threshold
-   write /sys/kernel/hmp/down_threshold 270
+   write /sys/kernel/hmp/down_threshold 300
 
    # GPU
    chmod 0664 /sys/devices/14ac0000.mali/max_clock
@@ -92,16 +92,17 @@
    write /sys/devices/14ac0000.mali/highspeed_delay 1
 
    # IO Scheduler
-   write /sys/block/sda/queue/scheduler deadline
-   write /sys/block/sda/queue/read_ahead_kb 1024
-   write /sys/block/mmcblk0/queue/scheduler deadline
-   write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+   write /sys/block/sda/queue/scheduler cfq
+   write /sys/block/sda/queue/read_ahead_kb 128
+   write /sys/block/mmcblk0/queue/nr_requests 256
+   write /sys/block/mmcblk0/queue/scheduler cfq
+   write /sys/block/mmcblk0/queue/read_ahead_kb 128
 
 
    # Wakelocks
    write /sys/module/wakeup/parameters/enable_ssp_wl 0
    write /sys/module/wakeup/parameters/enable_sensorhub_wl 0
-   write /sys/module/sec_battery/parameters/wl_polling 4
+   write /sys/module/sec_battery/parameters/wl_polling 3
    write /sys/module/sec_nfc/parameters/wl_nfc 1
 
    # Misc

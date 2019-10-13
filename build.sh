@@ -30,8 +30,9 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 
 K_VERSION="v7.4b02"
+K_SUBVER="3"
 K_BASE="CSF1"
-K_NAME="20190916-MoRoKernel"
+K_NAME="MoRoKernel"
 export KBUILD_BUILD_VERSION="1"
 
 
@@ -256,7 +257,7 @@ else
 	export BUILD_PLATFORM_VERSION=8.0.0
 fi
 
-export KERNEL_VERSION="$K_NAME-$OS-$K_BASE-$K_VERSION"
+export KERNEL_VERSION="$K_SUBVER-$K_NAME-$OS-$K_BASE-$K_VERSION"
 
 (
 	START_TIME=`date +%s`

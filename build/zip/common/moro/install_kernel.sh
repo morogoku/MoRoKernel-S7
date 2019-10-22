@@ -52,6 +52,9 @@ if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
 		if [ $SDK == 28 ]; then
 			ui_print "-- Rom: Treble PIE"
 			OS="treblePie"
+		elif [ $SDK == 29 ]; then
+			ui_print "-- Rom: Treble Q"
+			OS="treblePie"
 		else
 			ui_print " "
 			ui_print "@** UNSUPPORTED ANDROID VERSION **"

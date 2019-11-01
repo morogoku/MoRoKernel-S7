@@ -82,6 +82,7 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
+menu.1desc2=In roms Treble Quack phhusson, I recommend not installing Magisk
 menu.2=Magisk v20.0
 menu.2desc=Magisk Manager with Root integrated.
 menu.5=SuperSU 2.82-SR5 + SuHide 1.09

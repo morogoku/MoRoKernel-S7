@@ -19,11 +19,18 @@ ini_set("force_colorspace", "rgba");
 # Abort variable
 writetmpfile("abort.prop","abort=0");
 
+# Treble Q variable
+writetmpfile("trebleq.prop","trebleq=0");
+
+# Lineage 17 variable
+writetmpfile("los17.prop","los17=0");
+
 # Show GPU driver menu variable
 writetmpfile("gpu_driver.prop","show=0");
-# Execute script to update variable
-restotmp("files/show_gpu.sh","show_gpu.sh");
-exec("/tmp/aroma/show_gpu.sh");
+
+# Execute script to update variables
+restotmp("files/init_variables.sh","init_variables.sh");
+exec("/tmp/aroma/init_variables.sh");
 
 ##
 # Show Animated Splash
@@ -106,20 +113,61 @@ textbox(
 # Instalacion
 #
 
-form(
-	"<~menu.title>",
-	"<~menu.desc>",
-	"@personalize",
-	"menu.prop",
+if (prop("trebleq.prop","trebleq")=="1") then
 
-	"group1",     "<b><~menu.group1></b>",  "",                     	"group",
-	  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
-	  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
-	"group2",     "<b><~menu.group2></b>",  "",                     	"group",
-	  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
-	  "chk10",    "<b><~menu.10></b>",      "<~menu.10desc>",		"check.checked",
-	  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
-);
+	# If TrebleQ
+	form(
+		"<~menu.title>",
+		"<~menu.desc>",
+		"@personalize",
+		"menu.prop",
+
+		"group1",     "<b><~menu.group1></b>",  "",                     	"group",
+		  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc2>",         	"select.selected",
+		  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select",
+		"group2",     "<b><~menu.group2></b>",  "",                     	"group",
+		  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
+		  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
+	);
+	
+else 
+
+	# If Lineage17
+	if (prop("los17.prop","los17")=="1") then
+
+		# If Lineage 17
+		form(
+			"<~menu.title>",
+			"<~menu.desc>",
+			"@personalize",
+			"menu.prop",
+
+			"group1",     "<b><~menu.group1></b>",  "",                     	"group",
+			  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
+			  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
+			"group2",     "<b><~menu.group2></b>",  "",                     	"group",
+			  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
+		);
+
+	else
+
+		# Others
+		form(
+			"<~menu.title>",
+			"<~menu.desc>",
+			"@personalize",
+			"menu.prop",
+
+			"group1",     "<b><~menu.group1></b>",  "",                     	"group",
+			  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
+			  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
+			"group2",     "<b><~menu.group2></b>",  "",                     	"group",
+			  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
+			  "chk10",    "<b><~menu.10></b>",      "<~menu.10desc>",		"check.checked",
+			  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
+		);
+	endif;
+endif;
 
 if (prop("gpu_driver.prop","show")=="1") then
 

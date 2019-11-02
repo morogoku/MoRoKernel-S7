@@ -84,6 +84,7 @@ static struct lpj_info global_lpj_ref;
 
 struct device_node *moro_np;
 static int cluster1_all_cores = 0;
+static int cluster0_ms = 0;
 
 /* For switcher */
 static unsigned int freq_min[CL_END] __read_mostly;	/* Minimum (Big/Little) clock frequency */
@@ -2614,6 +2615,10 @@ static int exynos_mp_cpufreq_parse_dt(struct device_node *np, cluster_type cl)
 	if (of_property_read_u32(np, (cl ? "cl1_max_support_idx" : "cl0_max_support_idx"),
 				&ptr->max_support_idx))
 		return -ENODEV;
+		
+	if (cl == CL_ZERO && cluster0_ms != 0) {
+		ptr->max_support_idx = cluster0_ms;
+	}
 
 	if (of_property_read_u32(np, (cl ? "cl1_min_support_idx" : "cl0_min_support_idx"),
 				&ptr->min_support_idx))
@@ -3008,3 +3013,10 @@ static void __exit exynos_mp_cpufreq_exit(void)
 	platform_device_unregister(&exynos_mp_cpufreq_device);
 }
 module_exit(exynos_mp_cpufreq_exit);
+
+static int __init cpufreq_read_little_ms(char *str)
+{
+	get_option(&str, &cluster0_ms);
+	return 1;
+}
+__setup("little_ms=", cpufreq_read_little_ms);

@@ -122,6 +122,9 @@ if (prop("trebleq.prop","trebleq")=="1") then
 		"@personalize",
 		"menu.prop",
 
+		"group3",     "<b><~menu.group3></b>",  "",                     	"group",
+		  "opt3",     "<b><~menu.11></b>",       "<~menu.11desc>",         	"select.selected",
+		  "opt4",     "<b><~menu.12></b>",       "<~menu.12desc>",         	"select",
 		"group1",     "<b><~menu.group1></b>",  "",                     	"group",
 		  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc2>",         	"select.selected",
 		  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select",
@@ -142,6 +145,9 @@ else
 			"@personalize",
 			"menu.prop",
 
+			"group3",     "<b><~menu.group3></b>",  "",                     	"group",
+			  "opt3",     "<b><~menu.11></b>",       "<~menu.11desc>",         	"select.selected",
+			  "opt4",     "<b><~menu.12></b>",       "<~menu.12desc>",         	"select",
 			"group1",     "<b><~menu.group1></b>",  "",                     	"group",
 			  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
 			  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
@@ -157,7 +163,10 @@ else
 			"<~menu.desc>",
 			"@personalize",
 			"menu.prop",
-
+			
+			"group3",     "<b><~menu.group3></b>",  "",                     	"group",
+			  "opt3",     "<b><~menu.11></b>",       "<~menu.11desc>",         	"select.selected",
+			  "opt4",     "<b><~menu.12></b>",       "<~menu.12desc>",         	"select",
 			"group1",     "<b><~menu.group1></b>",  "",                     	"group",
 			  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",         	"select",
 			  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",         	"select.selected",
@@ -168,6 +177,30 @@ else
 		);
 	endif;
 endif;
+
+###
+# Little OC
+#
+
+if (prop("menu.prop","group3")=="opt4") then
+
+	selectbox(
+		"<~loc.title>",
+		"<~loc.desc>",
+		"icons/default",
+		"loc.prop",
+		
+		"<b><~loc.group></b>", 	"",				2,	#-- Grupo 1
+		"<b><~loc.1></b>",		"<~loc.1desc>",		1,	#-- selected.1 = 1
+		"<b><~loc.2></b>",		"<~loc.2desc>",		0,	#-- selected.1 = 2
+		"<b><~loc.3></b>",		"<~loc.3desc>",		0	#-- selected.1 = 3
+	);
+
+endif;
+
+###
+# GPU
+#
 
 if (prop("gpu_driver.prop","show")=="1") then
 
@@ -186,6 +219,7 @@ else
 	writetmpfile("gpu.prop","selected.1=1");
 
 endif;
+
 
 #########################################################################################
 # Confirmar

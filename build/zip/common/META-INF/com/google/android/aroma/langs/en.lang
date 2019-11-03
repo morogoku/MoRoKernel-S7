@@ -103,6 +103,22 @@ menu.9=Fix Private Mode (Stock Roms)
 menu.9desc=Only with S7 Stock based Roms
 menu.10=Spectrum Profiles
 menu.10desc=Copy in sdcard/Spectrum/profiles
+menu.group3=Overclock Little CPU
+menu.11=No, Little CPU Stock
+menu.11desc=Max Freq: 1586MHz
+menu.12=Yes, Enable OC Little Cpu
+menu.12desc=Select the Overclock for Little CPU on the next screen
+
+# Little OC
+loc.title=LITTLE CPU OVERCLOCK
+loc.desc=Select the maximum freq available for LITTLE Cpu. If you have random reboots disable the OC
+loc.group=Little CPU OC
+loc.1=Low OC
+loc.1desc=Max Freq: 1690MHz
+loc.2=Mid OC
+loc.2desc=Max Freq: 1794MHz
+loc.3=Hight OC (Unstable)
+loc.3desc=Max Freq: 1898MHz
 
 # GPU driver
 gpu.title=GPU Driver % Libs

@@ -86,6 +86,22 @@ menu.9=Fix Modo Privado (Stock Roms)
 menu.9desc=Solo con Roms basadas en S7 Stock.
 menu.10=Perfiles Spectrum
 menu.10desc=Copiar en sdcard/Spectrum/profiles
+menu.group3=Overclock Little CPU
+menu.11=No, Little CPU Stock
+menu.11desc=Max Freq: 1586MHz
+menu.12=Si, Activar OC Little Cpu
+menu.12desc=Seleccione en la siguiente pantalla el Overclock para Little CPU
+
+# Little OC
+loc.title=LITTLE CPU OVERCLOCK
+loc.desc=Seleccione la frecuencia maxima disponible para LITTLE Cpu. Si tiene reinicios aleatorios desactive el OC
+loc.group=Little CPU OC
+loc.1=Low OC
+loc.1desc=Max Freq: 1690MHz
+loc.2=Mid OC
+loc.2desc=Max Freq: 1794MHz
+loc.3=Hight OC (Inestable)
+loc.3desc=Max Freq: 1898MHz
 
 # GPU driver
 gpu.title=GPU Driver & Libs

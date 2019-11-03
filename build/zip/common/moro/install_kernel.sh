@@ -27,7 +27,6 @@ if [ $MODEL == $MODEL1 ]; then MODEL_DESC=$MODEL1_DESC; fi
 if [ $MODEL == $MODEL2 ]; then MODEL_DESC=$MODEL2_DESC; fi
 
 
-
 #======================================
 # AROMA INIT
 #======================================
@@ -99,7 +98,6 @@ else
 fi
 
 
-
 set_progress 0.10
 show_progress 0.25 -6000
 
@@ -145,7 +143,7 @@ sed -i '/ro.lmk/d' /system/build.prop
 
 
 set_progress 0.35
-show_progress 0.25 -9000
+show_progress 0.25 -24000
 
 ## FLASH KERNEL
 ui_print " "
@@ -154,6 +152,30 @@ ui_print "@Flashing kernel"
 cd /tmp/moro
 ui_print "-- Extracting"
 $BB tar -Jxf kernel.tar.xz $MODEL-$OS-$GPU-boot.img
+
+## Little OC
+if [ "$(file_getprop /tmp/aroma/menu.prop group3)" == "opt4" ]; then
+	# Unpack
+	ui_print "-- Unpacking"
+	mv /tmp/moro/$MODEL-$OS-$GPU-boot.img /tmp/moro/aik/boot.img
+	cd /tmp/moro/aik
+	./unpackimg.sh boot.img
+	rm -f boot.img
+	
+	# Patch cmdline
+	ui_print "-- Enabling Little CPU OC"
+	. /tmp/moro/cmdline.sh
+	
+	# Pack
+	ui_print "-- Packing"
+	cd /tmp/moro/aik
+	./repackimg.sh
+	echo SEANDROIDENFORCE >> image-new.img
+	mv -f /tmp/moro/aik/image-new.img /tmp/moro/$MODEL-$OS-$GPU-boot.img
+	cd /tmp/moro
+fi
+
+# Write kernel img
 ui_print "-- Flashing kernel $MODEL-$OS-$GPU-boot.img"
 dd of=/dev/block/platform/155a0000.ufs/by-name/BOOT if=/tmp/moro/$MODEL-$OS-$GPU-boot.img
 ui_print "-- Done"
@@ -226,6 +248,7 @@ show_progress 0.34 -19000
 fi
 
 
+ui_print " "
 ui_print "@Unmounting"
 unmount_system
 ui_print "-- umount /system"

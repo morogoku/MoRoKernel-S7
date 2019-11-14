@@ -22,6 +22,12 @@ obj-$(CONFIG_ECT)		+= ect_parser.o
 obj-$(CONFIG_EXYNOS_OTP)    += exynos_otp.o
 
 obj-$(CONFIG_EXYNOS_HOTPLUG_GOVERNOR)	+= exynos-hotplug_governor.o
+obj-$(CONFIG_AIO_HOTPLUG)		+= aio_hotplug.o
+obj-$(CONFIG_ALUCARD_HOTPLUG)		+= alucard_hotplug.o
+obj-$(CONFIG_ASMP_HOTPLUG)		+= autosmp.o
+obj-$(CONFIG_THUNDERPLUG_HOTPLUG)	+= thunderplug.o
+obj-$(CONFIG_INTELLI_PLUG) 		+= intelli_plug.o
+obj-$(CONFIG_BLU_PLUG)			+= blu_plug.o
 
 # memory
 obj-$(CONFIG_ARCH_EXYNOS)	+= memory/

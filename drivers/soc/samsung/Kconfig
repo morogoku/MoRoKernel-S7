@@ -77,5 +77,56 @@ config MCINFO_SYSFS
 
 config STATE_NOTIFIER
     	bool "State Notifier"
+    	
+config AIO_HOTPLUG
+	bool "All in One HotPlug"
+	depends on SMP && HOTPLUG_CPU
+	default n
+	help
+	  an All in One HotPlug for Traditional Quad-Core SoCs and 
+	  Hexa/Octa-Core big.LITTLE SoCs.
+	  
+config ALUCARD_HOTPLUG
+	bool "Enable alucard-hotplug cpu hotplug driver"
+	depends on HOTPLUG_CPU
+	default n
+	help
+	  Generic Alucard-hotplug cpu hotplug driver for ARM SOCs
+
+config ASMP_HOTPLUG
+	bool "Multi-core automatic hotplug support"
+	depends on HOTPLUG_CPU
+	default n
+	help
+	  Automatically hotplugs the multiple cpu cores on and off
+	  based on cpu load and suspend state
+      
+config ASMPTS_HOTPLUG
+	bool "Multi-core automatic hotplug support"
+	depends on SMP && HOTPLUG_CPU
+	default n
+	help
+	  Automatically hotplugs the multiple cpu cores on and off
+	  based on cpu load and suspend state
+      
+config THUNDERPLUG_HOTPLUG
+	bool "Enable plugging down/up of cores using powersuspend"
+	default n
+	help
+	  This driver uses powersuspend to take down the cpu cores
+	  on a octa core device.
+	  
+config INTELLI_PLUG
+	bool "Enable intelli-plug cpu hotplug driver"
+	default n
+	help
+	  Generic Intelli-plug cpu hotplug driver for ARM SOCs
+	  
+config BLU_PLUG
+	bool "Dynamic hotplug driver"
+	depends on HOTPLUG_CPU
+	default n
+	help
+	  The Dynamic hotplug driver automatically online/offline CPUs proportional to system load.
 
 endif #SOC_SAMSUNG

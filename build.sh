@@ -29,7 +29,7 @@ DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 
-K_VERSION="v7.6b01"
+K_VERSION="v7.6b03"
 K_SUBVER="5"
 K_BASE="CSI1"
 K_NAME="MoRoKernel"

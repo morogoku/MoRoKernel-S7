@@ -2,14 +2,20 @@
 <b>INFORMACIÓN DEL KERNEL:</b>
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSIÓN	: <b><#selectbg_g>v7.5</#></b>
-	FECHA	: <b><#selectbg_g>03/11/2019</#></b>
+	VERSIÓN	: <b><#selectbg_g>v7.6</#></b>
+	FECHA	: <b><#selectbg_g>19/11/2019</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v7.6</#></b></u>
+<*>Actualizado Kernel a 3.18.140.5 ASB-2019-11-05_3.18</*>
+<*>Samsung Sources N935SKKU4CSI1</*>
+<*>Añadidos CPU Hotplugs (de Thunderstorms kernel)</*>
+<*>Mtweaks v2.16.0</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v7.5</#></b></u>
 <*>Soporte para instalación de roms Treble Q</*>

@@ -34,7 +34,7 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 # VERSION KERNEL
 # --------------
-K_VERSION="v0"
+K_VERSION="v8.0b04"
 K_SUBVER="6"
 K_BASE="CSK1"
 K_NAME="MoRoKernel"

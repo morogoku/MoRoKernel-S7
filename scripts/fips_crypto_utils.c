@@ -13,84 +13,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
- 
-int main (int argc, char **argv)
-{
-	if (argc < 2)
-	{
-		printf ("\nUsage : \n");
-		printf ("fips_crypto_utils -u vmlinux_file hmac_file offset");
-		printf ("fips_crypto_utils -g vmlinux_file section_name offset size out_file");
-		printf ("\n");
-		return -1;
-	}
-
-	if (!strcmp ("-u", argv[1]))
-	{
-		unsigned long offset = 0;
-		unsigned char * vmlinux_file = NULL;
-		unsigned char * hmac_file    = NULL;
-
-		if (argc != 5)
-		{
-			printf ("\nUsage : \n");
-			printf ("fips_crypto_utils -u vmlinux_file hmac_file offset");
-			printf ("\n");
-			return -1;
-		}
-		
-		vmlinux_file = argv[2];
-		hmac_file    = argv[3];
-		offset       = atol(argv[4]);
-		
-		if (!vmlinux_file || !hmac_file || !offset)
-		{
-			printf ("./fips_crypto_utils -u vmlinux_file hmac_file offset");
-			return -1;
-		}
-
-		return update_crypto_hmac (vmlinux_file, hmac_file, offset);
-	}
-	else if (!strcmp ("-g", argv[1]))
-	{
-		const char * in_file      = NULL;
-		const char * section_name = NULL;
-		unsigned long offset      = 0;
-		unsigned long size        = 0;
-		const char * out_file     = NULL;
-
-		if (argc != 7)
-		{
-			printf ("\nUsage : \n");
-			printf ("./fips_crypto_utils -g vmlinux_file section_name offset size out_file");
-			printf ("\n");
-			return -1;
-		}
-
-		in_file      = argv[2];
-		section_name = argv[3];
-		offset       = atol(argv[4]);
-		size         = atol(argv[5]);
-		out_file     = argv[6];
-
-		if (!in_file || !section_name || !offset || !size || !out_file)
-		{
-			printf ("./fips_crypto_utils -g vmlinux_file section_name offset size out_file");
-			return -1;
-		}
-
-		return collect_crypto_bytes (in_file, section_name, offset, size, out_file);
-	}
-	else
-	{
-		printf ("\nUsage : \n");
-		printf ("fips_crypto_utils -u vmlinux_file hmac_file offset");
-		printf ("fips_crypto_utils -g vmlinux_file section_name offset size out_file");
-		printf ("\n");
-	}
-
-	return -1;
-}
+#include <string.h>
 
 /*
  * Given a vmlinux file, dumps "size" bytes from given "offset" to output file
@@ -251,4 +174,82 @@ update_crypto_hmac (const char * vmlinux_path, const char * hmac_path, unsigned 
 	fclose (hmac_fp);
 
 	return 0;
+}
+
+int main (int argc, char **argv)
+{
+	if (argc < 2)
+	{
+		printf ("\nUsage : \n");
+		printf ("fips_crypto_utils -u vmlinux_file hmac_file offset");
+		printf ("fips_crypto_utils -g vmlinux_file section_name offset size out_file");
+		printf ("\n");
+		return -1;
+	}
+
+	if (!strcmp ("-u", argv[1]))
+	{
+		unsigned long offset = 0;
+		unsigned char * vmlinux_file = NULL;
+		unsigned char * hmac_file    = NULL;
+
+		if (argc != 5)
+		{
+			printf ("\nUsage : \n");
+			printf ("fips_crypto_utils -u vmlinux_file hmac_file offset");
+			printf ("\n");
+			return -1;
+		}
+		
+		vmlinux_file = argv[2];
+		hmac_file    = argv[3];
+		offset       = atol(argv[4]);
+		
+		if (!vmlinux_file || !hmac_file || !offset)
+		{
+			printf ("./fips_crypto_utils -u vmlinux_file hmac_file offset");
+			return -1;
+		}
+
+		return update_crypto_hmac (vmlinux_file, hmac_file, offset);
+	}
+	else if (!strcmp ("-g", argv[1]))
+	{
+		const char * in_file      = NULL;
+		const char * section_name = NULL;
+		unsigned long offset      = 0;
+		unsigned long size        = 0;
+		const char * out_file     = NULL;
+
+		if (argc != 7)
+		{
+			printf ("\nUsage : \n");
+			printf ("./fips_crypto_utils -g vmlinux_file section_name offset size out_file");
+			printf ("\n");
+			return -1;
+		}
+
+		in_file      = argv[2];
+		section_name = argv[3];
+		offset       = atol(argv[4]);
+		size         = atol(argv[5]);
+		out_file     = argv[6];
+
+		if (!in_file || !section_name || !offset || !size || !out_file)
+		{
+			printf ("./fips_crypto_utils -g vmlinux_file section_name offset size out_file");
+			return -1;
+		}
+
+		return collect_crypto_bytes (in_file, section_name, offset, size, out_file);
+	}
+	else
+	{
+		printf ("\nUsage : \n");
+		printf ("fips_crypto_utils -u vmlinux_file hmac_file offset");
+		printf ("fips_crypto_utils -g vmlinux_file section_name offset size out_file");
+		printf ("\n");
+	}
+
+	return -1;
 }

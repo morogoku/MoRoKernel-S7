@@ -10,8 +10,16 @@
 # -----
 export ARCH=arm64
 export SUBARCH=arm64
-export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-export CROSS_COMPILE=$BUILD_CROSS_COMPILE
+
+GCC_PATH=/home/moro/kernel/toolchains/aarch64-linux-android-4.9
+CLANG_PATH=/home/moro/kernel/toolchains/clang-10.0.1-r370808
+#CLANG_PATH=/home/moro/kernel/toolchains/clang-6.0.2-4691093
+
+CLANG="yes"
+BUILD_CC=$CLANG_PATH/bin/clang
+BUILD_CLANG_TRIPLE=$CLANG_PATH/bin/aarch64-linux-gnu-
+BUILD_CROSS_COMPILE=$GCC_PATH/bin/aarch64-linux-android-
+
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 export ANDROID_MAJOR_VERSION=p 
@@ -83,10 +91,17 @@ FUNC_BUILD_KERNEL()
 	#FUNC_CLEAN_DTB
 
 	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
-			CROSS_COMPILE=$BUILD_CROSS_COMPILE \
 			tmp_defconfig || exit -1
-	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
-			CROSS_COMPILE=$BUILD_CROSS_COMPILE || exit -1
+
+	if [ $CLANG == "yes" ]; then
+		make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
+				CC=$BUILD_CC \
+				CLANG_TRIPLE=$BUILD_CLANG_TRIPLE \
+				CROSS_COMPILE=$BUILD_CROSS_COMPILE || exit -1
+	else
+		make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
+				CROSS_COMPILE=$BUILD_CROSS_COMPILE || exit -1
+	fi
 	echo ""
 
 	rm -f $RDIR/arch/$ARCH/configs/tmp_defconfig

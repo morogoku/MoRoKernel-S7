@@ -152,7 +152,7 @@ static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,
 	return oldval;
 }
 
-static inline unsigned long __cmpxchg_mb(volatile void *ptr, unsigned long old,
+static __always_inline unsigned long __cmpxchg_mb(volatile void *ptr, unsigned long old,
 					 unsigned long new, int size)
 {
 	unsigned long ret;

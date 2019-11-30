@@ -26,7 +26,7 @@
  * kernel v2.6.38 the now deprecated power_frequency trace point was
  * available prior to 2.6.38, but only for x86
  */
-#if GATOR_CPU_FREQ_SUPPORT
+#ifdef GATOR_CPU_FREQ_SUPPORT
 enum {
 	POWER_CPU_FREQ,
 	POWER_TOTAL

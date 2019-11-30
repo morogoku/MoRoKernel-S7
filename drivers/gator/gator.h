@@ -139,7 +139,7 @@ void gator_backtrace_handler(struct pt_regs *const regs);
 
 void gator_marshal_activity_switch(int core, int key, int activity, int pid);
 
-#if !GATOR_IKS_SUPPORT
+#ifndef GATOR_IKS_SUPPORT
 
 #define get_physical_cpu() smp_processor_id()
 #define lcpu_to_pcpu(lcpu) lcpu

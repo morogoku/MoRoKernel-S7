@@ -40,7 +40,7 @@ static void marshal_summary(long long timestamp, long long uptime, long long mon
 	gator_buffer_write_string(cpu, SUMMARY_BUF, "PAGESIZE");
 	snprintf(buf, sizeof(buf), "%lu", PAGE_SIZE);
 	gator_buffer_write_string(cpu, SUMMARY_BUF, buf);
-#if GATOR_IKS_SUPPORT
+#ifdef GATOR_IKS_SUPPORT
 	gator_buffer_write_string(cpu, SUMMARY_BUF, "iks");
 	gator_buffer_write_string(cpu, SUMMARY_BUF, "");
 #endif
@@ -305,7 +305,7 @@ static void marshal_sched_trace_exit(int tgid, int pid)
 	buffer_check(cpu, SCHED_TRACE_BUF, time);
 }
 
-#if GATOR_CPU_FREQ_SUPPORT
+#ifdef GATOR_CPU_FREQ_SUPPORT
 static void marshal_idle(int core, int state)
 {
 	unsigned long flags, cpu;

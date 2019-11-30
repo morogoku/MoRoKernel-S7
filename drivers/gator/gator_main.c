@@ -54,7 +54,7 @@ static unsigned long gator_protocol_version = PROTOCOL_VERSION;
 #error gator requires the kernel to have CONFIG_LOCAL_TIMERS defined on SMP systems
 #endif
 
-#if (GATOR_PERF_SUPPORT) && (!(GATOR_PERF_PMU_SUPPORT))
+#if defined(GATOR_PERF_SUPPORT) && !defined(GATOR_PERF_PMU_SUPPORT)
 #ifndef CONFIG_PERF_EVENTS
 #error gator requires the kernel to have CONFIG_PERF_EVENTS defined to support pmu hardware counters
 #elif !defined CONFIG_HW_PERF_EVENTS

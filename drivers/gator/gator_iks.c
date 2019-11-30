@@ -7,10 +7,10 @@
  *
  */
 
-#if GATOR_IKS_SUPPORT
+#ifdef GATOR_IKS_SUPPORT
 
 #include <linux/of.h>
-#include <asm/bL_switcher.h>
+#include "../../arch/arm/include/asm/bL_switcher.h"
 #include <asm/smp_plat.h>
 #include <trace/events/power_cpu_migrate.h>
 

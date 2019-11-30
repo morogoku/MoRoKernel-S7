@@ -9,7 +9,7 @@
 #include "gator.h"
 
 /* gator_events_armvX.c is used for Linux 2.6.x */
-#if GATOR_PERF_PMU_SUPPORT
+#ifdef GATOR_PERF_PMU_SUPPORT
 
 #include <linux/io.h>
 #ifdef CONFIG_OF

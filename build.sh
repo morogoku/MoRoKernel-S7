@@ -12,8 +12,8 @@ export ARCH=arm64
 export SUBARCH=arm64
 
 GCC_PATH=/home/moro/kernel/toolchains/aarch64-linux-android-4.9
-CLANG_PATH=/home/moro/kernel/toolchains/clang-10.0.1-r370808
-#CLANG_PATH=/home/moro/kernel/toolchains/clang-6.0.2-4691093
+#CLANG_PATH=/home/moro/kernel/toolchains/clang-10.0.1-r370808
+CLANG_PATH=/home/moro/kernel/toolchains/clang-6.0.2-4691093
 
 CLANG="yes"
 BUILD_CC=$CLANG_PATH/bin/clang
@@ -42,7 +42,7 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 # VERSION KERNEL
 # --------------
-K_VERSION="v8.0b04"
+K_VERSION="v8.0b13"
 K_SUBVER="6"
 K_BASE="CSK1"
 K_NAME="MoRoKernel"
@@ -179,7 +179,7 @@ FUNC_BUILD_RAMDISK()
 	./repackimg.sh
 
 	echo SEANDROIDENFORCE >> image-new.img
-	mv image-new.img $RDIR/build/$K_NAME-$K_OS-$K_BASE-$K_VERSION.img
+	mv image-new.img $RDIR/build/$K_NAME-$MODEL-$K_OS-$K_BASE-$K_VERSION.img
 	rm -rf $RDIR/build/temp
 }
 

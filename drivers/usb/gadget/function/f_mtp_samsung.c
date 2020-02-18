@@ -1779,9 +1779,9 @@ static int mtp_bind_config(struct usb_configuration *c, bool ptp_config)
 		if (status < 0)
 			return status;
 
-			strings_dev_mtp[F_MTP_IDX].id = status;
-			mtpg_interface_desc.iInterface = status;
-		}
+		strings_dev_mtp[F_MTP_IDX].id = status;
+		mtpg_interface_desc.iInterface = status;
+	}
 
 	mtpg->cdev = c->cdev;
 	mtpg->function.name = mtpg_longname;

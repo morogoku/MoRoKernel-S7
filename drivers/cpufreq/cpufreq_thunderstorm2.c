@@ -734,7 +734,7 @@ static void cpufreq_thunderstorm2_adjust_cpu(unsigned int cpu,
 	}
 
 	if (max_freq != policy->cur) {
-		__cpufreq_driver_target(policy, max_freq, CPUFREQ_RELATION_H);
+		__cpufreq_driver_target(policy, max_freq, CPUFREQ_RELATION_C);
 		for_each_cpu(i, policy->cpus) {
 			pcpu = &per_cpu(cpuinfo, i);
 			pcpu->pol_hispeed_val_time = hvt;

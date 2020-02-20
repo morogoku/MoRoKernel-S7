@@ -727,7 +727,7 @@ static int cpufreq_interactive_speedchange_task(void *data)
 			if (max_freq != pcpu->policy->cur) {
 				__cpufreq_driver_target(pcpu->policy,
 							max_freq,
-							CPUFREQ_RELATION_H);
+							CPUFREQ_RELATION_C);
 				for_each_cpu(j, pcpu->policy->cpus) {
 					pjcpu = &per_cpu(cpuinfo, j);
 					pjcpu->pol_hispeed_val_time = hvt;

@@ -410,6 +410,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
+		   -march=armv8-a -mtune=cortex-a72.cortex-a53 \
 		   -std=gnu89 $(call cc-option,-fno-PIE)
 
 KBUILD_AFLAGS_KERNEL :=

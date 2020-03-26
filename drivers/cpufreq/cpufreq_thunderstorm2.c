@@ -14,11 +14,20 @@
  *
  * Author: Mike Chan (mike@android.com)
  *
+ * Modded by : @nalas XDA
  * This is CPU governor based on interactive backported by me from Samsung
  * Galaxy S9 with some changes and addodns edited by @nalas XDA.
  * added :
- * - DOWN_LOW_LOAD_THRESHOLD, editbale by user
+ * ThunderStorm v1.0:
+ * - based on Interactive stock's from Samsung Galaxy S7
+ * - DOWN_LOW_LOAD_THRESHOLD (go_lowspeed_load), editbale by user
+ * ThunderStorm v2.0:
+ * - based on Interactive stock's from Samsung Galaxy S8/S9
+ * - DOWN_LOW_LOAD_THRESHOLD (go_lowspeed_load), editbale by user
  * - Screen off settings : screen_off_max, screen_off_timer_rate and prev_timer_rate, editable by user
+ * ThunderStorm v2.1:
+ * - State Notifier : added support for State_notifier
+ * - Max Freq Hysteresis : Max Freq Hysteresis, editable by user
  *
  */
 
@@ -52,6 +61,9 @@
 #define CONFIG_DYNAMIC_MODE_SUPPORT
 //#define CONFIG_DYNAMIC_MODE_SUPPORT_DEBUG
 
+#ifdef CONFIG_STATE_NOTIFIER
+#include <linux/state_notifier.h>
+#endif
 bool screen_on;
 
 struct cpufreq_thunderstorm2_cpuinfo {
@@ -71,6 +83,7 @@ struct cpufreq_thunderstorm2_cpuinfo {
 	u64 loc_floor_val_time; /* per-cpu floor_validate_time */
 	u64 pol_hispeed_val_time; /* policy hispeed_validate_time */
 	u64 loc_hispeed_val_time; /* per-cpu hispeed_validate_time */
+	u64 max_freq_hyst_start_time;
 	struct rw_semaphore enable_sem;
 	int governor_enabled;
 	u64 delta_idle;
@@ -148,17 +161,22 @@ struct cpufreq_thunderstorm2_tunables {
 	int timer_slack_val;
 	bool io_is_busy;
 
+	/*
+	 * Stay at max freq for at least max_freq_hysteresis before dropping
+	 * frequency.
+	 */
+	unsigned int max_freq_hysteresis;
+
 	/* handle for get cpufreq_policy */
 	unsigned int *policy;
 	
-	/* added 8% so no jump to high freq - was 6 */
+	/* added 8% so no jump to high freq - was 6  - is the same like go_lowspeed_load */
 #define DEFAULT_DOWN_LOW_LOAD_THRESHOLD 8
 	unsigned long down_low_load_threshold;
 
 	/* added simple rate max at screen off & screen off time rate */
 	unsigned long screen_off_max;
 	unsigned long screen_off_timer_rate;
-
 	
 #ifdef CONFIG_EXYNOS_WD_DVFS
 #define DEFAULT_WD_BOUNDARY 1600
@@ -604,6 +622,14 @@ static void cpufreq_thunderstorm2_timer(unsigned long data)
 
 	pcpu->loc_hispeed_val_time = now;
 
+	if (pcpu->target_freq >= pcpu->policy->max
+	    && new_freq < pcpu->target_freq
+	    && now - pcpu->max_freq_hyst_start_time <
+	    tunables->max_freq_hysteresis) {
+		spin_unlock_irqrestore(&pcpu->target_freq_lock, flags);
+		goto rearm;
+	}
+
 	/*
 	 * Do not scale below floor_freq unless we have been at or above the
 	 * floor frequency for the minimum sample time since last validated.
@@ -718,9 +744,10 @@ static void cpufreq_thunderstorm2_get_policy_info(struct cpufreq_policy *policy,
 	*pfvt = fvt;
 }
 
-static void cpufreq_thunderstorm2_adjust_cpu(unsigned int cpu,
+static void cpufreq_thunderstorm2_adjust_cpu(unsigned int cpu, 
 					   struct cpufreq_policy *policy)
 {
+	struct cpufreq_thunderstorm2_tunables *tunables;
 	struct cpufreq_thunderstorm2_cpuinfo *pcpu;
 	u64 hvt, fvt;
 	unsigned int max_freq;
@@ -734,7 +761,7 @@ static void cpufreq_thunderstorm2_adjust_cpu(unsigned int cpu,
 	}
 
 	if (max_freq != policy->cur) {
-		__cpufreq_driver_target(policy, max_freq, CPUFREQ_RELATION_C);
+		__cpufreq_driver_target(pcpu->policy, max_freq, CPUFREQ_RELATION_C);
 		for_each_cpu(i, policy->cpus) {
 			pcpu = &per_cpu(cpuinfo, i);
 			pcpu->pol_hispeed_val_time = hvt;
@@ -1119,6 +1146,27 @@ static ssize_t store_hispeed_freq(struct cpufreq_thunderstorm2_tunables *tunable
 	return count;
 }
 
+#define show_store_one(file_name)					\
+static ssize_t show_##file_name(					\
+	struct cpufreq_thunderstorm2_tunables *tunables, char *buf)	\
+{									\
+	return snprintf(buf, PAGE_SIZE, "%u\n", tunables->file_name);	\
+}									\
+static ssize_t store_##file_name(					\
+		struct cpufreq_thunderstorm2_tunables *tunables,	\
+		const char *buf, size_t count)				\
+{									\
+	int ret;							\
+	unsigned long int val;						\
+									\
+	ret = kstrtoul(buf, 0, &val);					\
+	if (ret < 0)							\
+		return ret;						\
+	tunables->file_name = val;					\
+	return count;							\
+}
+show_store_one(max_freq_hysteresis);
+
 static ssize_t show_go_hispeed_load(struct cpufreq_thunderstorm2_tunables
 		*tunables, char *buf)
 {
@@ -1319,6 +1367,7 @@ static ssize_t store_down_low_load_threshold(struct cpufreq_thunderstorm2_tunabl
 	tunables->down_low_load_threshold = val;
 	return count;
 }
+
 // -------------------------------------------
 
 static ssize_t show_timer_slack(struct cpufreq_thunderstorm2_tunables *tunables,
@@ -1528,6 +1577,7 @@ show_store_gov_pol_sys(timer_slack);
 show_store_gov_pol_sys(down_low_load_threshold);
 show_store_gov_pol_sys(screen_off_max);
 show_store_gov_pol_sys(screen_off_timer_rate);
+show_store_gov_pol_sys(max_freq_hysteresis);
 show_store_gov_pol_sys(boost);
 store_gov_pol_sys(boostpulse);
 show_store_gov_pol_sys(boostpulse_duration);
@@ -1563,6 +1613,7 @@ gov_sys_pol_attr_rw(timer_slack);
 gov_sys_pol_attr_rw(down_low_load_threshold);
 gov_sys_pol_attr_rw(screen_off_max);
 gov_sys_pol_attr_rw(screen_off_timer_rate);
+gov_sys_pol_attr_rw(max_freq_hysteresis);
 gov_sys_pol_attr_rw(boost);
 gov_sys_pol_attr_rw(boostpulse_duration);
 gov_sys_pol_attr_rw(io_is_busy);
@@ -1593,6 +1644,7 @@ static struct attribute *thunderstorm2_attributes_gov_sys[] = {
 	&down_low_load_threshold_gov_sys.attr,
 	&screen_off_max_gov_sys.attr,
 	&screen_off_timer_rate_gov_sys.attr,
+	&max_freq_hysteresis_gov_sys.attr,
 	&boost_gov_sys.attr,
 	&boostpulse_gov_sys.attr,
 	&boostpulse_duration_gov_sys.attr,
@@ -1625,6 +1677,7 @@ static struct attribute *thunderstorm2_attributes_gov_pol[] = {
 	&down_low_load_threshold_gov_pol.attr,
 	&screen_off_max_gov_pol.attr,
 	&screen_off_timer_rate_gov_pol.attr,
+	&max_freq_hysteresis_gov_pol.attr,
 	&boost_gov_pol.attr,
 	&boostpulse_gov_pol.attr,
 	&boostpulse_duration_gov_pol.attr,

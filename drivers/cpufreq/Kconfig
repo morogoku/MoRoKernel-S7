@@ -119,6 +119,56 @@ config CPU_FREQ_DEFAULT_GOV_SCHED
 	  Use the CPUfreq governor 'sched' as default. This scales
 	  cpu frequency using CPU utilization estimates from the
 	  scheduler.
+
+config CPU_FREQ_DEFAULT_GOV_BIOSHOCK
+	bool "BioShock"
+	select CPU_FREQ_GOV_BIOSHOCK
+	help
+	  Default governor of BioShock kernel
+
+config CPU_FREQ_DEFAULT_GOV_BLU_ACTIVE
+	bool "blu_active"
+	select CPU_FREQ_GOV_BLU_ACTIVE
+	help
+		Use the CPUFreq governor 'blu_active' as default. This allows
+		you to get a full dynamic cpu frequency capable system by simply
+		loading your cpufreq low-level hardware driver, using the
+		'interactive' governor for latency-sensitive workloads.
+
+config CPU_FREQ_DEFAULT_GOV_CULTIVATION
+	bool "cultivation"
+	select CPU_FREQ_GOV_CULTIVATION
+	help
+	Use the CPUFreq governor 'cultivation' as default.
+
+config CPU_FREQ_DEFAULT_GOV_IMPULSE
+	bool "impulse"
+	select CPU_FREQ_GOV_IMPULSE
+	help
+		Use the CPUFreq governor 'impulse' as default. This allows
+		you to get a full dynamic cpu frequency capable system by simply
+		loading your cpufreq low-level hardware driver, using the
+		'impulse' governor for latency-sensitive workloads.
+
+config CPU_FREQ_DEFAULT_GOV_INTELLIMM
+       bool "intelliminmax"
+       select CPU_FREQ_GOV_INTELLIMM
+       help
+         Use the CPUFreq governor 'intelliminmax' as default. This is
+	 governor will use only 3 different frequencies, idle, UI and max
+
+config CPU_FREQ_DEFAULT_GOV_SMARTASS2
+	bool "smartassV2"
+	select CPU_FREQ_GOV_SMARTASS2
+	help
+	  Use the CPUFreq governor 'smartass2' as default.
+
+config CPU_FREQ_DEFAULT_GOV_SMARTMAX_EPS
+	bool "smartmax_eps"
+	select CPU_FREQ_GOV_SMARTMAX_EPS
+	help
+	  Use the CPUFreq governor 'smartmax eps' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -229,6 +279,59 @@ config CPU_FREQ_GOV_SCHED
 	  does) but instead is event-driven by the scheduler.
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_BIOSHOCK
+	tristate "'bioshock' cpufreq bioshock"
+	depends on CPU_FREQ
+	help
+	  'bioshock' - More aggressive version of conservative
+
+config CPU_FREQ_GOV_BLU_ACTIVE
+	tristate "'blu_active' cpufreq policy governor"
+	help
+	  'blu_active' - This driver adds a dynamic cpufreq policy governor
+	  interactive workloads.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_blu_active.
+	  designed for latency-sensitive workloads.
+
+config CPU_FREQ_GOV_CULTIVATION
+	tristate "'cultivation' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  'cultivation' - another tuned interactive with extra options
+
+config CPU_FREQ_GOV_IMPULSE
+	tristate "'interactive' cpufreq policy governor"
+	help
+	  'impulse' - This driver adds a dynamic cpufreq policy governor
+	  designed for latency-sensitive workloads.
+
+	  If in doubt, say N.
+
+config CPU_FREQ_GOV_INTELLIMM
+       tristate "'intelliminmax' cpufreq policy governor"
+       help
+         To compile this driver as a module, choose M here: the
+         module will be called cpufreq_interactive.
+
+         For details, take a look at linux/Documentation/cpu-freq.
+
+	 If in doubt, say N.
+
+config CPU_FREQ_GOV_SMARTASS2
+	tristate "'smartassV2' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  'smartassV2' - a "smart" gover
+
+config CPU_FREQ_GOV_SMARTMAX_EPS
+	tristate "'smartmax EPS' cpufreq policy governor"
+	select CPU_FREQ_TABLE
+	help
+	  'smartmax EPS' is the extreme powersaving version of smartmax
+
 
 comment "CPU frequency scaling drivers"
 

@@ -1,0 +1,32 @@
+# 
+# MoRoKernel init services
+#
+
+on boot
+    start nuke
+
+
+on property:sys.boot_completed=1
+    stop proca
+    stop secure_storage
+    start kernelinit
+
+
+service nuke /vendor/etc/nuke.sh
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
+
+
+service kernelinit /sbin/moro_init.sh
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
+
+
+# Force cinema mode
+    write /sys/class/mdnie/mdnie/mode 4
+
+

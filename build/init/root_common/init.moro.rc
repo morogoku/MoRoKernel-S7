@@ -1,0 +1,20 @@
+# 
+# MoRoKernel init services
+#
+
+on boot
+
+
+on property:sys.boot_completed=1
+    stop proca
+    stop secure_storage
+    start kernelinit
+
+
+service kernelinit /sbin/moro_init.sh
+    user root
+    seclabel u:r:init:s0
+    oneshot
+    disabled
+
+

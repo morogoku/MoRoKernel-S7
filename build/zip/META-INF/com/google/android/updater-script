@@ -1,0 +1,25 @@
+#
+# MoRoKernel Aroma Installer
+# by Morogoku
+#
+
+ui_print("***********************************************");
+ui_print("* MoRoKernel AIO (Samsung, AOSP and Treble)");
+ui_print("* For Samsung Galaxy S7");
+ui_print("* Developed by MoroGoku");
+ui_print("* https://www.espdroids.com");
+ui_print("***********************************************");
+
+# Copy scripts
+package_extract_dir("moro", "/tmp/moro");
+set_perm_recursive(0, 0, 0777, 0777, "/tmp/moro");
+
+
+# Run install script
+run_program("/tmp/moro/install_kernel.sh");
+
+
+ui_print(" ");
+ui_print("** Done **");
+ui_print(" ");
+

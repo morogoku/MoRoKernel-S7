@@ -2,8 +2,8 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v7.6</#></b>
-	DATE	: <b><#selectbg_g>19/11/2019</#></b>
+	VERSION	: <b><#selectbg_g>v8.0</#></b>
+	DATE	: <b><#selectbg_g>01/04/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
@@ -11,70 +11,30 @@
 
 <b>CHANGELOG:</b>
 
-<u><b><#selectbg_g>MoRoKernel AIO v7.6</#></b></u>
-<*>Kernel updated to 3.18.140.5 ASB-2019-11-05_3.18</*>
-<*>Samsung Sources N935SKKU4CSI1</*>
-<*>Added CPU Hotplugs (from Thunderstorms kernel)</*>
-<*>Mtweaks v2.16.0</*>
-
-<u><b><#selectbg_g>MoRoKernel AIO v7.5</#></b></u>
-<*>Support for installation Treble Q roms</*>
-<*>Little A53 Max OC Selectable up to 1898MHz</*>
-<*>Magisk 20.1</*>
-
-<u><b><#selectbg_g>MoRoKernel AIO v7.4</#></b></u>
-<*>Kernel updated to 3.18.140.4 ASB-2019-10-05_3.18</*>
-<*>Support for Lineage 17</*>
-<*>Little A53 OC to 1794MHz</*>
-<*>Magisk 20.0</*>
-<*>Updated Battery spectrum profile by rtakak</*>
-
-<u><b><#selectbg_g>MoRoKernel AIO v7.3</#></b></u>
-<*>kernel updated to 3.18.140-20190916</*>
-<*>Re-enabled Low Memory Killer</*>
-<*>Magisk 19.4</*>
-
-<u><b><#selectbg_g>MoRoKernel AIO v7.2</#></b></u>
-<*>Thanks to Tetsuo Osaka for his advice</*>
-<*>Fixed Spectrum profile on reboot</*>
-<*>Spectrum battery profile by mrtakak</*>
-<*>add Input Boost (Thanks to @nalas)</*>
-<*>add Fingerprint Boost (Thanks to @nalas)</*>
-<*>Enable LZ4 compress for ZRAM </*>
-<*>Kernel LMK Disabled, working with LMK Daemon</*>
-<*>Irqchip exynos-combiner updated</*>
-<*>F2FS supported</*>
-<*>F2FS driver updated to latest</*>
-<*>Updated CFQ iosched</*>
-<*>Magisk 19.4-f383d11d (19309)</*>
-<*>MTweaks 2.15.1</*>
-<*>Fixed moro-init.sh mount (Thanks to akella)</*>
-
-<u><b><#selectbg_g>MoRoKernel AIO v7.1.1</#></b></u>
-<*>(treble kernel) Lineage offline charge</*>
-<*>(treble kernel) Fix MTP </*>
-
-<u><b><#selectbg_g>MoRoKernel AIO v7.1.0</#></b></u>
+<u><b><#selectbg_g>MoRoKernel AIO v8.0</#></b></u>
 <*>All In One KERNEL, OREO, PIE, LINEAGE, and TREBLE</*>
 <*>MADE FROM SCRATCH</*>
-<*>Sources NoteFE CSF1, updated to 3.18.140</*>
-<*>Selectable GPU driver r22 or r28 (for PIE Roms)</*>
+<*>Sources NoteFE N935KKKU4CTA4 updated to 3.18.140.8</*>
+<*>Selectable GPU Libs r22 or r28 (for PIE Roms)</*>
+<*>GPU R29 Driver</*>
+<*>UKSM 0.1.2.3</*>
+<*>AutoSMP Holplug</*>
+<*>Input Boost</*>
+<*>Fingerprint Boost</*>
 <*>4 Cores to MAX FREQ, selectable</*>
-<*>MoRoSOund v2.1.1, with 5 bands Equalizer</*>
+<*>DVFS decision control</*>
+<*>MoRoSound v2.1.1, with 5 bands Equalizer</*>
 <*>Wake gestures: sweep2wake, doubletap2wake and sweep2sleep</*>
-<*>MTweaks 2.14.0</*>
+<*>MTweaks 2.17.1</*>
 <*>A lot of CPU governors </*>
 <*>A lot of IO Shedulers</*>
 <*>GPU Freq: 250-806MHz</*>
-<*>Spectrum Support with profiles in sdcard/Spectrum/profiles</*>
 <*>Battery Store mode</*>
 <*>Voltage settings for CPU, GPU, Int, Mif, Dsip, Cam</*>
 <*>Battery settings</*>
 <*>USB charge to 900MHz</*>
 <*>PWMfree brightness control</*>
-<*>Knox 0x0 & SafetyNet</*>
-<*>Magisk 19.3</*>
-<*>Updated MagiskManager 7.3.2 (224)</*>
+<*>Magisk 20.4</*>
 <*>Powersuspend 4 modes, Autosleep, Userspace, LCD panel, Hybrid</*>
 <*>Wakelocks settings</*>
 <*>Boeffla Wakelock Settings</*>
@@ -82,5 +42,4 @@
 <*>Swap with LZ4 compression</*>
 <*>Led Settings</*>
 <*>Wireguard VPN compatible</*>
-
 

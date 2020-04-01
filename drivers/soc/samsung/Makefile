@@ -22,6 +22,7 @@ obj-$(CONFIG_ECT)		+= ect_parser.o
 obj-$(CONFIG_EXYNOS_OTP)    += exynos_otp.o
 
 obj-$(CONFIG_EXYNOS_HOTPLUG_GOVERNOR)	+= exynos-hotplug_governor.o
+obj-$(CONFIG_ASMP_HOTPLUG)		+= autosmp.o
 
 # memory
 obj-$(CONFIG_ARCH_EXYNOS)	+= memory/

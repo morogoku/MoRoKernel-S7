@@ -40,6 +40,14 @@ config EXYNOS_CONTENT_PATH_PROTECTION
 config EXYNOS_HOTPLUG_GOVERNOR
 	bool "Enable Exynos dynamic hotplug governor"
 
+config ASMP_HOTPLUG
+	bool "Multi-core automatic hotplug support"
+	depends on HOTPLUG_CPU
+	default n
+	help
+	  Automatically hotplugs the multiple cpu cores on and off
+	  based on cpu load and suspend state
+
 config SCHED_HP_EVENT
 	bool "Gathers scheduler events to decide hotplug in/out"
 	depends on EXYNOS_HOTPLUG_GOVERNOR

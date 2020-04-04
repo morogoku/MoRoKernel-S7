@@ -36,8 +36,6 @@ echo "2048" > /sys/block/sda/queue/read_ahead_kb
 echo "2048" > /sys/block/mmcblk0/queue/read_ahead_kb
 
 # Misc Options
-echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active
-echo "0" > /sys/module/sync/parameters/fsync_enabled
 echo "2" > /sys/kernel/power_suspend/power_suspend_mode
 echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
 

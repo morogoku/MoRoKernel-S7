@@ -80,6 +80,9 @@ mount_system() {
     
     #SDK
     SDK="$(file_getprop /system/build.prop ro.build.version.sdk)"
+    
+    #TREBLE
+    TREBLE="$(file_getprop /system/build.prop ro.treble.enabled)"
 }
 
 
@@ -103,7 +106,7 @@ set_os() {
         ui_print "@Device detected"
 
         ## SET OS VARIABLE
-        if [ -f /vendor/lib/hw/gralloc.exynos5.so ] || [ -f /system_root/vendor/lib/hw/gralloc.exynos5.so ]; then
+        if [ -f /vendor/lib/hw/gralloc.exynos5.so ] || [ -f /system_root/vendor/lib/hw/gralloc.exynos5.so ] && [ $TREBLE == "true" ]; then
         # If Treble Rom
             ui_print "-- $MODEL_DESC"
             if [ -f /system/framework/com.samsung.device.jar ]; then

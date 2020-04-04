@@ -102,7 +102,7 @@ textbox(
 	"<~changelog.title>",
 	"<~changelog.desc>",
 	"@welcome",
-	resread(getvar("changelog"))
+	resread("changelog_en.txt")
 );
 
 

@@ -756,7 +756,7 @@ static int cpufreq_thunderstorm_speedchange_task1(void *data)
 			if (max_freq != pcpu->policy->cur) {
 				__cpufreq_driver_target(pcpu->policy,
 							max_freq,
-							CPUFREQ_RELATION_C);
+							CPUFREQ_RELATION_L);
 				for_each_cpu(j, pcpu->policy->cpus) {
 					pjcpu = &per_cpu(cpuinfo, j);
 					pjcpu->pol_hispeed_val_time = hvt;

@@ -34,11 +34,13 @@ file_getprop() { grep "^$2" "$1" | cut -d= -f2; }
 
 SDK="$(file_getprop /system/build.prop ro.build.version.sdk)"
 
+TREBLE="$(file_getprop /system/build.prop ro.treble.enabled)"
+
 
 ==================
 ## SET OS VARIABLE
 ==================
-if [ -f /vendor/lib/hw/gralloc.exynos5.so ] || [ -f /system_root/vendor/lib/hw/gralloc.exynos5.so ]; then
+if [ -f /vendor/lib/hw/gralloc.exynos5.so ] || [ -f /system_root/vendor/lib/hw/gralloc.exynos5.so ] && [ $TREBLE == "true" ]; then
 # If Treble Rom
     if [ -f /system/framework/com.samsung.device.jar ]; then
     # If Treble UI Rom
@@ -86,7 +88,7 @@ fi
 ==========
 # SHOW GPU
 ==========
-if [ $OS == "twPie" ] || [ $OS == "twQ" ]; then
+if [ $OS == "twPie" ] || [ $OS == "twQ" ] || [ $OS == "trebleUi" ] || [ $OS == "treble" ] || [ $OS == "trebleQ" ]; then
     echo "show=1" > /tmp/aroma/gpu_driver.prop
 fi
 

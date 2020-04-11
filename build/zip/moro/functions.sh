@@ -45,60 +45,6 @@ abort() {
 }
 
 
-unmount_system() {
-    umount -l /system_root 2>/dev/null
-    umount -l /system 2>/dev/null
-}
-
-
-mount_system() {
-    # Mount system
-    export SYSTEM_ROOT=false
-
-    block=/dev/block/platform/155a0000.ufs/by-name/SYSTEM
-    SYSTEM_MOUNT=/system
-    SYSTEM=$SYSTEM_MOUNT
-
-    # Try to detect system-as-root through $SYSTEM_MOUNT/init.rc like Magisk does
-    # Mount whatever $SYSTEM_MOUNT is, sometimes remount is necessary if mounted read-only
-
-    grep -q "$SYSTEM_MOUNT.*\sro[\s,]" /proc/mounts && mount -o remount,rw $SYSTEM_MOUNT || mount -o rw "$block" $SYSTEM_MOUNT
-
-    # Remount /system to /system_root if we have system-as-root and bind /system to /system_root/system (like Magisk does)
-    # For reference, check https://github.com/topjohnwu/Magisk/blob/master/scripts/util_functions.sh
-    if [ -f /system/init.rc ]; then
-        mkdir /system_root
-        mount --move /system /system_root
-        mount -o bind /system_root/system /system
-        export SYSTEM_ROOT=true
-    fi
-
-    # Mount vendor
-    if [ $SYSTEM_ROOT == "false" ] && [ "$(ls /dev/block/platform/155a0000.ufs/by-name | grep 'VENDOR')" == "VENDOR" ]; then
-        mount /dev/block/platform/155a0000.ufs/by-name/VENDOR /vendor
-    fi
-    
-    #SDK
-    SDK="$(file_getprop /system/build.prop ro.build.version.sdk)"
-    
-    #TREBLE
-    TREBLE="$(file_getprop /system/build.prop ro.treble.enabled)"
-}
-
-
-# Variables
-BB=/sbin/busybox
-BL=`getprop ro.bootloader`
-MODEL=${BL:0:4}
-MODEL1=G930
-MODEL1_DESC="S7 Flat G930"
-MODEL2=G935
-MODEL2_DESC="S7 Edge G935"
-GPU=r29
-if [ $MODEL == $MODEL1 ]; then MODEL_DESC=$MODEL1_DESC; fi
-if [ $MODEL == $MODEL2 ]; then MODEL_DESC=$MODEL2_DESC; fi
-
-
 set_os() {
 ## CHECK SUPPORT, MODEL AND OS
     if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
@@ -114,9 +60,11 @@ set_os() {
                 if [ $SDK == 28 ]; then
                     ui_print "-- Rom: TrebleUi PIE"
                     OS="trebleUi"
+                    VENDOR="/vendor"
                 elif [ $SDK == 29 ]; then
                     ui_print "-- Rom: Samsung Q"
                     OS="twQ"
+                    VENDOR="/system/vendor"
                 else
                     ui_print " "
                     ui_print "@** UNSUPPORTED ANDROID VERSION **"
@@ -127,9 +75,11 @@ set_os() {
                 if [ $SDK == 28 ]; then
                     ui_print "-- Rom: Treble AOSP PIE"
                     OS="treble"
+                    VENDOR="/vendor"
                 elif [ $SDK == 29 ]; then
                     ui_print "-- Rom: Treble AOSP Q"
                     OS="treble"
+                    VENDOR="/vendor"
                 else
                     ui_print " "
                     ui_print "@** UNSUPPORTED ANDROID VERSION **"
@@ -144,9 +94,11 @@ set_os() {
                 if [ $SDK == 26 ]; then
                     ui_print "-- Rom: Samsung OREO"
                     OS="twOreo"
+                    VENDOR="/system/vendor"
                 elif [ $SDK == 28 ]; then
                     ui_print "-- Rom: Samsung PIE"
                     OS="twPie"
+                    VENDOR="/system/vendor"
                 else
                     ui_print " "
                     ui_print "@** UNSUPPORTED ANDROID VERSION **"
@@ -159,9 +111,11 @@ set_os() {
                 if [ $SDK == 28 ]; then
                     ui_print "-- Rom: Lineage 16"
                     OS="los16"
+                    VENDOR="/system/vendor"
                 elif [ $SDK == 29 ]; then
                     ui_print "-- Rom: Lineage 17"
-                    OS="los17" 
+                    OS="los17"
+                    VENDOR="/system/vendor"
                 else
                     ui_print " "
                     ui_print "@** UNSUPPORTED ANDROID VERSION **"
@@ -177,8 +131,60 @@ set_os() {
 }
 
 
+mount_parts() {
+    # Mount system
+    ui_print " "
+    ui_print "@Mount partitions"
+    ui_print "-- mount /system RW"
+
+    block=/dev/block/platform/155a0000.ufs/by-name/SYSTEM
+    SYSTEM_MOUNT=/system
+    SYSTEM=$SYSTEM_MOUNT
+
+    # Try to detect system-as-root through $SYSTEM_MOUNT/init.rc like Magisk does
+    # Mount whatever $SYSTEM_MOUNT is, sometimes remount is necessary if mounted read-only
+
+    grep -q "$SYSTEM_MOUNT.*\sro[\s,]" /proc/mounts && mount -o remount,rw $SYSTEM_MOUNT || mount -o rw "$block" $SYSTEM_MOUNT
+
+    # Remount /system to /system_root if we have system-as-root and bind /system to /system_root/system (like Magisk does)
+    # For reference, check https://github.com/topjohnwu/Magisk/blob/master/scripts/util_functions.sh
+    if [ -f /system/init.rc ]; then
+        ui_print "-- Device is system-as-root"
+        ui_print "-- Remounting /system as /system_root"
+        mkdir /system_root
+        mount --move /system /system_root
+        mount -o bind /system_root/system /system
+    fi
+    
+    # Mount vendor
+    if [ "$(ls /dev/block/platform/155a0000.ufs/by-name | grep 'VENDOR')" == "VENDOR" ]; then
+        ui_print "-- mount /vendor"
+        mount /dev/block/platform/155a0000.ufs/by-name/VENDOR /vendor
+    fi
+}
 
 
+unmount_parts() {
+    ui_print " "
+    ui_print "@Unmount partitions"
+    umount -l /system_root 2>/dev/null
+    umount -l /system 2>/dev/null
+    umount -l /vendor 2>/dev/null
+}
 
 
+init_variables() {
+    BB=/sbin/busybox
+    SDK="$(file_getprop /system/build.prop ro.build.version.sdk)"
+    TREBLE="$(file_getprop /system/build.prop ro.treble.enabled)"
+    BL=`getprop ro.bootloader`
+    MODEL=${BL:0:4}
+    MODEL1=G930
+    MODEL1_DESC="S7 Flat G930"
+    MODEL2=G935
+    MODEL2_DESC="S7 Edge G935"
+    GPU=r29
+    if [ $MODEL == $MODEL1 ]; then MODEL_DESC=$MODEL1_DESC; fi
+    if [ $MODEL == $MODEL2 ]; then MODEL_DESC=$MODEL2_DESC; fi
+}
 

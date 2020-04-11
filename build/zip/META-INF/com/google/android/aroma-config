@@ -112,36 +112,98 @@ textbox(
 
 if (prop("magisk_phh.prop","show")=="1") then
 
-	form(
-		"<~menu.title>",
-		"<~menu.desc>",
-		"@personalize",
-		"menu.prop",
-		
-		"group1",     "<b><~menu.group1></b>",  "",                             "group",
-		  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",                "select",
-		  "opt15",    "<b><~menu.15></b>",      "<~menu.15desc>",               "select.selected",
-		"group2",     "<b><~menu.group2></b>",  "",                     	"group",
-		  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
-		  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
-	);
+	if (prop("gpu_driver.prop","show")=="1") then
+
+		form(
+			"<~menu.title>",
+			"<~menu.desc>",
+			"@personalize",
+			"menu.prop",
+
+			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
+			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
+			  "opt15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"select.selected",	# Magisk phh
+			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
+			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
+			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
+			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
+		);
+
+	else	
+
+		form(
+			"<~menu.title>",
+			"<~menu.desc>",
+			"@personalize",
+			"menu.prop",
+
+			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
+			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
+			  "opt15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"select.selected",	# Magisk phh
+			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
+			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
+			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
+		);
+
+	endif;
 	
 else
 
-	form(
-		"<~menu.title>",
-		"<~menu.desc>",
-		"@personalize",
-		"menu.prop",
-		
-		"group1",     "<b><~menu.group1></b>",  "",                             "group",
-		  "opt1",     "<b><~menu.1></b>",       "<~menu.1desc>",                "select",
-		  "opt2",     "<b><~menu.2></b>",       "<~menu.2desc>",                "select.selected",
-		"group2",     "<b><~menu.group2></b>",  "",                     	"group",
-		  "chk2",     "<b><~menu.3></b>",       "<~menu.3desc>",		"check.checked",
-		  "chk7",     "<b><~menu.7></b>",       "<~menu.7desc>",		"check"
-	);
+	if (prop("gpu_driver.prop","show")=="1") then
+
+		form(
+			"<~menu.title>",
+			"<~menu.desc>",
+			"@personalize",
+			"menu.prop",
+			
+			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
+			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
+			  "opt2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"select.selected",	# Magisk
+			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
+			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
+			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
+			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
+		);
+
+	else
+
+		form(
+			"<~menu.title>",
+			"<~menu.desc>",
+			"@personalize",
+			"menu.prop",
+			
+			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
+			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
+			  "opt2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"select.selected",	# Magisk
+			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
+			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
+			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
+		);
+
+	endif;
 	
+endif;
+
+
+###
+# GPU
+#
+
+if (prop("menu.prop","chk13")=="1") then
+
+	selectbox(
+		"<~gpu.title>",
+		"<~gpu.desc>",
+		"icons/default",
+		"gpu.prop",
+		
+		"<b><~gpu.group></b>", 	"",				2,	#-- Grupo 1
+		"<b><~gpu.1></b>",		"<~gpu.1desc>",		0,	#-- selected.1 = 1
+		"<b><~gpu.2></b>",		"<~gpu.2desc>",		1	#-- selected.1 = 2
+	);
+
 endif;
 
 

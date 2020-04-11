@@ -208,9 +208,8 @@ FUNC_BUILD_FLASHABLES()
 	mkdir temp
 	cp -rf zip/. temp
 	
-	if [[ $OS == "twQ" || $OS == "los17" ]];then
-		cp -rf init/scripts/. temp/moro/files
-	fi
+	cp -rf init/scripts/. temp/moro/files
+	cp -rf init/sar/. temp/moro/files
 	
 	cd $RDIR/build/kernel-temp
 	echo ""

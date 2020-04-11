@@ -19,6 +19,8 @@ rm -rf $PWD/build/temp 2>/dev/null
 
 rm -f ./*.log
 
+echo "" > $PWD/build/zip/moro/files/.placeholder
+
 echo "" > build/ramdisk/twQ/ramdisk/apex/.placeholder
 echo "" > build/ramdisk/twQ/ramdisk/config/.placeholder
 echo "" > build/ramdisk/twQ/ramdisk/debug_ramdisk/.placeholder

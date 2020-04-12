@@ -126,6 +126,7 @@ if (prop("magisk_phh.prop","show")=="1") then
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
+			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
 			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
 		);
 
@@ -142,6 +143,7 @@ if (prop("magisk_phh.prop","show")=="1") then
 			  "opt15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"select.selected",	# Magisk phh
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
+			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
 			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
 		);
 
@@ -163,6 +165,7 @@ else
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
+			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
 			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
 		);
 
@@ -179,6 +182,7 @@ else
 			  "opt2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"select.selected",	# Magisk
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
+			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
 			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
 		);
 

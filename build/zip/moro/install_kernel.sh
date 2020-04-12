@@ -105,12 +105,12 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk3)" == 1 ]; then
 fi
 
 ## SPECTRUM PROFILES
-#if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ]; then
-#	ui_print " "
-#	ui_print "@Install Spectrum Profiles"
-#	mkdir -p -m 777 /data/.morokernel/apk 2>/dev/null
-#	cp -rf /tmp/moro/spec_profiles/. /data/.morokernel/spectrum
-#fi
+if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ]; then
+	ui_print " "
+	ui_print "@Install Spectrum Profiles"
+	mkdir -p -m 777 /data/media/0/spectrum 2>/dev/null
+	cp -rf /tmp/moro/spec_profiles/. /data/media/0/spectrum
+fi
 
 
 set_progress 0.65

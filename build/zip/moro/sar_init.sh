@@ -25,6 +25,8 @@ cp -f /tmp/moro/files/fix_personalist.sh $SDIR
 cp -f /tmp/moro/files/init_d.sh $SDIR
 cp -f /tmp/moro/files/install_apk.sh $SDIR
 cp -f /tmp/moro/files/tweaks.sh $SDIR
+cp -f /tmp/moro/files/init.spectrum.sh $SDIR
+cp -f /tmp/moro/files/spa $SDIR
 cp -f /tmp/moro/files/init.moro.rc /system_root
 chmod 755 /data/.morokernel/*
 chmod 755 /system_root/init.moro.rc

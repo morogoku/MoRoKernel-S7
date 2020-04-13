@@ -2,14 +2,23 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.0.1</#></b>
-	DATE	: <b><#selectbg_g>04/04/2020</#></b>
+	VERSION	: <b><#selectbg_g>v8.1</#></b>
+	DATE	: <b><#selectbg_g>13/04/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.1</#></b></u>
+<*>F2FS for Lineage 17</*>
+<*>Spectrum support</*>
+<*>Magisk Hide 20.4 enabled</*>
+<*>Removed ArchPower</*>
+<*>Disabled some debug options</*>
+<*>GPU libs installation for Treble and Samsung Pie</*>
+<*>MTweaks v2.17.2</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.0.1</#></b></u>
 <*>Fixed F2FS</*>

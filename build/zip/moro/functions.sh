@@ -32,7 +32,6 @@ clean_magisk() {
     /data/adb/*magisk* /data/adb/post-fs-data.d /data/adb/service.d /data/adb/modules* 2>/dev/null
         
     if [ -f /system/addon.d/99-magisk.sh ]; then
-        mount -o rw,remount /system
         rm -f /system/addon.d/99-magisk.sh
     fi
 }

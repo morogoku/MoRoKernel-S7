@@ -45,6 +45,14 @@ $BB tar -Jxf secure_storage.tar.xz
 ui_print "-- Copying files"
 
 
+# f2fs support for los17
+if [ $OS == "los17" ]; then
+	cp -f /tmp/moro/files/fstab.samsungexynos8890 /system_root
+	chmod 640 /system_root/fstab.samsungexynos8890
+	chown -R root.shell /system_root/fstab.samsungexynos8890
+fi
+
+
 # System As Root init scripts
 if [ $OS == "los17" ] || [ $OS == "twQ" ]; then
 	. /tmp/moro/sar_init.sh

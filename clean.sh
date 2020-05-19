@@ -16,6 +16,7 @@ rm -rf $PWD/arch/arm64/boot/dtb 2>/dev/null
 rm -f $PWD/build/*.zip 2>/dev/null
 rm -rf $PWD/build/kernel-temp 2>/dev/null
 rm -rf $PWD/build/temp 2>/dev/null
+rm -rf $PWD/net/wireguard 2>/dev/null
 
 rm -f ./*.log
 

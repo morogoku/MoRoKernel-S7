@@ -880,6 +880,12 @@ static struct kobj_type ktype_cpufreq = {
 struct kobject *cpufreq_global_kobject;
 EXPORT_SYMBOL(cpufreq_global_kobject);
 
+/*
+ * HACK: FIXME: Bring back cpufreq_{get,put}_global_kobject()
+ * definition removed by upstream commit 8eec1020f0c0 "cpufreq:
+ * create cpu/cpufreq at boot time" to fix build failures.
+ */
+
 static int cpufreq_global_kobject_usage;
 
 int cpufreq_get_global_kobject(void)

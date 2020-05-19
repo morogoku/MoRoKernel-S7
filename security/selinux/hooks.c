@@ -3271,7 +3271,7 @@ static int selinux_inode_permission(struct inode *inode, int mask)
 	const struct cred *cred = current_cred();
 	u32 perms;
 	bool from_access;
-	unsigned flags = mask & MAY_NOT_BLOCK;
+//	unsigned flags = mask & MAY_NOT_BLOCK; // warning unused variable
 	struct inode_security_struct *isec;
 	u32 sid;
 	struct av_decision avd;

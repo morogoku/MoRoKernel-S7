@@ -4,7 +4,7 @@
 #
    
    # Little CPU
-   echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+   echo "interactiveS9" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
    echo "442000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
    echo "1586000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
    echo "74" > /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
@@ -22,7 +22,7 @@
 
    # Big CPU
    echo "1" > /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster1_all_cores_max_freq
-   echo "interactive" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+   echo "interactiveS9" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
    echo "720000" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
    echo "2600000" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
    echo "80" > /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load

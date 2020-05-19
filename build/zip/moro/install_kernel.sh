@@ -155,7 +155,7 @@ show_progress 0.34 -19000
 		sh /tmp/moro/moro_clean.sh com.topjohnwu.magisk -asd
 	fi
 
-	#cp -rf /tmp/moro/magisk/*.apk /data/.morokernel/apk
+	cp -rf /tmp/moro/magisk/*.apk /data/.morokernel/apk
 
 	ui_print "-- Rooting with Magisk Manager"
 	ui_print " "
@@ -171,7 +171,7 @@ show_progress 0.34 -19000
 		sh /tmp/moro/moro_clean.sh com.topjohnwu.magisk -asd
 	fi
 
-	#cp -rf /tmp/moro/magisk/*.apk /data/.morokernel/apk
+	cp -rf /tmp/moro/magisk/*.apk /data/.morokernel/apk
 
 	ui_print "-- Rooting with Magisk Phh"
 	ui_print " "

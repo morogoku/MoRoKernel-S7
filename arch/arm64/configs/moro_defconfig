@@ -1806,6 +1806,7 @@ CONFIG_CERTIFY_HALL=y
 # CONFIG_V_HALL_FOLDING is not set
 # CONFIG_HALL_SW_LID is not set
 # CONFIG_HALL_M1120 is not set
+# CONFIG_HALL_EVENT_REVERSE is not set
 
 #
 # Input Device Drivers

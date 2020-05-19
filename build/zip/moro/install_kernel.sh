@@ -118,6 +118,9 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ]; then
 	ui_print "@Install Spectrum Profiles"
 	mkdir -p -m 777 /data/media/0/spectrum 2>/dev/null
 	cp -rf /tmp/moro/spec_profiles/. /data/media/0/spectrum
+	
+	# remove old spectrum profile path
+	rm -Rf /data/media/0/Spectrum 2>/dev/null
 fi
 
 

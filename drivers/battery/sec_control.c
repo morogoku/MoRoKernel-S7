@@ -17,8 +17,6 @@
 
 #include <linux/battery/sec_battery.h>
 
-extern bool unstable_power_detection;
-
 static struct sec_battery_info *info;
 	
 enum charge_control_type {
@@ -149,13 +147,6 @@ static ssize_t store_charge_property(struct device *dev,
 	return count;
 }
 
-#define CHARGE_INT_ATTR(_name, _mode, _var) \
-	{ __ATTR(_name, _mode, device_show_int, device_store_int), &(_var) }
-
-struct dev_ext_attribute static_controls[] = {
-	CHARGE_INT_ATTR(unstable_power_detection, 0644, unstable_power_detection)
-};
-
 void charger_control_init(struct sec_battery_info *sec_info)
 {
 	int i;
@@ -164,8 +155,5 @@ void charger_control_init(struct sec_battery_info *sec_info)
 
 	for (i = 0; i < ARRAY_SIZE(charge_controls); i++)
 		if (device_create_file(info->dev, &charge_controls[i].attribute))
-			;;
-	for (i = 0; i < ARRAY_SIZE(static_controls); i++)
-		if (device_create_file(info->dev, &static_controls[i].attr))
 			;;
 }

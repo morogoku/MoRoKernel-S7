@@ -885,16 +885,19 @@ static int sec_bat_set_charging_current(struct sec_battery_info *battery)
 				charging_current = (charging_current > battery->pdata->swelling_low_temp_current) ?
 					battery->pdata->swelling_low_temp_current : charging_current;
 			}
-
+#if defined(CONFIG_ENABLE_100MA_CHARGING_BEFORE_USB_CONFIGURED)
 			/* usb unconfigured or suspend*/
-			if ((battery->cable_type == SEC_BATTERY_CABLE_USB) && !lpcharge &&
-				(battery->pdic_info.sink_status.rp_currentlvl == RP_CURRENT_LEVEL_DEFAULT)) {
-				if (battery->current_event & SEC_BAT_CURRENT_EVENT_USB_100MA) {
-					pr_info("%s: usb unconfigured\n", __func__);
-					input_current = USB_CURRENT_UNCONFIGURED;
-					charging_current = USB_CURRENT_UNCONFIGURED;
-				}
+			if ((battery->cable_type == SEC_BATTERY_CABLE_USB) && !lpcharge) {
+#if defined(CONFIG_CCIC_NOTIFIER)
+				if (battery->pdic_info.sink_status.rp_currentlvl == RP_CURRENT_LEVEL_DEFAULT)
+#endif
+					if (battery->current_event & SEC_BAT_CURRENT_EVENT_USB_100MA) {
+						pr_info("%s: usb unconfigured\n", __func__);
+						input_current = USB_CURRENT_UNCONFIGURED;
+						charging_current = USB_CURRENT_UNCONFIGURED;
+					}
 			}
+#endif
 		}
 	}
 
@@ -3053,6 +3056,7 @@ static void sec_bat_time_to_full_work(struct work_struct *work)
 }
 #endif
 
+#if defined(CONFIG_ENABLE_100MA_CHARGING_BEFORE_USB_CONFIGURED)
 extern bool get_usb_enumeration_state(void);
 /* To disaply slow charging when usb charging 100MA*/
 static void sec_bat_check_slowcharging_work(struct work_struct *work)
@@ -3069,6 +3073,7 @@ static void sec_bat_check_slowcharging_work(struct work_struct *work)
 	}
 	dev_info(battery->dev, "%s: \n",__func__);
 }
+#endif
 
 static void sec_bat_wc_cv_mode_check(struct sec_battery_info *battery)
 {
@@ -6252,8 +6257,10 @@ static int sec_bat_set_property(struct power_supply *psy,
 			}
 			break;
 		case POWER_SUPPLY_EXT_PROP_USB_CONFIGURE:
+#if defined(CONFIG_CCIC_NOTIFIER)
 			if (battery->pdic_info.sink_status.rp_currentlvl > RP_CURRENT_LEVEL_DEFAULT)
 				return 0;
+#endif
 			pr_info("%s: usb configured %d\n", __func__, val->intval);
 			if (val->intval == USB_CURRENT_UNCONFIGURED) {
 				sec_bat_set_current_event(battery, SEC_BAT_CURRENT_EVENT_USB_100MA,
@@ -6788,9 +6795,11 @@ static int sec_bat_cable_check(struct sec_battery_info *battery,
 		if (is_hv_wire_type(battery->cable_type) &&
 		    (battery->chg_limit || battery->vbus_chg_by_siop)) {
 			current_cable_type = SEC_BATTERY_CABLE_HV_TA_CHG_LIMIT;
-		} else if (battery->current_event & SEC_BAT_CURRENT_EVENT_AFC &&
-			battery->pdic_info.sink_status.rp_currentlvl == RP_CURRENT_LEVEL_DEFAULT) {
-			current_cable_type = SEC_BATTERY_CABLE_PREPARE_TA;
+		} else if (battery->current_event & SEC_BAT_CURRENT_EVENT_AFC) {
+#if defined(CONFIG_CCIC_NOTIFIER)
+			if (battery->pdic_info.sink_status.rp_currentlvl == RP_CURRENT_LEVEL_DEFAULT)
+#endif
+				current_cable_type = SEC_BATTERY_CABLE_PREPARE_TA;
 		} else {
 			current_cable_type = SEC_BATTERY_CABLE_TA;
 		}
@@ -9071,7 +9080,9 @@ static int sec_battery_probe(struct platform_device *pdev)
 #if defined(CONFIG_CALC_TIME_TO_FULL)
 	INIT_DELAYED_WORK(&battery->timetofull_work, sec_bat_time_to_full_work);
 #endif
+#if defined(CONFIG_ENABLE_100MA_CHARGING_BEFORE_USB_CONFIGURED)
 	INIT_DELAYED_WORK(&battery->slowcharging_work, sec_bat_check_slowcharging_work);
+#endif
 	INIT_DELAYED_WORK(&battery->afc_work, sec_bat_afc_work);
 	INIT_DELAYED_WORK(&battery->siop_work, sec_bat_siop_work);
 	INIT_DELAYED_WORK(&battery->siop_event_work, sec_bat_siop_event_work);

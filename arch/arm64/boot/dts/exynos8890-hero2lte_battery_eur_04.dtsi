@@ -11,17 +11,11 @@
 
 #include "exynos8890-hero2lte_battery.dtsi"
 / {
-	pinctrl@10580000 {
-		wpc_det: wpc-det {
-			samsung,pins = "gpa2-0";
-			samsung,pin-function = <0xf>;
-			samsung,pin-pud = <1>;
-		};
+	battery {
+		battery,cisd_chg_limit_enable;
 	};
 
-	hsi2c@14E30000 {
-		p9220-charger@61 {
-			battery,wpc_det = <&gpa2 0 0>;
-		};
+	max77854-fuelgauge {
+		fuelgauge,fg_resistor = <2>;
 	};
 };

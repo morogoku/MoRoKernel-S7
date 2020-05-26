@@ -3601,7 +3601,7 @@ CONFIG_USB_RNDIS_MULTIPACKET=y
 #
 # USB Power Delivery and Type-C drivers
 #
-CONFIG_TYPEC=y
+# CONFIG_TYPEC is not set
 # CONFIG_UWB is not set
 CONFIG_MMC=y
 # CONFIG_MMC_DEBUG is not set

@@ -1307,18 +1307,13 @@ static ssize_t store_screen_off_max(struct cpufreq_thunderstorm2_tunables *tunab
 		const char *buf, size_t count)
 {
 	int ret;
-	unsigned long val, val_round;
+	unsigned long val;
 
 	ret = kstrtoul(buf, 0, &val);
 	if (ret < 0)
 		return ret;
 
-	val_round = jiffies_to_usecs(usecs_to_jiffies(val));
-	if (val != val_round)
-		pr_warn("screen_off_max not aligned to jiffy. Rounded up to %lu\n",
-			val_round);
-
-	tunables->screen_off_max = val_round;
+	tunables->screen_off_max = val;
 	return count;
 }
 

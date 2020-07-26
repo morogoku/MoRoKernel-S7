@@ -82,7 +82,7 @@ The marked options are recommended.
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.
-menu.2=Magisk v20.4
+menu.2=Magisk Canary 97b72a59 (20419)
 menu.2desc=To pass Safetynet you must enable MagiskHide in Magisk settings.
 menu.group2=Other options
 menu.3=MTweaks v2.17.3

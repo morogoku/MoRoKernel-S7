@@ -121,6 +121,15 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVES9
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactiveS9' governor for latency-sensitive workloads.
 
+config CPU_FREQ_DEFAULT_GOV_THUNDERSTORM
+	bool "thunderstorm"
+	select CPU_FREQ_GOV_THUNDERSTORM
+	help
+	  Use the CPUFreq governor 'thunderstorm' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'thunderstorm' governor for latency-sensitive workloads.
+
 config CPU_FREQ_DEFAULT_GOV_THUNDERSTORM2
 	bool "thunderstorm2"
 	select CPU_FREQ_GOV_THUNDERSTORM2
@@ -299,6 +308,10 @@ config CPU_FREQ_GOV_INTERACTIVES9
 	  For details, take a look at linux/Documentation/cpu-freq.
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_THUNDERSTORM
+	tristate "'thunderstorm' cpufreq policy governor"
+	depends on CPU_FREQ
 
 config CPU_FREQ_GOV_THUNDERSTORM2
 	tristate "'thunderstorm2' cpufreq policy governor"

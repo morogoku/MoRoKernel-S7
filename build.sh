@@ -327,7 +327,7 @@ elif [[ $prompt == "3" ]]; then
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
-    PERMISSIVE=no
+    PERMISSIVE=yes
     ZIP=yes
     ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
     MAIN
@@ -451,7 +451,7 @@ elif [[ $prompt == "8" ]]; then
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
-    PERMISSIVE=no
+    PERMISSIVE=yes
     ZIP=no
     MAIN
 
@@ -462,7 +462,7 @@ elif [[ $prompt == "8" ]]; then
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
-    PERMISSIVE=no
+    PERMISSIVE=yes
     ZIP=no
     MAIN
 

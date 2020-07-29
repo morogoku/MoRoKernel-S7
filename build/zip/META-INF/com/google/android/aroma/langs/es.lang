@@ -83,8 +83,6 @@ menu.8=Recovery TWRP 3.2.3-0 Fixed
 menu.8desc=Actualizado por Tkkg1994. Necesario para el kernel.
 menu.9=Fix Modo Privado (Stock Roms)
 menu.9desc=Solo con Roms basadas en S7 Stock.
-menu.10=Perfiles Spectrum
-menu.10desc=Copiar en sdcard/Spectrum/profiles
 menu.group3=Overclock Little CPU
 menu.11=No, Little CPU Stock
 menu.11desc=Max Freq: 1586MHz
@@ -95,6 +93,11 @@ menu.13=Instalar GPU Libs
 menu.13desc=En la siguiente pantalla elija las libs de GPU a instalar.
 menu.15=Magisk Phh ef9d077c
 menu.15desc=Magisk Phh para roms GSI
+menu.group5=Spectrum
+menu.14=Soporte Spectrum
+menu.14desc=Activa o Desactiva Soporte Spectrum
+menu.10=Perfiles Spectrum
+menu.10desc=Copiar en sdcard/Spectrum/profiles
 
 # Little OC
 loc.title=LITTLE CPU OVERCLOCK

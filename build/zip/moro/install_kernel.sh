@@ -42,6 +42,7 @@ cd /tmp/moro
 ui_print "-- Extracting"
 $BB tar -Jxf gpu_libs.tar.xz
 $BB tar -Jxf secure_storage.tar.xz
+$BB tar -Jxf aik.tar.xz
 ui_print "-- Copying files"
 
 
@@ -91,6 +92,34 @@ cd /tmp/moro
 ui_print "-- Extracting"
 $BB tar -Jxf kernel.tar.xz $MODEL-$OS-$GPU-boot.img
 
+## Spectrum support
+if [ "$(file_getprop /tmp/aroma/menu.prop chk14)" == 0 ]; then
+	# Unpack
+	ui_print "-- Unpacking boot.img"
+	mv /tmp/moro/$MODEL-$OS-$GPU-boot.img /tmp/moro/aik/boot.img
+	cd /tmp/moro/aik
+	./unpackimg.sh boot.img
+	rm -f boot.img
+	
+	# Disable spectrum support
+	ui_print "-- Disabling Spectrum support"
+	if [ $OS == "los17" ] || [ $OS == "twQ" ]; then
+		rm -f /system_root/init.spectrum.rc
+		sed -i '/init.spectrum.rc/d' /system_root/init.moro.rc
+	else
+		rm -f /tmp/moro/aik/ramdisk/init.spectrum.rc
+		sed -i '/init.spectrum.rc/d' /tmp/moro/aik/ramdisk/init.moro.rc
+	fi
+	
+	# Pack
+	ui_print "-- Packing boot.img"
+	cd /tmp/moro/aik
+	./repackimg.sh
+	echo SEANDROIDENFORCE >> image-new.img
+	mv -f /tmp/moro/aik/image-new.img /tmp/moro/$MODEL-$OS-$GPU-boot.img
+	cd /tmp/moro
+fi
+
 # Write kernel img
 ui_print "-- Flashing kernel $MODEL-$OS-$GPU-boot.img"
 dd of=/dev/block/platform/155a0000.ufs/by-name/BOOT if=/tmp/moro/$MODEL-$OS-$GPU-boot.img
@@ -113,7 +142,7 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk3)" == 1 ]; then
 fi
 
 ## SPECTRUM PROFILES
-if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ]; then
+if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ] && [ "$(file_getprop /tmp/aroma/menu.prop chk14)" == 1 ]; then
 	ui_print " "
 	ui_print "@Install Spectrum Profiles"
 	mkdir -p -m 777 /data/media/0/spectrum 2>/dev/null

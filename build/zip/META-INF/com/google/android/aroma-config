@@ -165,8 +165,10 @@ else
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
-			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
-			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
+			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check",		# Delete root data
+			"group5",	"<b><~menu.group5></b>",	"",			"group",		#-- SPECTRUM
+			  "chk14",	"<b><~menu.14></b>",		"<~menu.14desc>",	"check.checked",	# Spectrum support
+			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked"		# Spectrum profiles
 		);
 
 	else
@@ -182,8 +184,10 @@ else
 			  "opt2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"select.selected",	# Magisk
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
-			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
-			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check"			# Delete root data
+			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check",		# Delete root data
+			"group5",	"<b><~menu.group5></b>",	"",			"group",		#-- SPECTRUM
+			  "chk14",	"<b><~menu.14></b>",		"<~menu.14desc>",	"check.checked",	# Spectrum support
+			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked"		# Spectrum profiles
 		);
 
 	endif;

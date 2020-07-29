@@ -2,14 +2,19 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.3</#></b>
-	DATE	: <b><#selectbg_g>27/07/2020</#></b>
+	VERSION	: <b><#selectbg_g>v8.4</#></b>
+	DATE	: <b><#selectbg_g>30/07/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.4</#></b></u>
+<*>Compatible with Floyd v3.0 OneUIv2.1</*>
+<*>Revert to Stable Magisk 20.4</*>
+<*>Spectrum support selectable</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.3</#></b></u>
 <*>Compatible with Floyd v3.0 OneUIv2.1</*>

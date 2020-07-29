@@ -18,6 +18,7 @@ sed -i '/init.services.rc/d' /init.rc
 # If no MoroKernel v8 installed, remove files 
 if ! grep -q MoRoKernel /proc/version && ! grep -q v8 /proc/version; then 
     rm -f /init.moro.rc
+    rm -f /init.spectrum.rc
     sed -i '/init.moro.rc/d' /init.rc
     rm -Rf /data/.morokernel
 fi

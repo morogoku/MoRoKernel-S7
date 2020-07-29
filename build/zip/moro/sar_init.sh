@@ -28,8 +28,10 @@ cp -f /tmp/moro/files/tweaks.sh $SDIR
 cp -f /tmp/moro/files/init.spectrum.sh $SDIR
 cp -f /tmp/moro/files/spa $SDIR
 cp -f /tmp/moro/files/init.moro.rc /system_root
+cp -f /tmp/moro/files/init.spectrum.rc /system_root
 chmod 755 /data/.morokernel/*
 chmod 755 /system_root/init.moro.rc
+chmod 755 /system_root/init.spectrum.rc
 
 
 line=$(grep -n 'import' /system_root/init.rc | cut -d: -f 1 | tail -n1);

@@ -205,7 +205,7 @@ int do_fmp_fw_integrity_check(void)
 	return 0;
 }
 
-int do_fips_fmp_integrity_check(void)
+int __init do_fips_fmp_integrity_check(void)
 {
 	int i, rows, err;
 	unsigned long start_addr = 0;

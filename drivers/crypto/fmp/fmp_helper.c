@@ -17,7 +17,7 @@ extern void last_fmp_text(void);
 extern const int last_fmp_rodata;
 extern void last_fmp_init(void);
 
-unsigned long get_fmp_symbol_address(const char *symname)
+unsigned long __init get_fmp_symbol_address(const char *symname)
 {
 	if (!strcmp(symname, "first_fmp_text"))
 		return (unsigned long)first_fmp_text;

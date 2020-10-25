@@ -2318,7 +2318,7 @@ static struct miscdevice exynos_fmpdev = {
 	.fops	= &fmpdev_fops,
 };
 
-static int exynos_fips_fmp_probe(struct platform_device *pdev)
+static int __init exynos_fips_fmp_probe(struct platform_device *pdev)
 {
 	int ret;
 	struct device *dev = &pdev->dev;
@@ -2402,7 +2402,7 @@ static const struct of_device_id exynos_fips_fmp_match[] = {
 };
 MODULE_DEVICE_TABLE(of, exynos_fips_fmp_match);
 
-static struct platform_driver exynos_fips_fmp_driver = {
+static struct platform_driver exynos_fips_fmp_driver_probe = {
 	.driver = {
 		.name = "exynos-fips-fmp",
 		.owner = THIS_MODULE,
@@ -2415,13 +2415,13 @@ static struct platform_driver exynos_fips_fmp_driver = {
 
 static int __init exynos_fips_fmp_init(void)
 {
-	return platform_driver_register(&exynos_fips_fmp_driver);
+	return platform_driver_register(&exynos_fips_fmp_driver_probe);
 }
 late_initcall(exynos_fips_fmp_init);
 
 static void __exit exynos_fips_fmp_exit(void)
 {
-	platform_driver_unregister(&exynos_fips_fmp_driver);
+	platform_driver_unregister(&exynos_fips_fmp_driver_probe);
 }
 module_exit(exynos_fips_fmp_exit);
 

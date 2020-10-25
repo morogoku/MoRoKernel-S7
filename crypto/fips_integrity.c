@@ -219,7 +219,7 @@ update_hash (struct hash_desc * desc, unsigned char * start_addr, unsigned int s
 
 
 int
-do_integrity_check (void)
+__init do_integrity_check (void)
 {
 	int i,rows, err;
 	unsigned long start_addr = 0;

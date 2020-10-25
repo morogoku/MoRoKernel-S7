@@ -23,7 +23,7 @@ extern const int last_crypto_asm_rodata;
 extern void last_crypto_asm_text(void);
 extern void last_crypto_asm_init(void);
 
-unsigned long get_fips_symbol_address(const char *symname)
+unsigned long __init get_fips_symbol_address(const char *symname)
 {
 	if (!strcmp(symname, "first_crypto_text"))
 		return (unsigned long)first_crypto_text;

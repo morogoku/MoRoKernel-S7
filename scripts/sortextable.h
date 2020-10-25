@@ -207,5 +207,5 @@ do_func(Elf_Ehdr *ehdr, char const *const fname, table_sort_t custom_sort)
 	       (unsigned long)((char *)sort_done_location - (char *)ehdr));
 #endif
 	/* We need to sort ex_table in runtime due to KASLR */
-//	w(0, sort_done_location);
+	w(0, sort_done_location);
 }

@@ -1,7 +1,7 @@
 /*
  * Linux cfg80211 driver
  *
- * Copyright (C) 1999-2018, Broadcom Corporation
+ * Copyright (C) 1999-2019, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -24,7 +24,7 @@
  *
  * <<Broadcom-WL-IPTag/Open:>>
  *
- * $Id: wl_cfg80211.c 793549 2018-12-10 06:47:43Z $
+ * $Id: wl_cfg80211.c 826788 2019-06-21 13:28:08Z $
  */
 /* */
 #include <typedefs.h>
@@ -1807,7 +1807,6 @@ wl_cfg80211_add_virtual_iface(struct wiphy *wiphy,
 		return new_cfgdev;
 #if defined(WL_CFG80211_P2P_DEV_IF)
 	case NL80211_IFTYPE_P2P_DEVICE:
-		cfg->down_disc_if = FALSE;
 		new_cfgdev = wl_cfgp2p_add_p2p_disc_if(cfg);
 		mutex_unlock(&cfg->if_sync);
 		return new_cfgdev;
@@ -2165,12 +2164,7 @@ wl_cfg80211_del_virtual_iface(struct wiphy *wiphy, bcm_struct_cfgdev *cfgdev)
 	mutex_lock(&cfg->if_sync);
 #ifdef WL_CFG80211_P2P_DEV_IF
 	if (cfgdev->iftype == NL80211_IFTYPE_P2P_DEVICE) {
-		if (dhd_download_fw_on_driverload) {
-			ret = wl_cfgp2p_del_p2p_disc_if(cfgdev, cfg);
-		} else {
-			cfg->down_disc_if = TRUE;
-			ret = 0;
-		}
+		ret = wl_cfgp2p_del_p2p_disc_if(cfgdev, cfg);
 		mutex_unlock(&cfg->if_sync);
 		return ret;
 	}
@@ -15473,10 +15467,27 @@ static void wl_scan_timeout(unsigned long data)
 #if defined(DHD_DEBUG) && defined(DHD_FW_COREDUMP)
 	uint32 prev_memdump_mode = dhdp->memdump_enabled;
 #endif /* DHD_DEBUG && DHD_FW_COREDUMP */
+	unsigned long flags;
 
+	spin_lock_irqsave(&cfg->cfgdrv_lock, flags);
 	if (!(cfg->scan_request)) {
 		WL_ERR(("timer expired but no scan request\n"));
+		spin_unlock_irqrestore(&cfg->cfgdrv_lock, flags);
 		return;
+	} else {
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 6, 0))
+		if (cfg->scan_request->dev) {
+			wdev = cfg->scan_request->dev->ieee80211_ptr;
+		}
+#else
+		wdev = cfg->scan_request->wdev;
+#endif /* LINUX_VERSION < KERNEL_VERSION(3, 6, 0) */
+		spin_unlock_irqrestore(&cfg->cfgdrv_lock, flags);
+
+		if (!wdev) {
+			WL_ERR(("No wireless_dev present\n"));
+			return;
+		}
 	}
 
 	bss_list = wl_escan_get_buf(cfg, FALSE);
@@ -15492,18 +15503,7 @@ static void wl_scan_timeout(unsigned long data)
 		}
 	}
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 6, 0))
-	if (cfg->scan_request->dev)
-		wdev = cfg->scan_request->dev->ieee80211_ptr;
-#else
-	wdev = cfg->scan_request->wdev;
-#endif /* LINUX_VERSION < KERNEL_VERSION(3, 6, 0) */
-	if (!wdev) {
-		WL_ERR(("No wireless_dev present\n"));
-		return;
-	}
 	ndev = wdev_to_wlc_ndev(wdev, cfg);
-
 	bzero(&msg, sizeof(wl_event_msg_t));
 	WL_ERR(("timer expired\n"));
 #if defined(DHD_DEBUG) && defined(DHD_FW_COREDUMP)
@@ -20781,6 +20781,11 @@ wl_cfg80211_set_mgmt_vndr_ies(struct bcm_cfg80211 *cfg, bcm_struct_cfgdev *cfgde
 	WL_DBG(("Enter. pktflag:0x%x bssidx:%x vnd_ie_len:%d \n",
 		pktflag, bssidx, vndr_ie_len));
 
+	if (!cfgdev) {
+		WL_ERR(("cfgdev is NULL\n"));
+		return -EINVAL;
+	}
+
 	ndev = cfgdev_to_wlc_ndev(cfgdev, cfg);
 
 	if (bssidx > WL_MAX_IFS) {
@@ -21481,9 +21486,8 @@ void wl_cfg80211_del_p2p_wdev(struct net_device *dev)
 		wdev = cfg->p2p_wdev;
 	}
 
-	if (wdev && cfg->down_disc_if) {
+	if (wdev) {
 		wl_cfgp2p_del_p2p_disc_if(wdev, cfg);
-		cfg->down_disc_if = FALSE;
 	}
 }
 #endif /* WL_CFG80211_P2P_DEV_IF */

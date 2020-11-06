@@ -1,7 +1,7 @@
 /*
  * Linux cfg80211 driver
  *
- * Copyright (C) 1999-2018, Broadcom Corporation
+ * Copyright (C) 1999-2019, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -24,7 +24,7 @@
  *
  * <<Broadcom-WL-IPTag/Open:>>
  *
- * $Id: wl_cfg80211.h 792549 2018-12-05 09:39:13Z $
+ * $Id: wl_cfg80211.h 826788 2019-06-21 13:28:08Z $
  */
 
 /**
@@ -881,9 +881,6 @@ struct bcm_cfg80211 {
 	uint8 fbt_key[FBT_KEYLEN];
 #endif
 	int roam_offload;
-#ifdef WL_CFG80211_P2P_DEV_IF
-	bool down_disc_if;
-#endif /* WL_CFG80211_P2P_DEV_IF */
 #ifdef P2PLISTEN_AP_SAMECHN
 	bool p2p_resp_apchn_status;
 #endif /* P2PLISTEN_AP_SAMECHN */

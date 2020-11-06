@@ -1,5 +1,5 @@
 #
-# Copyright (C) 1999-2018, Broadcom Corporation
+# Copyright (C) 1999-2019, Broadcom Corporation
 # 
 #      Unless you and Broadcom execute a separate written software license
 # agreement governing use of this software, this software is licensed to you
@@ -332,7 +332,7 @@ else
 endif
 
 # TCP SYNC flood attack block
-DHDCFLAGS += -DDHDTCPSYNC_FLOOD_BLK -DTCP_SYNC_FLOOD_LIMIT=50
+DHDCFLAGS += -DDHDTCPSYNC_FLOOD_BLK -DTCP_SYNC_FLOOD_LIMIT=500
 
 ##############################
 # Android Platform Definition
@@ -593,9 +593,11 @@ ifeq ($(filter y,$(CONFIG_ARCH_MSM8996) $(CONFIG_ARCH_MSM8998) $(CONFIG_SOC_EXYN
   DHDCFLAGS := $(filter-out -DSOFTAP_SEND_HANGEVT,$(DHDCFLAGS))
  # CLM
   DHDCFLAGS += -DDHD_SUPPORT_GB_999
- # Configure MU-MIMO capability
 ifeq ($(CONFIG_SOC_EXYNOS8890),y)
+ # Configure MU-MIMO capability
   DHDCFLAGS += -DDYNAMIC_MUMIMO_CONTROL
+ # Disable IRQ affinity setting
+  DHDCFLAGS := $(filter-out -DDHD_LB_IRQSET,$(DHDCFLAGS))
 endif
 ifeq ($(filter y,$(CONFIG_ARCH_MSM8998) $(CONFIG_ARCH_SDM845)),y)
 # Use SMMU for IOMEM

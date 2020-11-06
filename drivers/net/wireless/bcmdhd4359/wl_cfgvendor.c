@@ -1,7 +1,7 @@
 /*
  * Linux cfg80211 Vendor Extension Code
  *
- * Copyright (C) 1999-2018, Broadcom Corporation
+ * Copyright (C) 1999-2019, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -24,7 +24,7 @@
  *
  * <<Broadcom-WL-IPTag/Open:>>
  *
- * $Id: wl_cfgvendor.c 792083 2018-12-03 12:02:51Z $
+ * $Id: wl_cfgvendor.c 827430 2019-06-26 06:18:16Z $
  */
 
 /*
@@ -203,25 +203,31 @@ static int
 wl_cfgvendor_set_rand_mac_oui(struct wiphy *wiphy,
 	struct wireless_dev *wdev, const void  *data, int len)
 {
-	int err = 0;
+	int err = -EINVAL;
 	struct bcm_cfg80211 *cfg = wiphy_priv(wiphy);
 	int type;
+
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		goto exit;
+	}
+
+	if (len <= 0) {
+		WL_ERR(("invalid len %d\n", len));
+		goto exit;
+	}
 
 	type = nla_type(data);
 
 	if (type == ANDR_WIFI_ATTRIBUTE_RANDOM_MAC_OUI) {
 		if (nla_len(data) != DOT11_OUI_LEN) {
 			WL_ERR(("nla_len not matched.\n"));
-			err = -EINVAL;
 			goto exit;
 		}
 		err = dhd_dev_cfg_rand_mac_oui(bcmcfg_to_prmry_ndev(cfg), nla_data(data));
 
 		if (unlikely(err))
 			WL_ERR(("Bad OUI, could not set:%d \n", err));
-
-	} else {
-		err = -EINVAL;
 	}
 exit:
 	return err;
@@ -231,18 +237,27 @@ static int
 wl_cfgvendor_set_nodfs_flag(struct wiphy *wiphy,
 	struct wireless_dev *wdev, const void *data, int len)
 {
-	int err = 0;
+	int err = -EINVAL;
 	struct bcm_cfg80211 *cfg = wiphy_priv(wiphy);
 	int type;
 	u32 nodfs;
+
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		return -EINVAL;
+	}
+
+	if (len <= 0) {
+		WL_ERR(("invalid len %d\n", len));
+		return -EINVAL;
+	}
 
 	type = nla_type(data);
 	if (type == ANDR_WIFI_ATTRIBUTE_NODFS_SET) {
 		nodfs = nla_get_u32(data);
 		err = dhd_dev_set_nodfs(bcmcfg_to_prmry_ndev(cfg), nodfs);
-	} else {
-		err = -1;
 	}
+
 	return err;
 }
 #endif /* CUSTOM_FORCE_NODFS_FLAG */
@@ -506,6 +521,16 @@ wl_cfgvendor_enable_full_scan_result(struct wiphy *wiphy,
 	struct bcm_cfg80211 *cfg = wiphy_priv(wiphy);
 	int type;
 	bool real_time = FALSE;
+
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		return -EINVAL;
+	}
+
+	if (len <= 0) {
+		WL_ERR(("invalid len %d\n", len));
+		return -EINVAL;
+	}
 
 	type = nla_type(data);
 
@@ -1006,6 +1031,16 @@ wl_cfgvendor_gscan_get_channel_list(struct wiphy *wiphy,
 	uint32 reply_len = 0, num_channels, mem_needed;
 	struct sk_buff *skb;
 
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		return -EINVAL;
+	}
+
+	if (len <= 0) {
+		WL_ERR(("invalid len %d\n", len));
+		return -EINVAL;
+	}
+
 	type = nla_type(data);
 
 	if (type == GSCAN_ATTRIBUTE_BAND) {
@@ -1279,6 +1314,12 @@ wl_cfgvendor_rtt_set_config(struct wiphy *wiphy, struct wireless_dev *wdev,
 	err = dhd_dev_rtt_capability(bcmcfg_to_prmry_ndev(cfg), &capability);
 	if (err < 0) {
 		WL_ERR(("failed to get the capability\n"));
+		goto exit;
+	}
+
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		err = BCME_BADARG;
 		goto exit;
 	}
 
@@ -1649,6 +1690,16 @@ static int wl_cfgvendor_enable_lazy_roam(struct wiphy *wiphy,
 	int type;
 	uint32 lazy_roam_enable_flag;
 
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		return -EINVAL;
+	}
+
+	if (len <= 0) {
+		WL_ERR(("invaild len %d\n", len));
+		return -EINVAL;
+	}
+
 	type = nla_type(data);
 
 	if (type == GSCAN_ATTRIBUTE_LAZY_ROAM_ENABLE) {
@@ -1661,6 +1712,7 @@ static int wl_cfgvendor_enable_lazy_roam(struct wiphy *wiphy,
 			WL_ERR(("Could not enable lazy roam:%d \n", err));
 
 	}
+
 	return err;
 }
 
@@ -2098,10 +2150,19 @@ wl_cfgvendor_priv_string_handler(struct wiphy *wiphy,
 	int maxmsglen = PAGE_SIZE - 0x100;
 	struct sk_buff *reply;
 
-	WL_ERR(("entry: cmd = %d\n", nlioc->cmd));
+	if (!data) {
+		WL_ERR(("data is not available\n"));
+		return BCME_BADARG;
+	}
 
-	if (nlioc->offset != sizeof(struct bcm_nlmsg_hdr) ||
-		len <= sizeof(struct bcm_nlmsg_hdr)) {
+	if (len <= sizeof(struct bcm_nlmsg_hdr)) {
+		WL_ERR(("invalid len %d\n", len));
+		return BCME_BADARG;
+	}
+
+	WL_DBG(("entry: cmd = %d\n", nlioc->cmd));
+
+	if (nlioc->offset != sizeof(struct bcm_nlmsg_hdr)) {
 		WL_ERR(("invalid offset %d\n", nlioc->offset));
 		return BCME_BADARG;
 	}
@@ -2141,7 +2202,7 @@ wl_cfgvendor_priv_string_handler(struct wiphy *wiphy,
 	}
 	cur = buf;
 	while (ret_len > 0) {
-		msglen = nlioc->len > maxmsglen ? maxmsglen : ret_len;
+		msglen = ret_len > maxmsglen ? maxmsglen : ret_len;
 		ret_len -= msglen;
 		payload = msglen + sizeof(msglen);
 		reply = cfg80211_vendor_cmd_alloc_reply_skb(wiphy, payload);

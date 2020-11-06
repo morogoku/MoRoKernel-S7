@@ -9369,9 +9369,9 @@ static int hmp_active_task_migration_cpu_stop(void *data)
 	rcu_read_unlock();
 	double_unlock_balance(busiest_rq, target_rq);
 out_unlock:
-	put_task_struct(p);
 	busiest_rq->active_balance = 0;
 	raw_spin_unlock_irq(&busiest_rq->lock);
+	put_task_struct(p);
 	return 0;
 }
 
@@ -9460,9 +9460,9 @@ static int hmp_idle_pull_cpu_stop(void *data)
 	rcu_read_unlock();
 	double_unlock_balance(busiest_rq, target_rq);
 out_unlock:
-	put_task_struct(p);
 	busiest_rq->active_balance = 0;
 	raw_spin_unlock_irq(&busiest_rq->lock);
+	put_task_struct(p);
 	return 0;
 }
 
@@ -9653,10 +9653,11 @@ static unsigned int hmp_idle_pull(int this_cpu)
 		trace_sched_hmp_migrate(p, target->push_cpu,
 			HMP_MIGRATE_IDLE_PULL);
 		hmp_next_up_delay(&p->se, target->push_cpu);
+		raw_spin_unlock_irqrestore(&target->lock, flags);
 	} else {
+		raw_spin_unlock_irqrestore(&target->lock, flags);
 		put_task_struct(p);
 	}
-	raw_spin_unlock_irqrestore(&target->lock, flags);
 	if (force) {
 		stop_one_cpu_nowait(cpu_of(target),
 				hmp_idle_pull_cpu_stop,

@@ -1,7 +1,7 @@
 /*
  * Broadcom Dongle Host Driver (DHD), common DHD core.
  *
- * Copyright (C) 1999-2018, Broadcom Corporation
+ * Copyright (C) 1999-2019, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -24,7 +24,7 @@
  *
  * <<Broadcom-WL-IPTag/Open:>>
  *
- * $Id: dhd_common.c 772708 2018-07-18 05:47:31Z $
+ * $Id: dhd_common.c 853330 2019-12-02 06:58:26Z $
  */
 #include <typedefs.h>
 #include <osl.h>
@@ -305,7 +305,7 @@ enum {
 };
 
 const bcm_iovar_t dhd_iovars[] = {
-	{"version",	IOV_VERSION,	0,	0,	IOVT_BUFFER,	sizeof(dhd_version) },
+	{"version",	IOV_VERSION,	0,	0,	IOVT_BUFFER,	0 },
 #ifdef DHD_DEBUG
 	{"msglevel",	IOV_MSGLEVEL,	0,	0,	IOVT_UINT32,	0 },
 	{"mem_debug",   IOV_MEM_DEBUG,  0,      0,      IOVT_BUFFER,    0 },
@@ -1311,13 +1311,13 @@ dhd_doiovar(dhd_pub_t *dhd_pub, const bcm_iovar_t *vi, uint32 actionid, const ch
 	switch (actionid) {
 	case IOV_GVAL(IOV_VERSION):
 		/* Need to have checked buffer length */
-		dhd_ver_len = strlen(dhd_version);
+		dhd_ver_len = sizeof(dhd_version) - 1;
 		bus_api_rev_len = strlen(bus_api_revision);
-		if (dhd_ver_len)
-			bcm_strncpy_s((char*)arg, dhd_ver_len, dhd_version, dhd_ver_len);
-		if (bus_api_rev_len)
-			bcm_strncat_s((char*)arg + dhd_ver_len, bus_api_rev_len, bus_api_revision,
-				bus_api_rev_len);
+		if (len > dhd_ver_len + bus_api_rev_len) {
+			memcpy((char *)arg, dhd_version, dhd_ver_len);
+			memcpy((char *)arg + dhd_ver_len, bus_api_revision, bus_api_rev_len);
+			*((char *)arg + dhd_ver_len + bus_api_rev_len) = '\0';
+		}
 		break;
 
 	case IOV_GVAL(IOV_MSGLEVEL):
@@ -2290,7 +2290,7 @@ dhd_ioctl(dhd_pub_t * dhd_pub, dhd_ioctl_t *ioc, void *buf, uint buflen)
 				for (arg = buf, arglen = buflen; *arg && arglen; arg++, arglen--)
 					;
 
-				if (*arg) {
+				if (arglen == 0 || *arg) {
 					bcmerror = BCME_BUFTOOSHORT;
 					goto unlock_exit;
 				}
@@ -3392,7 +3392,7 @@ dhd_pktfilter_offload_set(dhd_pub_t * dhd, char *arg)
 	int 				rc;
 	uint32				mask_size;
 	uint32				pattern_size;
-	char				*argv[16], * buf = 0;
+	char				*argv[MAXPKT_ARG] = {0}, * buf = 0;
 	int					i = 0;
 	char				*arg_save = 0, *arg_org = 0;
 #define BUF_SIZE		2048
@@ -3420,8 +3420,13 @@ dhd_pktfilter_offload_set(dhd_pub_t * dhd, char *arg)
 	}
 
 	argv[i] = bcmstrtok(&arg_save, " ", 0);
-	while (argv[i++])
+	while (argv[i++]) {
+		if (i >= MAXPKT_ARG) {
+			DHD_ERROR(("Invalid args provided\n"));
+			goto fail;
+		}
 		argv[i] = bcmstrtok(&arg_save, " ", 0);
+	}
 
 	i = 0;
 	if (argv[i] == NULL) {

@@ -3562,6 +3562,8 @@ static int decon_dsu_change( struct decon_device *decon, struct decon_win_config
 
 	decon->DSU_mode = update_config->enableDSU;
 	if(decon->DSU_mode) {
+		// hd/fhd
+		usleep_range(16000, 17000);
 		decon->DSU_x_delta = update_config->dst.x;
 		decon->DSU_y_delta = update_config->top;
 

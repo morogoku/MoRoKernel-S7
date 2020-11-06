@@ -1,5 +1,30 @@
-BCM4361 DHD 1.77.72.10 for Android Great/Dream/Hero & BCM4345X & BCM4343X Project
+BCM4361 DHD 1.77.72.13 for Android Great/Dream/Hero & BCM4345X & BCM4343X Project
 (Notes: 1.77.x is twigged off from 1.579.235.9)
+
+DHD 1.77.72.13 - 2019.12.05
+Security Patch
+ - CS9179066(By Kim MoonSoo) SI-15880: Fixed heap buffer overflow in the "get version" request ioctl
+
+
+DHD 1.77.72.12 - 2019.07.04
+Kernel Panic
+ - CS7706946(By Min SungBin) Fixed to avoid kernel panic due to race condition of cfg->scan_request
+
+Security Patch
+ - CS7091164(By Kang Hyung Wook) (SI-13561) Fixed kernel heap overflow security issue at dhdpcie_downloadvars
+ - CS7091347(By Kang Hyung Wook) (SI-13585) Fixed kernel panic due to write buffer exceeds the size
+ - CS7091371(By Kang Hyung Wook) (SI-13584) Fixed kernel panic due to access to not allocated memory
+ - CS7860687(By Kang Hyung Wook) SI-12455: Fixed use-after-free write in dhd_set_monitor() function
+ - CS7949699(By Choi Hyeonu) SI-14074: Fixed Security issue, Potential stack-based buffer overflow in dhd_pktfilter_offload_set
+ - CS7956197(By Choi Hyeonu) SI-14130: Fixed the multiple NULL pointer dereference in wl_cfgvendor.c
+ - CS8069399(By Kang Hyung Wook) SI-13926: Fixed use-after-free in the wl_cfg80211_set_mgmt_vndr_ies function
+ - CS8424803(By Choi Hyeonu) SI-14869: Moved the length check routine for the nlioc variable before accessing it in the wl_cfgvendor_priv_string_handler() function
+
+Others
+ - CS7526157(By Suthar Nitesh) Fixed DualBandConcurrency field in .softap.info
+ - CS8284495(By Choi Jongmin) Increasing TCP SYN flooding attack threshold value to 500
+ - Disabled DHD_LB_IRQSET for Exynos8890 platform
+
 
 DHD 1.77.72.10 - 2018.12.11
 Security Patch

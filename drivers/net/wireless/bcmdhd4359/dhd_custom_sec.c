@@ -1,7 +1,7 @@
 /*
  * Customer HW 4 dependant file
  *
- * Copyright (C) 1999-2018, Broadcom Corporation
+ * Copyright (C) 1999-2019, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -1124,8 +1124,10 @@ void dhd_adps_mode_from_file(dhd_pub_t *dhd)
 #define SOFTAP_INFO_FILE_FIRST_LINE	"#.softap.info"
 #define SOFTAP_INFO_BUF_SZ	512
 /*
- * # Whether both wifi and hotspot can be turned on at the same time?
+ * # Does RSDB Wifi sharing support?
  * DualBandConcurrency
+ * # Both wifi and hotspot can be turned on at the same time?
+ * DualInterface
  * # 5Ghz band support?
  * 5G
  * # How many clients can be connected?
@@ -1147,11 +1149,7 @@ const char *softap_info_values[] = {
 };
 #elif defined(BCM43454_CHIP) || defined(BCM43455_CHIP) || defined(BCM43456_CHIP)
 const char *softap_info_values[] = {
-#ifdef WL_RESTRICTED_APSTA_SCC
-	"yes", "yes", "10", "no", "yes", "yes", NULL
-#else
 	"no", "yes", "10", "no", "yes", "yes", NULL
-#endif /* WL_RESTRICTED_APSTA_SCC */
 };
 #elif defined(BCM43430_CHIP)
 const char *softap_info_values[] = {

@@ -187,8 +187,6 @@ show_progress 0.34 -19000
 		sh /tmp/moro/moro_clean.sh com.topjohnwu.magisk -asd
 	fi
 
-	cp -rf /tmp/moro/magisk/*.apk /data/.morokernel/apk
-
 	ui_print "-- Rooting with Magisk Manager"
 	ui_print " "
 	$BB unzip /tmp/moro/magisk/magisk.zip META-INF/com/google/android/* -d /tmp/moro/magisk
@@ -203,12 +201,14 @@ show_progress 0.34 -19000
 		sh /tmp/moro/moro_clean.sh com.topjohnwu.magisk -asd
 	fi
 
-	cp -rf /tmp/moro/magisk/*.apk /data/.morokernel/apk
-
-	ui_print "-- Rooting with Magisk Phh"
+	ui_print "-- Rooting with Magisk Manager"
+	ui_print "-- Phh Patched"
 	ui_print " "
-	$BB unzip /tmp/moro/magisk_phh/magisk.zip META-INF/com/google/android/* -d /tmp/moro/magisk_phh
-	sh /tmp/moro/magisk_phh/META-INF/com/google/android/update-binary dummy 1 /tmp/moro/magisk_phh/magisk.zip
+	# Phh patch
+	. /tmp/moro/phh_patch.sh
+	# Install Phh Magisk
+	$BB unzip /tmp/moro/magisk/magisk.zip META-INF/com/google/android/* -d /tmp/moro/magisk
+	sh /tmp/moro/magisk/META-INF/com/google/android/update-binary dummy 1 /tmp/moro/magisk/magisk.zip
 fi
 
 

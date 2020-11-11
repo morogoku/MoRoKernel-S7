@@ -93,7 +93,6 @@ FUNC_BUILD_KERNEL()
 		sed -i '/CONFIG_HALL_EVENT_REVERSE/c\CONFIG_HALL_EVENT_REVERSE=y' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
 
-
 	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
 			CROSS_COMPILE=$BUILD_CROSS_COMPILE \
 			tmp_defconfig || exit -1

@@ -352,11 +352,11 @@ elif [[ $prompt == "5" ]]; then
     echo "S7 Edge - Lineage 17 Selected"
 
     OS=los17
-    ANDROID=8
+    ANDROID=9
     MTP=aosp
     GPU=r29
     MODEL=G935
-    OS_DEFCONFIG=$DEFCONFIG_OREO
+    OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
     PERMISSIVE=yes
     ZIP=yes
@@ -488,22 +488,22 @@ elif [[ $prompt == "8" ]]; then
     MAIN
 
     OS=los17
-    ANDROID=8
+    ANDROID=9
     MTP=aosp
     GPU=r29
     MODEL=G935
-    OS_DEFCONFIG=$DEFCONFIG_OREO
+    OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
     PERMISSIVE=yes
     ZIP=no
     MAIN
 
     OS=los17
-    ANDROID=8
+    ANDROID=9
     MTP=aosp
     GPU=r29
     MODEL=G930
-    OS_DEFCONFIG=$DEFCONFIG_OREO
+    OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
     PERMISSIVE=yes
     ZIP=no

@@ -2,14 +2,21 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.4</#></b>
-	DATE	: <b><#selectbg_g>30/07/2020</#></b>
+	VERSION	: <b><#selectbg_g>v8.5</#></b>
+	DATE	: <b><#selectbg_g>17/11/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.5</#></b></u>
+<*>Upgrade for Lineage 17.1 roms</*>
+<*>Lineage 17.0 no more compatible</*>
+<*>Improved temperature</*>
+<*>Updated sources to N935KKKU4CTH1</*>
+<*>Various optimizations</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.4</#></b></u>
 <*>Compatible with Floyd v3.0 OneUIv2.1</*>

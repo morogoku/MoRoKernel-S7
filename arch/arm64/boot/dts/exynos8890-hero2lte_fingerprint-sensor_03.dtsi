@@ -87,7 +87,7 @@
 			reg = <0>;
 			spi-max-frequency = <19200000>;
 			pinctrl-names = "default", "sleep", "idle";
-			pinctrl-0 = <&btp_irq &btp_reset &btp_ldo &btp_check>;
+			pinctrl-0 = <&btp_irq &btp_reset &btp_ldo &btp_check &btp_gpio>;
 			pinctrl-1 = <&btp_irqsleep>;
 			pinctrl-2 = <&btp_irqidle>;
 

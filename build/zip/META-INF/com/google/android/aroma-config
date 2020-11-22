@@ -116,7 +116,7 @@ if (prop("magisk_phh.prop","show")=="1") then
 
 		form(
 			"<~menu.title>",
-			"<~menu.desc>",
+			"<~menu.desc>" + "\n" + prop("os.prop","os") + ": <b>" + prop("os.prop","osdesc") + "</b>",
 			"@personalize",
 			"menu.prop",
 
@@ -134,7 +134,7 @@ if (prop("magisk_phh.prop","show")=="1") then
 
 		form(
 			"<~menu.title>",
-			"<~menu.desc>",
+			"<~menu.desc>" + "\n" + prop("os.prop","os") + ": <b>" + prop("os.prop","osdesc") + "</b>",
 			"@personalize",
 			"menu.prop",
 
@@ -155,7 +155,7 @@ else
 
 		form(
 			"<~menu.title>",
-			"<~menu.desc>",
+			"<~menu.desc>" + "\n <b>" + prop("os.prop","os") + ": <#selectbg_g>" + prop("os.prop","osdesc") + "</#></b>",
 			"@personalize",
 			"menu.prop",
 			
@@ -175,7 +175,7 @@ else
 
 		form(
 			"<~menu.title>",
-			"<~menu.desc>",
+			"<~menu.desc>" + "\n" + prop("os.prop","os") + ": <b>" + prop("os.prop","osdesc") + "</b>",
 			"@personalize",
 			"menu.prop",
 			

@@ -46,15 +46,19 @@ if [ -f /vendor/lib/hw/gralloc.exynos5.so ] || [ -f /system_root/vendor/lib/hw/g
     # If Treble UI Rom
         if [ $SDK == 28 ]; then
             OS="trebleUi"
+            OSDESC="TrebleUi Pie Rom"
         elif [ $SDK == 29 ]; then
             OS="twQ"
+            OSDESC="Samsung Q Rom"
         fi
     else
     # If Treble AOSP Rom
         if [ $SDK == 28 ]; then
             OS="treble"
+            OSDESC="Treble AOSP Pie Rom"
         elif [ $SDK == 29 ]; then
             OS="trebleQ"
+            OSDESC="Treble AOSP Q Rom"
         fi
     fi	
 else
@@ -63,18 +67,27 @@ else
     # If Samsung rom
         if [ $SDK == 26 ]; then
             OS="twOreo"
+            OSDESC="Samsung Oreo Rom"
         elif [ $SDK == 28 ]; then
             OS="twPie"
+            OSDESC="Samsung Pie Rom"
         fi
     else
     # If Lineage rom
         if [ $SDK == 28 ]; then
             OS="los16"
+            OSDESC="Lineage 16 Pie Rom"
         elif [ $SDK == 29 ]; then
             OS="los17" 
+            OSDESC="Lineage 17/17.1 Q Rom"
         fi
     fi
 fi
+
+
+# Set OS file 
+echo "os=$OS" > /tmp/aroma/os.prop
+echo "osdesc=$OSDESC" >> /tmp/aroma/os.prop
 
 
 ============
@@ -98,6 +111,5 @@ fi
 =========
 umount -l /system_root 2>/dev/null
 umount -l /system 2>/dev/null
-
 
 

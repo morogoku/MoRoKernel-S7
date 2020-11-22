@@ -77,8 +77,7 @@ changelog.desc=Instalation of <b>MoRoKernel</b> for <b>Galaxy S7.</b>
 
 # Instalacion
 menu.title=MoRoKernel Instalation
-menu.desc=Along with the installation of the kernel choose the desired options, type of root, app, etc.\
-The marked options are recommended.
+menu.desc=ROM Detected:
 menu.group1=Root Options
 menu.1=Without root
 menu.1desc=Recommended if you are installing another type of root on your own.

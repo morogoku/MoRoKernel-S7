@@ -121,8 +121,7 @@ if (prop("magisk_phh.prop","show")=="1") then
 			"menu.prop",
 
 			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
-			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
-			  "opt15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"select.selected",	# Magisk phh
+			  "chk15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"check.checked",	# Magisk phh
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
@@ -139,8 +138,7 @@ if (prop("magisk_phh.prop","show")=="1") then
 			"menu.prop",
 
 			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
-			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
-			  "opt15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"select.selected",	# Magisk phh
+			  "chk15",	"<b><~menu.15></b>",		"<~menu.15desc>",	"check.checked",	# Magisk phh
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk10",	"<b><~menu.10></b>",		"<~menu.10desc>",	"check.checked",	# Spectrum
@@ -160,8 +158,7 @@ else
 			"menu.prop",
 			
 			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
-			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
-			  "opt2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"select.selected",	# Magisk
+			  "chk2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"check.checked",	# Magisk
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk13",	"<b><~menu.13></b>",		"<~menu.13desc>",	"check",		# GPU install
@@ -180,8 +177,7 @@ else
 			"menu.prop",
 			
 			"group1",	"<b><~menu.group1></b>",	"",			"group",		#-- ROOT
-			  "opt1",	"<b><~menu.1></b>",		"<~menu.1desc>",	"select",		# Without root
-			  "opt2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"select.selected",	# Magisk
+			  "chk2",	"<b><~menu.2></b>",		"<~menu.2desc>",	"check.checked",	# Magisk
 			"group2",	"<b><~menu.group2></b>",	"",			"group",		#-- OTHER OPTIONS
 			  "chk3",	"<b><~menu.3></b>",		"<~menu.3desc>",	"check.checked",	# Mtweaks
 			  "chk7",	"<b><~menu.7></b>",		"<~menu.7desc>",	"check",		# Delete root data

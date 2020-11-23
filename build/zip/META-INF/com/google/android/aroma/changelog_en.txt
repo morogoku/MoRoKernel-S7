@@ -2,7 +2,7 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.5.1</#></b>
+	VERSION	: <b><#selectbg_g>v8.5.2</#></b>
 	DATE	: <b><#selectbg_g>23/11/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
@@ -10,6 +10,9 @@
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.5.2</#></b></u>
+<*>Fixed Fingerprint error and reboots with some roms</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.5.1</#></b></u>
 <*>Enabled CRYPTO_FIPS</*>

@@ -177,7 +177,7 @@ ui_print " "
 ui_print "@Root"
 	
 ## WITHOUT ROOT
-if [ "$(file_getprop /tmp/aroma/menu.prop group1)" == "opt1" ]; then
+if [ "$(file_getprop /tmp/aroma/menu.prop chk2)" == 0 ] || [ "$(file_getprop /tmp/aroma/menu.prop chk15)" == 0 ]; then
 show_progress 0.34 -5000
 
 	ui_print "-- Without Root"

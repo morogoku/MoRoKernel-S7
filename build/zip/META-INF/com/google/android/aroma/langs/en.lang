@@ -114,8 +114,6 @@ menu.14=Spectrum Support
 menu.14desc=Enable or Disable Spectrum support
 menu.10=Spectrum Profiles
 menu.10desc=Copy in sdcard/Spectrum/profiles
-menu.16=Fingerprint Always-on
-menu.16desc=Unlock with your fingerprint directly
 
 # Little OC
 loc.title=LITTLE CPU OVERCLOCK

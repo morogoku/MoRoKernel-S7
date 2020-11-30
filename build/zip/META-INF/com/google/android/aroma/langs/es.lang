@@ -97,8 +97,6 @@ menu.14=Soporte Spectrum
 menu.14desc=Activa o Desactiva Soporte Spectrum
 menu.10=Perfiles Spectrum
 menu.10desc=Copiar en sdcard/Spectrum/profiles
-menu.16=Lector Huella siempre activo
-menu.16desc=Desbloquee con la huella directamente
 
 # Little OC
 loc.title=LITTLE CPU OVERCLOCK

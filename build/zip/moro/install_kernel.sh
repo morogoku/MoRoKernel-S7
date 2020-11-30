@@ -92,37 +92,25 @@ cd /tmp/moro
 ui_print "-- Extracting"
 $BB tar -Jxf kernel.tar.xz $MODEL-$OS-$GPU-boot.img
 
-## Mods boot.img
-if [ "$(file_getprop /tmp/aroma/menu.prop chk16)" == 1 ] || [ "$(file_getprop /tmp/aroma/menu.prop chk14)" == 0 ]; then
+## Spectrum support
+if [ "$(file_getprop /tmp/aroma/menu.prop chk14)" == 0 ]; then
 	# Unpack
 	ui_print "-- Unpacking boot.img"
 	mv /tmp/moro/$MODEL-$OS-$GPU-boot.img /tmp/moro/aik/boot.img
 	cd /tmp/moro/aik
 	./unpackimg.sh boot.img
 	rm -f boot.img
-
-	# FP Always ON
-	if [ "$(file_getprop /tmp/aroma/menu.prop chk16)" == 1 ]; then
-		
-		# Patch cmdline
-		ui_print "-- Enabling FP Always ON"
-		. /tmp/moro/cmdline.sh
+	
+	# Disable spectrum support
+	ui_print "-- Disabling Spectrum support"
+	if [ $OS == "los17" ] || [ $OS == "twQ" ]; then
+		rm -f /system_root/init.spectrum.rc
+		sed -i '/init.spectrum.rc/d' /system_root/init.moro.rc
+	else
+		rm -f /tmp/moro/aik/ramdisk/init.spectrum.rc
+		sed -i '/init.spectrum.rc/d' /tmp/moro/aik/ramdisk/init.moro.rc
 	fi
-
-	# Spectrum support
-	if [ "$(file_getprop /tmp/aroma/menu.prop chk14)" == 0 ]; then
-		
-		# Disable spectrum support
-		ui_print "-- Disabling Spectrum support"
-		if [ $OS == "los17" ] || [ $OS == "twQ" ]; then
-			rm -f /system_root/init.spectrum.rc
-			sed -i '/init.spectrum.rc/d' /system_root/init.moro.rc
-		else
-			rm -f /tmp/moro/aik/ramdisk/init.spectrum.rc
-			sed -i '/init.spectrum.rc/d' /tmp/moro/aik/ramdisk/init.moro.rc
-		fi
-	fi
-
+	
 	# Pack
 	ui_print "-- Packing boot.img"
 	cd /tmp/moro/aik

@@ -109,8 +109,6 @@ static struct of_device_id vfsspi_match_table[] = {
 #define vfsspi_match_table NULL
 #endif
 
-static int always_on = 0;
-
 /*
  * vfsspi_devData - The spi driver private structure
  * @devt:Device ID
@@ -1502,7 +1500,7 @@ static int vfsspi_parse_dt(struct device *dev,
 		}
 	}
 #endif
-	if ((always_on == 0) || !of_find_property(np, "vfsspi-retainPin", NULL)) {
+	if (!of_find_property(np, "vfsspi-retainPin", NULL)) {
 		pr_err("%s: not set retainPin in dts\n", __func__);
 		data->retain_pin = 0;
 		data->detect_mode = DETECT_NORMAL;
@@ -2258,13 +2256,6 @@ static void __exit vfsspi_exit(void)
 	pr_debug("%s vfsspi_exit\n", __func__);
 	spi_unregister_driver(&vfsspi_spi);
 }
-
-static int __init fp_read_always_on(char *str)
-{
-	get_option(&str, &always_on);
-	return 1;
-}
-__setup("fp_always_on=", fp_read_always_on);
 
 module_init(vfsspi_init);
 module_exit(vfsspi_exit);

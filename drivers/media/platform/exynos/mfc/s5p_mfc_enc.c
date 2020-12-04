@@ -1696,7 +1696,7 @@ static int vidioc_s_fmt(struct file *file, void *priv, struct v4l2_format *f)
 	struct s5p_mfc_dev *dev = video_drvdata(file);
 	struct s5p_mfc_ctx *ctx = fh_to_mfc_ctx(file->private_data);
 	struct s5p_mfc_enc *enc = ctx->enc_priv;
-	struct s5p_mfc_fmt *fmt;
+	struct s5p_mfc_fmt *fmt = NULL;
 	struct v4l2_pix_format_mplane *pix_fmt_mp = &f->fmt.pix_mp;
 	int ret = 0;
 
@@ -1975,12 +1975,24 @@ static int vidioc_qbuf(struct file *file, void *priv, struct v4l2_buffer *buf)
 		return -EIO;
 	}
 
-	if (V4L2_TYPE_IS_MULTIPLANAR(buf->type) && !buf->length) {
+	if (!V4L2_TYPE_IS_MULTIPLANAR(buf->type)) {
+		mfc_err_ctx("Invalid V4L2 Buffer for driver: type(%d)\n", buf->type);
+		return -EINVAL;
+	}
+
+	if (!buf->length) {
 		mfc_err_ctx("multiplanar but length is zero\n");
 		return -EIO;
 	}
 
 	if (buf->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
+		if (ctx->src_fmt->mem_planes != buf->length) {
+			mfc_err_ctx("number of memory container miss-match "
+					"between Src planes(%d) and buffer length(%d)\n",
+					ctx->src_fmt->mem_planes, buf->length);
+			return -EINVAL;
+		}
+
 		ret = vb2_qbuf(&ctx->vq_src, buf);
 		if (!ret) {
 			mfc_debug(7, "timestamp: %ld %ld\n",
@@ -2061,6 +2073,12 @@ static int vidioc_dqbuf(struct file *file, void *priv, struct v4l2_buffer *buf)
 		mfc_err_ctx("Call on DQBUF after unrecoverable error.\n");
 		return -EIO;
 	}
+
+	if (!V4L2_TYPE_IS_MULTIPLANAR(buf->type)) {
+		mfc_err_ctx("Invalid V4L2 Buffer for driver: type(%d)\n", buf->type);
+		return -EINVAL;
+	}
+
 	if (buf->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
 		ret = vb2_dqbuf(&ctx->vq_src, buf, file->f_flags & O_NONBLOCK);
 	else
@@ -2077,6 +2095,12 @@ static int vidioc_streamon(struct file *file, void *priv,
 	int ret = -EINVAL;
 
 	mfc_debug_enter();
+
+	if (!V4L2_TYPE_IS_MULTIPLANAR(type)) {
+		mfc_err_ctx("Invalid V4L2 Buffer for driver: type(%d)\n", type);
+		return -EINVAL;
+	}
+
 	if (type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
 		ret = vb2_streamon(&ctx->vq_src, type);
 
@@ -2102,10 +2126,15 @@ static int vidioc_streamoff(struct file *file, void *priv,
 			    enum v4l2_buf_type type)
 {
 	struct s5p_mfc_ctx *ctx = fh_to_mfc_ctx(file->private_data);
-	int ret;
+	int ret = -EINVAL;
 
 	mfc_debug_enter();
-	ret = -EINVAL;
+
+	if (!V4L2_TYPE_IS_MULTIPLANAR(type)) {
+		mfc_err_ctx("Invalid V4L2 Buffer for driver: type(%d)\n", type);
+		return -EINVAL;
+	}
+
 	if (type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
 		ctx->last_framerate = 0;
 		memset(&ctx->last_timestamp, 0, sizeof(struct timeval));

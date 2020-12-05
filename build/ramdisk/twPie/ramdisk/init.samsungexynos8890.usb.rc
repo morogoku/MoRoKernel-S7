@@ -16,9 +16,6 @@ on post-fs
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
 
-on property:sys.usb.config=none
-    setprop sys.usb.state ${sys.usb.config}
-
 on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 04e8

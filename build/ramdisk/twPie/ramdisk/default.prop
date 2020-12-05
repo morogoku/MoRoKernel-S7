@@ -42,7 +42,7 @@ setupwizard.feature.predeferred_enabled=false
 setupwizard.theme=glif_v3_light
 ro.setupwizard.wifi_on_exit=false
 ro.setupwizard.mode=OPTIONAL
-ro.com.google.gmsversion=9_201907
+ro.com.google.gmsversion=9_202001
 ro.vndk.version=28
 ro.vndk.lite=true
 ro.zygote=zygote64_32
@@ -63,6 +63,6 @@ wlan.wfd.hdcp=disable
 #
 # BOOTIMAGE_BUILD_PROPERTIES
 #
-ro.bootimage.build.date=Tue Nov 26 13:29:36 KST 2019
-ro.bootimage.build.date.utc=1574742576
-ro.bootimage.build.fingerprint=samsung/gracerltexx/gracerlte:9/PPR1.180610.011/N935FXXU6CSK1:user/test-keys
+ro.bootimage.build.date=Mon Nov 2 11:39:02 KST 2020
+ro.bootimage.build.date.utc=1604284742
+ro.bootimage.build.fingerprint=samsung/gracerltektt/gracerltektt:9/PPR1.180610.011/N935KKKU4CTK1:user/test-keys

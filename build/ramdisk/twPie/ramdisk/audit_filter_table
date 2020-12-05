@@ -640,3 +640,6 @@ auditfilter platform_app spu_file:dir read; comm="ndroid.spay:web"
 # http://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-2308
 auditfilter cp_vername mmb_device:chr_file getattr;
 
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3165
+auditfilter hal_neuralnetworks_default default_prop:file map;
+

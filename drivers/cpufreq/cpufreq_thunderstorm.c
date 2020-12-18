@@ -1197,7 +1197,8 @@ static ssize_t store_down_low_load_threshold(struct cpufreq_thunderstorm_tunable
 		const char *buf, size_t count)
 {
 	int ret;
-	unsigned long val, val_round;
+	unsigned long val;
+//	unsigned long val_round;
 
 	ret = kstrtoul(buf, 0, &val);
 	if (ret < 0 || ret > 50)

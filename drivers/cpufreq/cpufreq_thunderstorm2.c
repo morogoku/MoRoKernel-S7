@@ -747,7 +747,7 @@ static void cpufreq_thunderstorm2_get_policy_info(struct cpufreq_policy *policy,
 static void cpufreq_thunderstorm2_adjust_cpu(unsigned int cpu, 
 					   struct cpufreq_policy *policy)
 {
-	struct cpufreq_thunderstorm2_tunables *tunables;
+//	struct cpufreq_thunderstorm2_tunables *tunables;
 	struct cpufreq_thunderstorm2_cpuinfo *pcpu;
 	u64 hvt, fvt;
 	unsigned int max_freq;
@@ -1353,7 +1353,8 @@ static ssize_t store_down_low_load_threshold(struct cpufreq_thunderstorm2_tunabl
 		const char *buf, size_t count)
 {
 	int ret;
-	unsigned long val, val_round;
+	unsigned long val;
+//	unsigned long val_round;
 
 	ret = kstrtoul(buf, 0, &val);
 	if (ret < 0 || ret > 50)

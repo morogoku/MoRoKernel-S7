@@ -2,14 +2,27 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.5.2</#></b>
-	DATE	: <b><#selectbg_g>23/11/2020</#></b>
+	VERSION	: <b><#selectbg_g>v8.6.0</#></b>
+	DATE	: <b><#selectbg_g>20/12/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.6.0</#></b></u>
+<*>Sources N935KKKU4CTK1</*>
+<*>MoroSound v2.2.0</*>
+<*> - Dual Speaker</*>
+<*> - Mono sound</*>
+<*> - Mic gain controls for 3 mics</*>
+<*>MTweaks v2.18.0</*>
+<*>ZZMOOVE Cpue Governor</*>
+<*>Removed Fingerprint Always-On</*>
+<*>Interactive S7 governor for default</*>
+<*>Reverted to kernel 8.2 cpu configuration</*>
+<*>Sdfat update to version 2.4.5</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.5.2</#></b></u>
 <*>Fixed Fingerprint error and reboots with some roms</*>

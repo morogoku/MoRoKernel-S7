@@ -2,14 +2,18 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.6.0</#></b>
-	DATE	: <b><#selectbg_g>20/12/2020</#></b>
+	VERSION	: <b><#selectbg_g>v8.6.1</#></b>
+	DATE	: <b><#selectbg_g>21/12/2020</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.6.1</#></b></u>
+<*>Reverted SDFat updates</*>
+<*>MTweaks 2.18.1</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.6.0</#></b></u>
 <*>Sources N935KKKU4CTK1</*>

@@ -4,7 +4,8 @@
 # This is a common source of Android security bugs.
 #
 
-import /init.spectrum.rc
+
+
 
 on boot
     start check

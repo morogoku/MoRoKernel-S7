@@ -115,6 +115,10 @@ set_os() {
                     ui_print "-- Rom: Lineage 17"
                     OS="los17"
                     VENDOR="/system/vendor"
+                elif [ $SDK == 30 ]; then
+                    ui_print "-- Rom: Lineage 18"
+                    OS="los17"
+                    VENDOR="/system/vendor"
                 else
                     ui_print " "
                     ui_print "@** UNSUPPORTED ANDROID VERSION **"

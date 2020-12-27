@@ -71,6 +71,9 @@ else
         elif [ $SDK == 29 ]; then
             OS="los17" 
             OSDESC="Lineage 17/17.1 Q Rom"
+        elif [ $SDK == 30 ]; then
+            OS="los17" 
+            OSDESC="Lineage 18/18.1 R Rom"
         fi
     fi
 fi

@@ -10,16 +10,24 @@ mount -o rw,remount /data;
 mount -o rw,remount /;
 
 
+# RC files dir
+RCDIR=""
+if [ ! -f /init.rc ]; then
+  RCDIR=/system/etc/init/hw
+fi
+
+
 # Clean init.rc
-sed -i '/init.ts.rc/d' /init.rc
-sed -i '/init.services.rc/d' /init.rc
+sed -i '/init.ts.rc/d' $RCDIR/init.rc
+sed -i '/init.services.rc/d' $RCDIR/init.rc
+sed -i '/init.spectrum.rc/d' $RCDIR/init.rc
 
 
 # If no MoroKernel v8 installed, remove files 
-if ! grep -q MoRoKernel /proc/version && ! grep -q v8 /proc/version; then 
-    rm -f /init.moro.rc
-    rm -f /init.spectrum.rc
-    sed -i '/init.moro.rc/d' /init.rc
+if ! grep -q MoRoKernel /proc/version; then 
+    rm -f $RCDIR/init.moro.rc
+    rm -f $RCDIR/init.spectrum.rc
+    sed -i '/init.moro.rc/d' $RCDIR/init.rc
     rm -Rf /data/.morokernel
 fi
 

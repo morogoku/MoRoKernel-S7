@@ -43,14 +43,22 @@ ui_print "-- Extracting"
 $BB tar -Jxf gpu_libs.tar.xz
 $BB tar -Jxf secure_storage.tar.xz
 $BB tar -Jxf aik.tar.xz
+$BB tar -Jxf wifi.tar.xz
 ui_print "-- Copying files"
 
 
-# f2fs support for los17
 if [ $OS == "los17" ]; then
+# f2fs support for los17
 	cp -f /tmp/moro/files/fstab.samsungexynos8890 /system_root
 	chmod 640 /system_root/fstab.samsungexynos8890
 	chown -R root.shell /system_root/fstab.samsungexynos8890
+	
+	
+# Wifi fix for Lineage 17.0
+	if [ ! -f $VENDOR/firmware/bcm4359C0_murata.hcd ]; then
+		ui_print "-- Fixing wifi for Lineage 17.0 roms"
+		cp -rf wifi/. $VENDOR/
+	fi	
 fi
 
 

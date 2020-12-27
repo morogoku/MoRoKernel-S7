@@ -134,20 +134,11 @@ mount_parts() {
     # Mount system
     ui_print " "
     ui_print "@Mount partitions"
-    ui_print "-- mount /system RW"
+    ui_print "-- mount /system"
 
-    block=/dev/block/platform/155a0000.ufs/by-name/SYSTEM
-    SYSTEM_MOUNT=/system
-    SYSTEM=$SYSTEM_MOUNT
-
-    # Try to detect system-as-root through $SYSTEM_MOUNT/init.rc like Magisk does
-    # Mount whatever $SYSTEM_MOUNT is, sometimes remount is necessary if mounted read-only
-
-    grep -q "$SYSTEM_MOUNT.*\sro[\s,]" /proc/mounts && mount -o remount,rw $SYSTEM_MOUNT || mount -o rw "$block" $SYSTEM_MOUNT
-
-    # Remount /system to /system_root if we have system-as-root and bind /system to /system_root/system (like Magisk does)
-    # For reference, check https://github.com/topjohnwu/Magisk/blob/master/scripts/util_functions.sh
-    if [ -f /system/init.rc ]; then
+    mount /system
+    
+    if [ -f /system/init.environ.rc ]; then
         ui_print "-- Device is system-as-root"
         ui_print "-- Remounting /system as /system_root"
         mkdir /system_root

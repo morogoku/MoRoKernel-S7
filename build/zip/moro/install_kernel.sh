@@ -199,6 +199,7 @@ show_progress 0.34 -19000
 	ui_print " "
 	$BB unzip /tmp/moro/magisk/magisk.zip META-INF/com/google/android/* -d /tmp/moro/magisk
 	sh /tmp/moro/magisk/META-INF/com/google/android/update-binary dummy 1 /tmp/moro/magisk/magisk.zip
+	cp /tmp/moro/magisk/magisk.zip /data/adb/magisk/magisk.apk
 
 elif [ "$(file_getprop /tmp/aroma/menu.prop chk15)" == 1 ]; then
 show_progress 0.34 -19000

@@ -27,9 +27,9 @@ set_perm() {
 
 clean_magisk() {
     rm -rf /cache/*magisk* /cache/unblock /data/*magisk* /data/cache/*magisk* /data/property/*magisk* \
-    /data/Magisk.apk /data/busybox /data/custom_ramdisk_patch.sh /data/app/com.topjohnwu.magisk* \
-    /data/user*/*/magisk.db /data/user*/*/com.topjohnwu.magisk /data/user*/*/.tmp.magisk.config \
-    /data/adb/*magisk* /data/adb/post-fs-data.d /data/adb/service.d /data/adb/modules* 2>/dev/null
+    /data/Magisk.apk /data/busybox /data/custom_ramdisk_patch.sh /data/adb/*magisk* \
+    /data/adb/post-fs-data.d /data/adb/service.d /data/adb/modules* \
+    /data/unencrypted/magisk /metadata/magisk /persist/magisk /mnt/vendor/persist/magisk 2>/dev/null
         
     if [ -f /system/addon.d/99-magisk.sh ]; then
         rm -f /system/addon.d/99-magisk.sh

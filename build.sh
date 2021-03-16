@@ -31,7 +31,7 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 K_VERSION="v8.7b01"
 K_SUBVER="8"
-K_BASE="CTK1"
+K_BASE="CUA1"
 K_NAME="MoRoKernel"
 export KBUILD_BUILD_VERSION="1"
 

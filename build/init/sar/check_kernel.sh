@@ -28,6 +28,13 @@ if ! grep -q MoRoKernel /proc/version; then
     rm -f $RCDIR/init.moro.rc
     rm -f $RCDIR/init.spectrum.rc
     sed -i '/init.moro.rc/d' $RCDIR/init.rc
+    
+    # If not exist restore init.custom.rc
+    if ! grep -q init.custom.rc $RCDIR/init.rc; then
+	    line=$(grep -n 'import' $RCDIR/init.rc | cut -d: -f 1 | tail -n1);
+	    sed -i ''${line}'a\import \/vendor\/etc\/init\/init.custom.rc' $RCDIR/init.rc
+    fi	    
+    
     rm -Rf /data/.morokernel
 fi
 

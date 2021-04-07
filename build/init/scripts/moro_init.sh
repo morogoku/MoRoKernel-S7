@@ -8,9 +8,6 @@ LOG="$MORO_DIR/morokernel.log"
 
 rm -f $LOG
 
-BB="/sbin/busybox"
-RESETPROP="/sbin/resetprop -v -n"
-
 
 # Mount
 mount -t rootfs -o rw,remount rootfs;
@@ -38,6 +35,9 @@ fi
 echo $(date) "MoRo-Kernel LOG" >> $LOG;
 echo " " >> $LOG;
 
+
+# Zram
+. $SDIR/zram.sh
 
 # Fix personalist error
 . $SDIR/fix_personalist.sh

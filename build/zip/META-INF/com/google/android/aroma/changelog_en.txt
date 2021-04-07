@@ -2,14 +2,21 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.6.1</#></b>
-	DATE	: <b><#selectbg_g>21/12/2020</#></b>
+	VERSION	: <b><#selectbg_g>v8.7</#></b>
+	DATE	: <b><#selectbg_g>11/04/2021</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.7</#></b></u>
+<*>Sources N935KKKU4CUA1</*>
+<*>Lineage 18.1 compatible</*>
+<*>Lineage 17 & 17.1 wifi compatible</*>
+<*>Magisk v22.1</*>
+<*>Disable Zswap, and Enable ZRAM LZ4</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.6.1</#></b></u>
 <*>Reverted SDFat updates</*>

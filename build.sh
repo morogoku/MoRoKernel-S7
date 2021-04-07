@@ -29,7 +29,7 @@ DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
 
 
-K_VERSION="v8.7b01"
+K_VERSION="v8.7"
 K_SUBVER="8"
 K_BASE="CUA1"
 K_NAME="MoRoKernel"
@@ -232,8 +232,11 @@ elif [[ $ANDROID == "8" ]]; then
 	export PLATFORM_VERSION=8.0.0
 fi
 
-export KERNEL_VERSION="$K_SUBVER-$K_NAME-$OS-$K_BASE-$K_VERSION"
-
+if [[ $OS == "los17" ]];then
+	export KERNEL_VERSION="$K_SUBVER-$K_NAME-los17/18-$K_BASE-$K_VERSION"
+else
+	export KERNEL_VERSION="$K_SUBVER-$K_NAME-$OS-$K_BASE-$K_VERSION"
+fi
 (
 	START_TIME=`date +%s`
 	FUNC_DELETE_PLACEHOLDERS
@@ -270,7 +273,7 @@ echo "(1) S7 Edge - Samsung OREO"
 echo "(2) S7 Edge - Samsung PIE (r29)"
 echo "(3) S7 Edge - Samsung Q"
 echo "(4) S7 Edge - Lineage 16"
-echo "(5) S7 Edge - Lineage 17"
+echo "(5) S7 Edge - Lineage 17/18"
 echo "(6) S7 Edge - TREBLE AOSP"
 echo "(7) S7 Edge - TREBLE Samsung"
 echo ""

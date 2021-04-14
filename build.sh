@@ -92,6 +92,10 @@ FUNC_BUILD_KERNEL()
 	if [[ $OS == "twQ" ]]; then
 		sed -i '/CONFIG_HALL_EVENT_REVERSE/c\CONFIG_HALL_EVENT_REVERSE=y' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
+	
+	# DTB
+	cp $DTSDIR/exynos8890-herolte_$OS.dtsi $DTSDIR/exynos8890-herolte_common.dtsi
+	echo "Used exynos8890-herolte_$OS.dtsi as exynos8890-herolte_common.dtsi"
 
 	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
 			CROSS_COMPILE=$BUILD_CROSS_COMPILE \
@@ -101,49 +105,6 @@ FUNC_BUILD_KERNEL()
 	echo ""
 
 	rm -f $RDIR/arch/$ARCH/configs/tmp_defconfig
-}
-
-FUNC_BUILD_DTB()
-{
-	[ -f "$DTCTOOL" ] || {
-		echo "You need to run ./build.sh first!"
-		exit 1
-	}
-	
-	cp $DTSDIR/exynos8890-herolte_$OS.dtsi $DTSDIR/exynos8890-herolte_common.dtsi
-	echo "Used exynos8890-herolte_$OS.dtsi as exynos8890-herolte_common.dtsi"
-	
-	case $MODEL in
-	G930)
-		DTSFILES="exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
-				exynos8890-herolte_eur_open_09 exynos8890-herolte_eur_open_10"
-		;;
-	G935)
-		DTSFILES="exynos8890-hero2lte_eur_open_04 exynos8890-hero2lte_eur_open_08"
-		;;
-	*)
-
-		echo "Unknown device: $MODEL"
-		exit 1
-		;;
-	esac
-	mkdir -p $OUTDIR $DTBDIR
-	cd $DTBDIR || {
-		echo "Unable to cd to $DTBDIR!"
-		exit 1
-	}
-	rm -f ./*
-	echo "Processing dts files."
-	for dts in $DTSFILES; do
-		echo "=> Processing: ${dts}.dts"
-		${CROSS_COMPILE}cpp -nostdinc -undef -x assembler-with-cpp -I "$INCDIR" "$DTSDIR/${dts}.dts" > "${dts}.dts"
-		echo "=> Generating: ${dts}.dtb"
-		$DTCTOOL -p $DTB_PADDING -i "$DTSDIR" -O dtb -o "${dts}.dtb" "${dts}.dts"
-	done
-	echo "Generating dtb.img."
-	$RDIR/scripts/dtbtool_exynos/dtbtool -o "$OUTDIR/dtb.img" -d "$DTBDIR/" -s $PAGE_SIZE
-	echo "Done."
-	
 	rm -f $DTSDIR/exynos8890-herolte_common.dtsi
 }
 
@@ -232,6 +193,7 @@ elif [[ $ANDROID == "8" ]]; then
 	export PLATFORM_VERSION=8.0.0
 fi
 
+# Kernel name for Lineage 17 & 18 roms
 if [[ $OS == "los17" ]];then
 	export KERNEL_VERSION="$K_SUBVER-$K_NAME-los17/18-$K_BASE-$K_VERSION"
 else
@@ -241,7 +203,6 @@ fi
 	START_TIME=`date +%s`
 	FUNC_DELETE_PLACEHOLDERS
 	FUNC_BUILD_KERNEL
-	FUNC_BUILD_DTB
 	FUNC_BUILD_RAMDISK
 	if [ $ZIP == "yes" ]; then
 	    FUNC_BUILD_FLASHABLES

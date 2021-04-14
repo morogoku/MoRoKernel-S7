@@ -11,6 +11,7 @@ make ARCH=arm64 distclean
 
 rm -f $PWD/build/*.img 2>/dev/null
 rm -f $PWD/arch/arm64/boot/dts/*.dtb 2>/dev/null
+rm -f $PWD/arch/arm64/boot/dts/exynos8890-herolte_common.dtsi
 rm -f $PWD/arch/arm64/configs/tmp_defconfig 2>/dev/null
 rm -rf $PWD/arch/arm64/boot/dtb 2>/dev/null
 rm -f $PWD/build/*.zip 2>/dev/null

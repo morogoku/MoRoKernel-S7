@@ -118,16 +118,11 @@ FUNC_BUILD_RAMDISK()
 	mkdir temp 2>/dev/null
 	cp -rf aik/. temp
 	
-	if [[ $OS == "trebleUi" ]]; then
-		cp -rf ramdisk/treble/ramdisk/. temp/ramdisk
-		cp -rf ramdisk/treble/split_img/. temp/split_img
-	else
-		cp -rf ramdisk/$OS/ramdisk/. temp/ramdisk
-		cp -rf ramdisk/$OS/split_img/. temp/split_img
-	fi
+	cp -rf ramdisk/$OS/ramdisk/. temp/ramdisk
+	cp -rf ramdisk/$OS/split_img/. temp/split_img
 	
 	if [[ $OS != "twQ" && $OS != "los17" ]];then
-		if [[ $OS == "treble" || $OS == "trebleUi" ]]; then
+		if [[ $OS == "treble" ]]; then
 			cp -rf init/root_treble/. temp/ramdisk
 		else
 			cp -rf init/root_common/. temp/ramdisk
@@ -235,8 +230,7 @@ echo "(2) S7 Edge - Samsung PIE (r29)"
 echo "(3) S7 Edge - Samsung Q"
 echo "(4) S7 Edge - Lineage 16"
 echo "(5) S7 Edge - Lineage 17/18"
-echo "(6) S7 Edge - TREBLE AOSP"
-echo "(7) S7 Edge - TREBLE Samsung"
+echo "(6) S7 Edge - TREBLE"
 echo ""
 echo "S7 AllInOne: OREO + PIE + Lineage + Treble"
 echo "(8) S7 AllInOne: OREO + PIE + Q + AOSP + TREBLE"
@@ -343,22 +337,6 @@ elif [[ $prompt == "6" ]]; then
     ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
     MAIN
     
-elif [[ $prompt == "7" ]]; then
-
-    echo "S7 Edge - TREBLE Samsung Selected"
-
-    OS=trebleUi
-    ANDROID=9
-    MTP=sam
-    GPU=r29
-    MODEL=G935
-    OS_DEFCONFIG=$DEFCONFIG_PIE
-    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
-    PERMISSIVE=yes
-    ZIP=yes
-    ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
-    MAIN
-
 elif [[ $prompt == "8" ]]; then
 
     echo "S7 AllInOne: OREO + PIE + AOSP"
@@ -487,28 +465,6 @@ elif [[ $prompt == "8" ]]; then
     OS=treble
     ANDROID=9
     MTP=aosp
-    GPU=r29
-    MODEL=G930
-    OS_DEFCONFIG=$DEFCONFIG_PIE
-    DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
-    PERMISSIVE=yes
-    ZIP=no
-    MAIN
-    
-    OS=trebleUi
-    ANDROID=9
-    MTP=sam
-    GPU=r29
-    MODEL=G935
-    OS_DEFCONFIG=$DEFCONFIG_PIE
-    DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
-    PERMISSIVE=yes
-    ZIP=no
-    MAIN
-    
-    OS=trebleUi
-    ANDROID=9
-    MTP=sam
     GPU=r29
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_PIE

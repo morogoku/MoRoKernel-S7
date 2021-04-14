@@ -56,11 +56,7 @@ set_os() {
             ui_print "-- $MODEL_DESC"
             if [ -f /system/framework/com.samsung.device.jar ]; then
             # If Treble UI Rom
-                if [ $SDK == 28 ]; then
-                    ui_print "-- Rom: TrebleUi PIE"
-                    OS="trebleUi"
-                    VENDOR="/vendor"
-                elif [ $SDK == 29 ]; then
+                if [ $SDK == 29 ]; then
                     ui_print "-- Rom: Samsung Q"
                     OS="twQ"
                     VENDOR="/system/vendor"

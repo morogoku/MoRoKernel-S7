@@ -35,10 +35,7 @@ if [ -f /vendor/lib/hw/gralloc.exynos5.so ] || [ -f /system_root/vendor/lib/hw/g
 # If Treble Rom
     if [ -f /system/framework/com.samsung.device.jar ]; then
     # If Treble UI Rom
-        if [ $SDK == 28 ]; then
-            OS="trebleUi"
-            OSDESC="TrebleUi Pie Rom"
-        elif [ $SDK == 29 ]; then
+        if [ $SDK == 29 ]; then
             OS="twQ"
             OSDESC="Samsung Q Rom"
         fi
@@ -95,7 +92,7 @@ fi
 ==========
 # SHOW GPU
 ==========
-if [ $OS == "twPie" ] || [ $OS == "twQ" ] || [ $OS == "trebleUi" ] || [ $OS == "treble" ] || [ $OS == "trebleQ" ]; then
+if [ $OS == "twPie" ] || [ $OS == "twQ" ] || [ $OS == "treble" ] || [ $OS == "trebleQ" ]; then
     echo "show=1" > /tmp/aroma/gpu_driver.prop
 fi
 

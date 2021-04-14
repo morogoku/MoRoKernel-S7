@@ -27,6 +27,7 @@ DEFCONFIG_OREO=moro-oreo_defconfig
 DEFCONFIG_PIE=moro-pie_defconfig
 DEFCONFIG_S7EDGE=moro-edge_defconfig
 DEFCONFIG_S7FLAT=moro-flat_defconfig
+DEFCONFIG_N7FE=moro-grace_defconfig
 
 
 K_VERSION="v8.7"
@@ -118,8 +119,13 @@ FUNC_BUILD_RAMDISK()
 	mkdir temp 2>/dev/null
 	cp -rf aik/. temp
 	
-	cp -rf ramdisk/$OS/ramdisk/. temp/ramdisk
-	cp -rf ramdisk/$OS/split_img/. temp/split_img
+	if [[ $MODEL == "N935" && $OS == "twPie" ]]; then
+		cp -rf ramdisk/twPie-N935/ramdisk/. temp/ramdisk
+		cp -rf ramdisk/twPie-N935/split_img/. temp/split_img
+	else
+		cp -rf ramdisk/$OS/ramdisk/. temp/ramdisk
+		cp -rf ramdisk/$OS/split_img/. temp/split_img
+	fi
 	
 	if [[ $OS != "twQ" && $OS != "los17" ]];then
 		if [[ $OS == "treble" ]]; then
@@ -194,6 +200,7 @@ if [[ $OS == "los17" ]];then
 else
 	export KERNEL_VERSION="$K_SUBVER-$K_NAME-$OS-$K_BASE-$K_VERSION"
 fi
+
 (
 	START_TIME=`date +%s`
 	FUNC_DELETE_PLACEHOLDERS
@@ -231,6 +238,7 @@ echo "(3) S7 Edge - Samsung Q"
 echo "(4) S7 Edge - Lineage 16"
 echo "(5) S7 Edge - Lineage 17/18"
 echo "(6) S7 Edge - TREBLE"
+echo "(7) N7 FE - Samsung Q"
 echo ""
 echo "S7 AllInOne: OREO + PIE + Lineage + Treble"
 echo "(8) S7 AllInOne: OREO + PIE + Q + AOSP + TREBLE"
@@ -332,6 +340,22 @@ elif [[ $prompt == "6" ]]; then
     MODEL=G935
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7EDGE
+    PERMISSIVE=yes
+    ZIP=yes
+    ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
+    MAIN
+
+elif [[ $prompt == "7" ]]; then
+
+    echo "N7 FE - Samsung Q Selected"
+
+    OS=twQ
+    ANDROID=9
+    MTP=sam
+    GPU=r29
+    MODEL=N935
+    OS_DEFCONFIG=$DEFCONFIG_PIE
+    DEVICE_DEFCONFIG=$DEFCONFIG_N7FE
     PERMISSIVE=yes
     ZIP=yes
     ZIP_NAME=$K_NAME-$OS-$MODEL-$K_BASE-$K_VERSION.zip
@@ -469,6 +493,28 @@ elif [[ $prompt == "8" ]]; then
     MODEL=G930
     OS_DEFCONFIG=$DEFCONFIG_PIE
     DEVICE_DEFCONFIG=$DEFCONFIG_S7FLAT
+    PERMISSIVE=yes
+    ZIP=no
+    MAIN
+    
+    OS=twPie
+    ANDROID=9
+    MTP=sam
+    GPU=r29
+    MODEL=N935
+    OS_DEFCONFIG=$DEFCONFIG_PIE
+    DEVICE_DEFCONFIG=$DEFCONFIG_N7FE
+    PERMISSIVE=yes
+    ZIP=no
+    MAIN
+    
+    OS=twQ
+    ANDROID=9
+    MTP=sam
+    GPU=r29
+    MODEL=N935
+    OS_DEFCONFIG=$DEFCONFIG_PIE
+    DEVICE_DEFCONFIG=$DEFCONFIG_N7FE
     PERMISSIVE=yes
     ZIP=yes
     ZIP_NAME=$K_NAME-AllInOne-$K_BASE-$K_VERSION.zip

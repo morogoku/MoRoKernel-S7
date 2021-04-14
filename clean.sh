@@ -11,6 +11,7 @@ make ARCH=arm64 distclean
 
 rm -f $PWD/build/*.img 2>/dev/null
 rm -f $PWD/arch/arm64/boot/dts/*.dtb 2>/dev/null
+rm -f $PWD/arch/arm64/boot/dtb.img 2>/dev/null
 rm -f $PWD/arch/arm64/boot/dts/exynos8890-herolte_common.dtsi
 rm -f $PWD/arch/arm64/configs/tmp_defconfig 2>/dev/null
 rm -rf $PWD/arch/arm64/boot/dtb 2>/dev/null
@@ -45,6 +46,36 @@ echo "" > build/ramdisk/twPie/ramdisk/proc/.placeholder
 echo "" > build/ramdisk/twPie/ramdisk/storage/.placeholder
 echo "" > build/ramdisk/twPie/ramdisk/sys/.placeholder
 echo "" > build/ramdisk/twPie/ramdisk/system/.placeholder
+
+echo "" > build/ramdisk/twPie-N935/ramdisk/acct/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/cache/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/config/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/data/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/dev/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/keydata/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/keyrefuge/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/lib/modules/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/mnt/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/omr/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/proc/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/storage/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/sys/.placeholder
+echo "" > build/ramdisk/twPie-N935/ramdisk/system/.placeholder
+
+echo "" > build/ramdisk/twPie-N935K/ramdisk/acct/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/cache/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/config/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/data/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/dev/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/keydata/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/keyrefuge/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/lib/modules/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/mnt/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/omr/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/proc/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/storage/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/sys/.placeholder
+echo "" > build/ramdisk/twPie-N935K/ramdisk/system/.placeholder
 
 echo "" > build/ramdisk/twOreo/ramdisk/acct/.placeholder
 echo "" > build/ramdisk/twOreo/ramdisk/cache/.placeholder

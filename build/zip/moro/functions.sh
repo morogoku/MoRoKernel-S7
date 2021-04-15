@@ -169,12 +169,26 @@ init_variables() {
     TREBLE="$(file_getprop /system/build.prop ro.treble.enabled)"
     BL=`getprop ro.bootloader`
     MODEL=${BL:0:4}
-    MODEL1=G930
-    MODEL1_DESC="S7 Flat G930"
-    MODEL2=G935
-    MODEL2_DESC="S7 Edge G935"
     GPU=r29
-    if [ $MODEL == $MODEL1 ]; then MODEL_DESC=$MODEL1_DESC; fi
-    if [ $MODEL == $MODEL2 ]; then MODEL_DESC=$MODEL2_DESC; fi
+
+    case $MODEL in
+    G930)
+    	MODEL_DESC="S7 Flat G930"
+    	;;
+    G935)
+    	MODEL_DESC="S7 Edge G935"
+    	;;
+    N935)
+    	MODEL_DESC="Note FE N935"
+    	;;
+    N930)
+    	MODEL_DESC="Note 7 N930"
+    	MODEL="N935"
+    	;;
+    *)
+    	MODEL_DESC="Unknown device: $MODEL"
+    	;;
+    esac
+
 }
 

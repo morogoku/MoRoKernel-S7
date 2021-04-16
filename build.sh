@@ -95,9 +95,15 @@ FUNC_BUILD_KERNEL()
 	fi
 	
 	# DTB
-	cp $DTSDIR/exynos8890-herolte_$OS.dtsi $DTSDIR/exynos8890-herolte_common.dtsi
-	echo "Used exynos8890-herolte_$OS.dtsi as exynos8890-herolte_common.dtsi"
+	if [[ $MODEL == "G935" || $MODEL == "G930" ]]; then
+		cp $DTSDIR/exynos8890-herolte_$OS.dtsi $DTSDIR/exynos8890-herolte_common.dtsi
+		echo "Used exynos8890-herolte_$OS.dtsi as exynos8890-herolte_common.dtsi"
+	elif [[ $MODEL == "N935" || $MODEL == "N930" ]]; then
+		cp $DTSDIR/exynos8890-gracelte_$OS.dtsi $DTSDIR/exynos8890-gracelte_common.dtsi
+		echo "Used exynos8890-gracelte_$OS.dtsi as exynos8890-gracelte_common.dtsi"
+	fi
 
+	# COMPILE
 	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
 			CROSS_COMPILE=$BUILD_CROSS_COMPILE \
 			tmp_defconfig || exit -1
@@ -105,8 +111,9 @@ FUNC_BUILD_KERNEL()
 			CROSS_COMPILE=$BUILD_CROSS_COMPILE || exit -1
 	echo ""
 
-	rm -f $RDIR/arch/$ARCH/configs/tmp_defconfig
-	rm -f $DTSDIR/exynos8890-herolte_common.dtsi
+	rm -f $RDIR/arch/$ARCH/configs/tmp_defconfig 2>/dev/null
+	rm -f $DTSDIR/exynos8890-herolte_common.dtsi 2>/dev/null
+	rm -f $DTSDIR/exynos8890-gracelte_common.dtsi 2>/dev/null
 }
 
 FUNC_BUILD_RAMDISK()

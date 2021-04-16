@@ -46,7 +46,7 @@ abort() {
 
 set_os() {
 ## CHECK SUPPORT, MODEL AND OS
-    if [ $MODEL == $MODEL1 ] || [ $MODEL == $MODEL2 ]; then
+    if [ $MODEL == G935 ] || [ $MODEL == G930 ] || [ $MODEL == N935 ] || [ $MODEL == N930 ]; then
         ui_print " "
         ui_print "@Device detected"
 
@@ -125,7 +125,7 @@ set_os() {
     else
         ui_print " "
         ui_print "@** UNSUPPORTED DEVICE! **"
-        abort "-- The kernel is only for $VAR1 and $VAR2, and this device is $MODEL. Aborting..."
+        abort "-- The kernel is only for G93X and N93X, and this device is $MODEL. Aborting..."
     fi
 }
 

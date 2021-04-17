@@ -136,6 +136,15 @@ gpu.1desc=Solve problems with some games, but SmartView may fail in some Roms
 gpu.2=r28 GPU Driver
 gpu.2desc=The most stable for SmartView in all Roms, but can produce LAG in some games
 
+# Spectrum
+spec.title=Perfiles SPECTRUM
+spec.desc=Select the profiles for SPECTRUM
+spec.group=Spectrum Profiles
+spec.1=MoroGoku
+spec.1desc=Made by Morogoku, they are profiles with few modifications. Stable.
+spec.2=TheAlexPlaYT
+spec.2desc=Made by TheAlexPlaYT, they are more aggressive and have many modifications. If you notice problems, change to Morogoku's.
+
 # Sin Root
 stock.title=Without root
 stock.desc=Do you want to clean the remains of the previous root?

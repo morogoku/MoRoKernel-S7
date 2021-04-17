@@ -154,8 +154,15 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk10)" == 1 ] && [ "$(file_getprop /t
 	ui_print " "
 	ui_print "@Install Spectrum Profiles"
 	mkdir -p -m 777 /data/media/0/spectrum 2>/dev/null
-	cp -rf /tmp/moro/spec_profiles/. /data/media/0/spectrum
 	
+	if [ "$(file_getprop /tmp/aroma/spec.prop selected.1)" == "1" ]; then
+		ui_print "-- Installing Morogoku profiles"
+		cp -rf /tmp/moro/spec_profiles/moro/. /data/media/0/spectrum
+	elif [ "$(file_getprop /tmp/aroma/spec.prop selected.1)" == "2" ]; then
+		ui_print "-- Installing TheAlexPlaYT profiles"
+		cp -rf /tmp/moro/spec_profiles/alex/. /data/media/0/spectrum
+	fi
+
 	# remove old spectrum profile path
 	rm -Rf /data/media/0/Spectrum 2>/dev/null
 fi

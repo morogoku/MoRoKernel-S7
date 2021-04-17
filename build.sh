@@ -47,6 +47,17 @@ FUNC_DELETE_PLACEHOLDERS()
         echo ""
 }
 
+FUNC_CLEAN_DTB()
+{
+	if ! [ -d $DTSDIR ] ; then
+		echo "no directory : "$DTSDIR""
+	else
+		echo "rm files in : "$RDIR/arch/$ARCH/boot/dts/*.dtb""
+		rm $DTSDIR/*.dtb 2>/dev/null
+		rm $DTBDIR/*.dtb 2>/dev/null
+	fi
+}
+
 FUNC_BUILD_KERNEL()
 {
 	echo ""
@@ -212,6 +223,7 @@ fi
 	START_TIME=`date +%s`
 	FUNC_DELETE_PLACEHOLDERS
 	FUNC_BUILD_KERNEL
+	FUNC_CLEAN_DTB
 	FUNC_BUILD_RAMDISK
 	if [ $ZIP == "yes" ]; then
 	    FUNC_BUILD_FLASHABLES

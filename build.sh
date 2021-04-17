@@ -30,7 +30,7 @@ DEFCONFIG_S7FLAT=moro-flat_defconfig
 DEFCONFIG_N7FE=moro-grace_defconfig
 
 
-K_VERSION="v8.7.1b04"
+K_VERSION="v8.7.1b05"
 K_SUBVER="8"
 K_BASE="CUA1"
 K_NAME="MoRoKernel"

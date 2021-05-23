@@ -2,14 +2,21 @@
 <b>KERNEL INFORMATION:</b>
 
 	NAME	: <b><#selectbg_g>MoRoKernel S7</#></b>	
-	VERSION	: <b><#selectbg_g>v8.7</#></b>
-	DATE	: <b><#selectbg_g>11/04/2021</#></b>
+	VERSION	: <b><#selectbg_g>v8.8</#></b>
+	DATE	: <b><#selectbg_g>23/05/2021</#></b>
 	AUTHOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>ONLY FOR Galaxy S7</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v8.8</#></b></u>
+<*>NOTE FE support, for Floyd Q, and Samsung Pie roms</*>
+<*>Magisk v23.0</*>
+<*>Fixed Lineage 18.1 problems with obb folder</*>
+<*>Installer works with all recoverys</*>
+<*>TheAlexPlaYT spectrum profiles selectables</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v8.7</#></b></u>
 <*>Sources N935KKKU4CUA1</*>

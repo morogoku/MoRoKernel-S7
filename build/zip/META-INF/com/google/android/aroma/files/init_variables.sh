@@ -6,10 +6,12 @@
 ==============
 export SYSTEM_ROOT=false
 
-mount /system
+block=/dev/block/platform/155a0000.ufs/by-name/SYSTEM
+
+mount -o rw "$block" /system
 
 if [ -f /system/init.environ.rc ]; then
-    mkdir /system_root
+    mkdir /system_root 2>/dev/null
     mount --move /system /system_root
     mount -o bind /system_root/system /system
     export SYSTEM_ROOT=true

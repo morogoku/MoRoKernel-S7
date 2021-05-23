@@ -15,7 +15,7 @@ mkdir -p $SDIR
 if [ -f /system_root/init.rc ]; then
   RCDIR=/system_root
 else
-  RCDIR=/system/etc/init/hw
+  RCDIR=${SYSTEM_MOUNT}/etc/init/hw
   LOS18=1
 fi
 

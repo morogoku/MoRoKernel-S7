@@ -47,7 +47,7 @@ ui_print "-- Copying files"
 
 
 # System As Root init scripts
-if [ $OS == "los17" ] || [ $OS == "twQ" ]; then
+if [ $OS == "los18" ] || [ $OS == "twQ" ]; then
 	. /tmp/moro/sar_init.sh
 fi
 
@@ -95,7 +95,7 @@ if [ "$(file_getprop /tmp/aroma/menu.prop chk14)" == 0 ]; then
 	
 	# Disable spectrum support
 	ui_print "-- Disabling Spectrum support"
-	if [ $OS == "los17" ] || [ $OS == "twQ" ]; then
+	if [ $OS == "los18" ] || [ $OS == "twQ" ]; then
 		rm -f /system_root/init.spectrum.rc
 		sed -i '/init.spectrum.rc/d' /system_root/init.moro.rc
 	else

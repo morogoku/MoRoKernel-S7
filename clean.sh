@@ -101,12 +101,12 @@ echo "" > build/ramdisk/los16/ramdisk/storage/.placeholder
 echo "" > build/ramdisk/los16/ramdisk/sys/.placeholder
 echo "" > build/ramdisk/los16/ramdisk/system/.placeholder
 
-echo "" > build/ramdisk/los17/ramdisk/apex/.placeholder
-echo "" > build/ramdisk/los17/ramdisk/debug_ramdisk/.placeholder
-echo "" > build/ramdisk/los17/ramdisk/dev/.placeholder
-echo "" > build/ramdisk/los17/ramdisk/mnt/.placeholder
-echo "" > build/ramdisk/los17/ramdisk/proc/.placeholder
-echo "" > build/ramdisk/los17/ramdisk/sys/.placeholder
+echo "" > build/ramdisk/los18/ramdisk/apex/.placeholder
+echo "" > build/ramdisk/los18/ramdisk/debug_ramdisk/.placeholder
+echo "" > build/ramdisk/los18/ramdisk/dev/.placeholder
+echo "" > build/ramdisk/los18/ramdisk/mnt/.placeholder
+echo "" > build/ramdisk/los18/ramdisk/proc/.placeholder
+echo "" > build/ramdisk/los18/ramdisk/sys/.placeholder
 
 echo "" > build/ramdisk/treble/ramdisk/acct/.placeholder
 echo "" > build/ramdisk/treble/ramdisk/cache/.placeholder

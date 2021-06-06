@@ -145,7 +145,7 @@ FUNC_BUILD_RAMDISK()
 		cp -rf ramdisk/$OS/split_img/. temp/split_img
 	fi
 	
-	if [[ $OS != "twQ" && $OS != "los17" ]];then
+	if [[ $OS != "twQ" && $OS != "los18" ]];then
 		if [[ $OS == "treble" ]]; then
 			cp -rf init/root_treble/. temp/ramdisk
 		else
@@ -213,7 +213,7 @@ elif [[ $ANDROID == "8" ]]; then
 fi
 
 # Kernel name for Lineage 17 & 18 roms
-if [[ $OS == "los17" ]];then
+if [[ $OS == "los18" ]];then
 	export KERNEL_VERSION="$K_SUBVER-$K_NAME-los17/18-$K_BASE-$K_VERSION"
 else
 	export KERNEL_VERSION="$K_SUBVER-$K_NAME-$OS-$K_BASE-$K_VERSION"
@@ -336,7 +336,7 @@ elif [[ $prompt == "5" ]]; then
 
     echo "S7 Edge - Lineage 17 Selected"
 
-    OS=los17
+    OS=los18
     ANDROID=9
     MTP=aosp
     GPU=r29
@@ -472,7 +472,7 @@ elif [[ $prompt == "8" ]]; then
     ZIP=no
     MAIN
 
-    OS=los17
+    OS=los18
     ANDROID=9
     MTP=aosp
     GPU=r29
@@ -483,7 +483,7 @@ elif [[ $prompt == "8" ]]; then
     ZIP=no
     MAIN
 
-    OS=los17
+    OS=los18
     ANDROID=9
     MTP=aosp
     GPU=r29

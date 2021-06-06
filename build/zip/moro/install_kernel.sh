@@ -46,6 +46,12 @@ $BB tar -Jxf aik.tar.xz
 ui_print "-- Copying files"
 
 
+# f2fs support for los17/18
+if [ $OS == "los18" ]; then
+	. /tmp/moro/f2fs.sh
+fi
+
+
 # System As Root init scripts
 if [ $OS == "los18" ] || [ $OS == "twQ" ]; then
 	. /tmp/moro/sar_init.sh

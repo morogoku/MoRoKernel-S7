@@ -135,7 +135,7 @@ mount_parts() {
     # Mount system
     ui_print " "
     ui_print "@Mount partitions"
-    ui_print "-- mount /system"
+    ui_print "-- mount /system RW"
 
     block=/dev/block/platform/155a0000.ufs/by-name/SYSTEM
     mount -o rw "$block" /system

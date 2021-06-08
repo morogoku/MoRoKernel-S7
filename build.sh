@@ -101,7 +101,7 @@ FUNC_BUILD_KERNEL()
 	fi
 	
 	# HALL_EVENT_REVERSE for Q rom
-	if [[ $OS == "twQ" ]]; then
+	if [[ $OS == "twQ" || $OS == "los18" ]]; then
 		sed -i '/CONFIG_HALL_EVENT_REVERSE/c\CONFIG_HALL_EVENT_REVERSE=y' $RDIR/arch/$ARCH/configs/tmp_defconfig
 	fi
 	

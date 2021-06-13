@@ -5198,16 +5198,14 @@ ssize_t sec_bat_store_attrs(
 		break;
 	case STORE_MODE:
 		if (sscanf(buf, "%10d\n", &x) == 1) {
-#if !defined(CONFIG_SEC_FACTORY)
-			if (x) {
-				battery->store_mode = true;
-				if (is_hv_wire_type(battery->cable_type) ||
-					is_hv_wireless_type(battery->cable_type)) {
-					sec_bat_set_charging_current(battery);
-				}
-			}
-#endif
+			battery->store_mode = x ? true : false;
 			ret = count;
+			if (battery->store_mode) {
+				union power_supply_propval value;
+				value.intval = battery->store_mode;
+				psy_do_property(battery->pdata->charger_name, set,
+						POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX, value);
+			}
 		}
 		break;
 	case UPDATE:
@@ -6319,13 +6317,6 @@ static int sec_bat_get_property(struct power_supply *psy,
 					return 0;
 				}
 			}
-#if defined(CONFIG_STORE_MODE)
-			if (battery->store_mode && !lpcharge &&
-					battery->cable_type != SEC_BATTERY_CABLE_NONE &&
-					battery->status == POWER_SUPPLY_STATUS_DISCHARGING) {
-				val->intval = POWER_SUPPLY_STATUS_CHARGING;
-			} else
-#endif
 				val->intval = battery->status;
 		}
 		break;
@@ -9053,7 +9044,14 @@ static int sec_battery_probe(struct platform_device *pdev)
 	battery->cable_type = SEC_BATTERY_CABLE_NONE;
 	battery->test_mode = 0;
 	battery->factory_mode = false;
+#if defined(CONFIG_STORE_MODE)
 	battery->store_mode = false;
+	value.intval = battery->store_mode;
+	psy_do_property(battery->pdata->charger_name, set,
+			POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX, value);
+#else
+	battery->store_mode = false;
+#endif
 	battery->slate_mode = false;
 	battery->is_hc_usb = false;
 	battery->is_sysovlo = false;
@@ -9232,10 +9230,6 @@ static int sec_battery_probe(struct platform_device *pdev)
 	value.intval = 0;
 	psy_do_property(battery->pdata->wireless_charger_name, set,
 					POWER_SUPPLY_PROP_CHARGE_TYPE, value);
-
-#if defined(CONFIG_STORE_MODE) && !defined(CONFIG_SEC_FACTORY)
-	battery->store_mode = true;
-#endif
 
 #if defined(CONFIG_USB_TYPEC_MANAGER_NOTIFIER)
 	battery->pdic_info.sink_status.rp_currentlvl = RP_CURRENT_LEVEL_NONE;

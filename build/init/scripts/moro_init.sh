@@ -37,7 +37,7 @@ echo " " >> $LOG;
 
 
 # Zram
-. $SDIR/zram.sh
+#. $SDIR/zram.sh
 
 # Fix personalist error
 . $SDIR/fix_personalist.sh

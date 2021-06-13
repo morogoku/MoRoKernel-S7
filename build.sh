@@ -145,7 +145,7 @@ FUNC_BUILD_RAMDISK()
 		cp -rf ramdisk/$OS/split_img/. temp/split_img
 	fi
 	
-	if [[ $OS != "twQ" && $OS != "los18" ]];then
+	if [[ $OS != "twQ" || $OS != "los18" ]];then
 		if [[ $OS == "treble" ]]; then
 			cp -rf init/root_treble/. temp/ramdisk
 		else
@@ -153,6 +153,11 @@ FUNC_BUILD_RAMDISK()
 		fi
 		
 		cp -rf init/scripts/. temp/ramdisk/sbin
+	fi
+	
+	if [[ $OS != "twPie" || $OS != "twOreo" ]]; then
+		sed -i '/zram.sh/c\#. $SDIR/zram.sh' temp/ramdisk/sbin/moro_init.sh
+		rm -f temp/ramdisk/sbin/zram.sh
 	fi
 	
 	rm -f temp/split_img/boot.img-zImage
